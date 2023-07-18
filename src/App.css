@@ -1,3 +1,7 @@
+body{
+  background-image: url('./assets/Images/fondo.png');
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -39,4 +43,22 @@
 
 .read-the-docs {
   color: #888;
+}
+
+.papas {
+  width: 100px;
+  margin: 20px;
+}
+.papas:hover {
+  filter: drop-shadow(0 0 2em #dae907aa);
+  cursor: pointer;
+}
+
+.hamb {
+  width: 100px;
+  margin: 20px;
+}
+.hamb:hover {
+  filter: drop-shadow(0 0 2em #f0eaeaaa);
+  cursor: pointer;
 }
