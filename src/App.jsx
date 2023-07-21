@@ -2,18 +2,20 @@ import './App.css'
 import logo from './assets/Images/logo.png'
 import Button from './components/button/button.jsx'
 
-export default function App() {
+function App() {
 
   const handleClick = () => {
-    console.log('Hola');
+    console.log('Hola APP');
   };
 
   return (
     <>
-      <div className='home'>
+      <div>
         <img src={logo} className="logo" alt="img logo" />
-        <Button label="Iniciar sesión" onClick={handleClick} />
+        <Button label="APP" onClick={handleClick} />
       </div>
     </>
   )
 }
+
+export default App
