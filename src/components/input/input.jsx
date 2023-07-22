@@ -1,15 +1,16 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import PropTypes from 'prop-types';
+import './input.css'
 
-export default function Input({ type, placeholder, value, onChange, label, classInputLabel, classInput,classContainer }) {
+export default function Input({ type, placeholder, value, onChange, label, classInputLabel, classInput }) {
   return (
     <>
-        <div className={classContainer}>
-            {label && <label className={classInputLabel} >{label}</label>}
+        <div className='containerInput'>
+            {label && <label className={`labelDefault ${classInputLabel}`} >{label}</label>}
             <input
                 type={type}
-                className={classInput}
+                className={`inputDefault ${classInput}`}
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}
@@ -26,6 +27,5 @@ Input.propTypes = {
     onChange: PropTypes.func,
     label: PropTypes.string,
     classInputLabel: PropTypes.string,
-    classInput: PropTypes.string,
-    classContainer: PropTypes.string
+    classInput: PropTypes.string
 }

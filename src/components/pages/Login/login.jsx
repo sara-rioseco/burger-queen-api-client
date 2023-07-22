@@ -3,15 +3,26 @@ import React, { useState } from 'react';
 import './login.css'
 import gif from '../../../assets/Images/hamb.gif'
 import Input from '../../input/input.jsx'
+import Button from '../../button/button.jsx'
 
 export default function Login() {
 
   const [inputValue, setInputValue] = useState('');
 
-  const handleInputChange = (event) => {
+  const handleNameChange = (event) => {
     setInputValue(event.target.value);
     console.log(event.target.value)
-    console.log('hola CAMBIO')
+    console.log('hola CAMBIO NAME')
+  };
+
+  const handlePasswordChange = (event) => {
+    setInputValue(event.target.value);
+    console.log(event.target.value)
+    console.log('hola CAMBIO PASSWORD')
+  };
+
+  const handleClick = () => {
+    console.log('Hola ENTRAR');
   };
 
   return (
@@ -22,22 +33,22 @@ export default function Login() {
             type='text' 
             placeholder='Escribe aquí' 
             value={inputValue} 
-            onChange={handleInputChange} 
+            onChange={handleNameChange} 
             label='NOMBRE:' 
             classInputLabel='labels'
             classInput='inputs'
-            classContainer='containerInput'
           />
           <Input 
             type='text' 
             placeholder='*************' 
             value={inputValue} 
-            onChange={handleInputChange} 
+            onChange={handlePasswordChange} 
             label='CONTRASEÑA:' 
             classInputLabel='labels'
             classInput='inputs'
             classContainer='containerInput'
           />
+          <Button label="ENTRAR" onClick={handleClick} classButton='buttonEnter'/>
         </div>
          <img src={gif} className="logo" alt="img logo" />
       </div>

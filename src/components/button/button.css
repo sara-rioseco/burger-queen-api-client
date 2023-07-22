@@ -1,13 +1,12 @@
 @import url('https://fonts.cdnfonts.com/css/bebas-neue');
 
-.button {
+.buttonDefault {
     background-color: rgba(209, 166, 80, 1);
     color: #000000;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 6dvh;
     font-family: 'Bebas Neue', sans-serif;
     font-weight: bold;
 }

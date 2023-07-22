@@ -3,10 +3,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './button.css';
 
-export default function Button(props) {
+export default function Button({label, onClick, classButton}) {
     return (
-      <button className="button" onClick={props.onClick}>
-        {props.label}
+      <button className={`buttonDefault ${classButton}`} onClick={onClick}>
+        {label}
       </button>
     );
   }
@@ -14,4 +14,5 @@ export default function Button(props) {
   Button.propTypes = {
     label: PropTypes.string.isRequired,
     onClick: PropTypes.func,
+    classButton: PropTypes.string
   };
