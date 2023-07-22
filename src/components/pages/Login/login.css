@@ -1,34 +1,44 @@
-body{
-    width: 100%;
-    height: 100%;
-    margin: 0px;
-    background-image: url('../../../assets/Images/fondo.png');
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-color: black;
+@import url('https://fonts.cdnfonts.com/css/bebas-neue');
+@import url('https://fonts.cdnfonts.com/css/asap-condensed');
+
+.login {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  
-  #root {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
-  }
-.home{
-    display: flex;
-    flex-direction: column;
     align-items: center;
+    flex-wrap: wrap;
   }
+
+.form{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background-color: black;
+  border-color: #FFFFFF;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 15px;
+}
+
+.containerInput{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
   
-  .logo {
-    width: 25em;
-    height: 25em;
-    margin: 20px;
+.labels{
+    color: white;
+    size: 3em;
+    font-size: 4dvh;
+    font-family: 'Bebas Neue', sans-serif;
+    font-weight: bold;
   }
-  .logo:hover {
-    filter: drop-shadow(0 0 1em #ffffffaa);
+
+.inputs{
+    width: 28em;
+    height: 2em;
+    font-size: 2dvh;
+    font-family: 'Asap Condensed', sans-serif;
+  }
+
+.inputs::placeholder{
+    color: #696565;
   }
