@@ -7,16 +7,18 @@ import Button from '../../button/button.jsx'
 
 export default function Login() {
 
-  const [inputValue, setInputValue] = useState('');
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+
 
   const handleNameChange = (event) => {
-    setInputValue(event.target.value);
+    setName(event.target.value);
     console.log(event.target.value)
     console.log('hola CAMBIO NAME')
   };
 
   const handlePasswordChange = (event) => {
-    setInputValue(event.target.value);
+    setPassword(event.target.value);
     console.log(event.target.value)
     console.log('hola CAMBIO PASSWORD')
   };
@@ -29,10 +31,12 @@ export default function Login() {
     <>
       <div className='login'>
         <div className='form'>
+          <h2 className='title'>INICIAR SESIÓN</h2>
+          <div className='line'></div>
           <Input 
             type='text' 
             placeholder='Escribe aquí' 
-            value={inputValue} 
+            value={name} 
             onChange={handleNameChange} 
             label='NOMBRE:' 
             classInputLabel='labels'
@@ -41,7 +45,7 @@ export default function Login() {
           <Input 
             type='text' 
             placeholder='*************' 
-            value={inputValue} 
+            value={password} 
             onChange={handlePasswordChange} 
             label='CONTRASEÑA:' 
             classInputLabel='labels'
