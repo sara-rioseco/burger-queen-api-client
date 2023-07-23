@@ -1,32 +1,43 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
+import axios from 'axios';
+// CSS
 import './login.css'
-import gif from '../../../assets/Images/hamb.gif'
+//COMPONENTES
 import Input from '../../input/input.jsx'
 import Button from '../../button/button.jsx'
+//ASSETS
+import gif from '../../../assets/Images/hamb.gif'
+
 
 export default function Login() {
-
+  // ESTADOS
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
-
+  // CONTROLADORES DE EVENTOS
   const handleNameChange = (event) => {
     setName(event.target.value);
-    console.log(event.target.value)
-    console.log('hola CAMBIO NAME')
   };
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
-    console.log(event.target.value)
-    console.log('hola CAMBIO PASSWORD')
   };
 
-  const handleClick = () => {
-    console.log('Hola ENTRAR');
+  const handleClick = async () => {
+    try {
+      const response = await axios.post('https://burger-api-mock.onrender.com/login', {
+        email: name,
+        password: password,
+      });
+      console.log(response);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
+  // RENDERIZADO
   return (
     <>
       <div className='login'>

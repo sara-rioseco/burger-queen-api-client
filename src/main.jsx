@@ -1,6 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+import './index.css'
+
 import Home from './components/pages/Home/home.jsx';
 import Login from './components/pages/Login/login.jsx';
 import Menu from './components/pages/Menu/menu.jsx';
@@ -8,7 +11,7 @@ import Orders from './components/pages/Orders/orders.jsx';
 import Kitchen from './components/pages/Kitchen/kitchen.jsx';
 import Users from './components/pages/Users/users.jsx';
 import Products from './components/pages/Products/products.jsx';
-import './index.css'
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
