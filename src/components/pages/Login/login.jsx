@@ -8,12 +8,15 @@ import Input from '../../input/input.jsx'
 import Button from '../../button/button.jsx'
 //ASSETS
 import gif from '../../../assets/Images/hamb.gif'
+import hide from '../../../assets/Images/hide.png'
+import show from '../../../assets/Images/show.png'
 
 
 export default function Login() {
   // ESTADOS
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   // CONTROLADORES DE EVENTOS
   const handleNameChange = (event) => {
@@ -22,6 +25,14 @@ export default function Login() {
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const getPasswordInputType = () => {
+    return showPassword ? 'text' : 'password';
   };
 
   const handleClick = async () => {
@@ -53,19 +64,26 @@ export default function Login() {
             classInputLabel='labels'
             classInput='inputs'
           />
-          <Input 
-            type='text' 
-            placeholder='*************' 
-            value={password} 
-            onChange={handlePasswordChange} 
-            label='CONTRASEÑA:' 
-            classInputLabel='labels'
-            classInput='inputs'
-            classContainer='containerInput'
-          />
+          <div className='password'>
+            <Input 
+              type={getPasswordInputType()} 
+              placeholder='*************' 
+              value={password} 
+              onChange={handlePasswordChange} 
+              label='CONTRASEÑA:' 
+              classInputLabel='labels'
+              classInput='inputs'
+              classContainer='containerInput'
+            />
+            <img 
+              src={showPassword ? hide : show} 
+              className="togglePassword"
+              onClick={togglePasswordVisibility}
+            />
+          </div>
           <Button label="ENTRAR" onClick={handleClick} classButton='buttonEnter'/>
         </div>
-         <img src={gif} className="logo" alt="img logo" />
+         <img src={gif} className="gif" alt="gif" />
       </div>
     </>
   )
