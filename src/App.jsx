@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import { Route, Routes } from 'react-router-dom';
-
+import { Route, Routes, createBrowserRouter } from 'react-router-dom';
 import './App.css'
 
 import Home from './components/pages/Home/home.jsx';
@@ -13,22 +12,41 @@ import Users from './components/pages/Users/users.jsx';
 import Products from './components/pages/Products/products.jsx';
 import ErrorPage from './components/pages/Error/error-page.jsx';
 
-function App() {
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/menu",
+    element: <Menu />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/orders",
+    element: <Orders />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/kitchen",
+    element: <Kitchen />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/users",
+    element: <Users />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/products",
+    element: <Products />,
+    errorElement: <ErrorPage />,
+  },
+])
 
-  return (
-    <>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/menu" element={<Menu />} />
-        <Route path="/orders" element={<Orders />} />
-        <Route path="/kitchen" element={<Kitchen />} />
-        <Route path="/users" element={<Users />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/error-page" element={<ErrorPage />} />
-      </Routes>
-    </>
-  )
-}
-
-export default App
