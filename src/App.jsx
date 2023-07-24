@@ -11,6 +11,8 @@ import Orders from './components/pages/Orders/orders.jsx';
 import Kitchen from './components/pages/Kitchen/kitchen.jsx';
 import Users from './components/pages/Users/users.jsx';
 import Products from './components/pages/Products/products.jsx';
+import ErrorPage from './components/pages/Error/error-page.jsx';
+
 function App() {
 
   return (
@@ -23,6 +25,7 @@ function App() {
         <Route path="/kitchen" element={<Kitchen />} />
         <Route path="/users" element={<Users />} />
         <Route path="/products" element={<Products />} />
+        <Route path="/error-page" element={<ErrorPage />} />
       </Routes>
     </>
   )
