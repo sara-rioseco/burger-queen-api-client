@@ -7,6 +7,7 @@ import './login.css'
 //COMPONENTES
 import Input from '../../input/input.jsx'
 import Button from '../../button/button.jsx'
+import { useNameChange, usePasswordChange, useTogglePassword, useLoginClick } from '../../../utils/login';
 //ASSETS
 import gif from '../../../assets/Images/hamb.gif'
 import hide from '../../../assets/Images/hide.png'
@@ -14,49 +15,11 @@ import show from '../../../assets/Images/show.png'
 
 
 export default function Login() {
-  const navigate = useNavigate();
-  // ESTADOS
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-
-  // CONTROLADORES DE EVENTOS
-  const handleNameChange = (event) => {
-    setName(event.target.value);
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const getPasswordInputType = () => {
-    return showPassword ? 'text' : 'password';
-  };
-
-  const handleClick = async () => {
-    try {
-      const response = await axios.post('https://burger-queen-api-mock-r47a.onrender.com/login', {
-        email: name,
-        password: password,
-      });
-      console.log(response);
-      console.log(response.data);
-      console.log(response.data.accessToken);
-      console.log(response.data.user);
-      console.log(response.data.user.role);
-      response.data.user.role === 'admin' && navigate('/users');
-      response.data.user.role === 'waiter' && navigate('/orders');
-      response.data.user.role === 'chef' && navigate('/kitchen');
-    } catch (error) {
-      console.error(error);
-      error && navigate('/error-page')
-    }
-  };
-
+  const { name, handleNameChange } = useNameChange();
+  const { password, handlePasswordChange } = usePasswordChange();
+  const { showPassword, togglePasswordVisibility, getPasswordInputType } = useTogglePassword();
+  const { handleLoginClick } = useLoginClick();
+  
   // RENDERIZADO
   return (
     <>
@@ -90,7 +53,7 @@ export default function Login() {
               onClick={togglePasswordVisibility}
             />
           </div>
-          <Button label="ENTRAR" onClick={handleClick} classButton='buttonEnter'/>
+          <Button label="ENTRAR" onClick={handleLoginClick} classButton='buttonEnter'/>
         </div>
          <img src={gif} className="gif" alt="gif" />
       </div>
