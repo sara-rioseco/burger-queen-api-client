@@ -2,28 +2,19 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-export function useNameChange() {
+export function LoginLogic() {
+  const navigate = useNavigate();
   const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleNameChange = (event) => {
     setName(event.target.value);
   };
 
-  return { name, handleNameChange };
-}
-
-export function usePasswordChange() {
-  const [password, setPassword] = useState('');
-
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
-
-  return { password, handlePasswordChange };
-}
-
-export function useTogglePassword() {
-  const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -33,15 +24,9 @@ export function useTogglePassword() {
     return showPassword ? 'text' : 'password';
   };
 
-  return { showPassword, togglePasswordVisibility, getPasswordInputType };
-}
-
-export function useLoginClick() {
-  const navigate = useNavigate();
-
-  const handleLoginClick = async (name, password) => {
+  const handleLoginClick = async () => {
     try {
-      const response = await axios.post('https://burger-queen-api-mock-r47a.onrender.com/login', {
+      const response = await axios.post('http://localhost:8080/login', {
         email: name,
         password: password,
       });
@@ -59,5 +44,14 @@ export function useLoginClick() {
     }
   };
 
-  return { handleLoginClick };
+  return {
+    name,
+    password,
+    showPassword,
+    handleNameChange,
+    handlePasswordChange,
+    togglePasswordVisibility,
+    getPasswordInputType,
+    handleLoginClick,
+  }
 }

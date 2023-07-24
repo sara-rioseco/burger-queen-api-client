@@ -7,7 +7,7 @@ import './login.css'
 //COMPONENTES
 import Input from '../../input/input.jsx'
 import Button from '../../button/button.jsx'
-import { useNameChange, usePasswordChange, useTogglePassword, useLoginClick } from '../../../utils/login';
+import { LoginLogic } from '../../../utils/login';
 //ASSETS
 import gif from '../../../assets/Images/hamb.gif'
 import hide from '../../../assets/Images/hide.png'
@@ -15,11 +15,17 @@ import show from '../../../assets/Images/show.png'
 
 
 export default function Login() {
-  const { name, handleNameChange } = useNameChange();
-  const { password, handlePasswordChange } = usePasswordChange();
-  const { showPassword, togglePasswordVisibility, getPasswordInputType } = useTogglePassword();
-  const { handleLoginClick } = useLoginClick();
-  
+  const {
+    name,
+    password,
+    showPassword,
+    handleNameChange,
+    handlePasswordChange,
+    togglePasswordVisibility,
+    getPasswordInputType,
+    handleLoginClick,
+  } = LoginLogic();
+
   // RENDERIZADO
   return (
     <>
