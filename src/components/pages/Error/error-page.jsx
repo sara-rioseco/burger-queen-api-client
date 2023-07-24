@@ -13,12 +13,10 @@ export default function ErrorPage() {
 
   return (
     <>
-      <div className='home'>
+      <div className='home'id="error-page">
         <h1>¡Ay no!</h1>
         <p>Ha ocurrido un error inesperado</p>
-        <p>
-          <i>{error.statusText || error.message}</i>
-        </p>
+        <p><i>{error.statusText || error.message}</i></p>
         <img src={logo} className="logo" alt="img logo" />
         <Button label="OK" onClick={handleClick} />
       </div>
