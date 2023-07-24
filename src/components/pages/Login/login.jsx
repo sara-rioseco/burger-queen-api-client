@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 // CSS
 import './login.css'
 //COMPONENTES
@@ -13,6 +14,7 @@ import show from '../../../assets/Images/show.png'
 
 
 export default function Login() {
+  const navigate = useNavigate();
   // ESTADOS
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
@@ -43,9 +45,15 @@ export default function Login() {
       });
       console.log(response);
       console.log(response.data);
+      console.log(response.data.accessToken);
       console.log(response.data.user);
+      console.log(response.data.user.role);
+      response.data.user.role === 'admin' && navigate('/users');
+      response.data.user.role === 'waiter' && navigate('/orders');
+      response.data.user.role === 'chef' && navigate('/kitchen');
     } catch (error) {
       console.error(error);
+      error && navigate('/error-page')
     }
   };
 
