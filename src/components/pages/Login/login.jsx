@@ -37,7 +37,7 @@ export default function Login() {
 
   const handleClick = async () => {
     try {
-      const response = await axios.post('https://burger-api-mock.onrender.com/login', {
+      const response = await axios.post('https://burger-queen-api-mock-r47a.onrender.com/login', {
         email: name,
         password: password,
       });
