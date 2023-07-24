@@ -43,6 +43,7 @@ export default function Login() {
       });
       console.log(response);
       console.log(response.data);
+      console.log(response.data.user);
     } catch (error) {
       console.error(error);
     }
