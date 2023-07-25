@@ -75,7 +75,7 @@ export default function Orders() {
                     <td>${getTotalOrder(order.products)}</td>
                     <td className='buttonsTable'><img src={Edit} className="edit" alt="buttonEdit" /></td>
                     <td className='buttonsTable'><img src={Delete} className="delete" alt="buttonDelete" /></td>
-                    <td className='buttonsTable'><img src={Check} className="check" alt="buttonCheck" /></td>
+                    <td className='buttonsTable'><img src={Check} className="check" alt="buttonListo" /></td>
                   </tr>
                 ))}
               </tbody>
