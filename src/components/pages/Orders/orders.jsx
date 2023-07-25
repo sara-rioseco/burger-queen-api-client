@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 // CSS
 import './orders.css'
 //COMPONENTES
@@ -12,13 +13,22 @@ import Delete from '../../../assets/Images/borrar.png'
 import Check from '../../../assets/Images/listo.png'
 
 export default function Orders() {
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImlhbWF3YWl0ZXJAbWFpbC5jb20iLCJpYXQiOjE2OTAyOTQ3MDUsImV4cCI6MTY5MDI5ODMwNSwic3ViIjoiMyJ9._pqzgUhi3w4aASVs3hc_V9iWU0MtpuJjF02LT7XhCM4';
+  const navigate = useNavigate();
+
+  const token = localStorage.getItem('accessToken');
 
   const [showOrdersTable, setShowOrdersTable] = useState(false);
   const [ordersData, setOrdersData] = useState([]);
 
   useEffect(() => {
     const fetchOrders = async () => {
+      // Verificar si hay un accessToken antes de hacer la solicitud
+    if (!token) {
+      // Redirigir al usuario al inicio de sesión si no hay un accessToken
+      navigate('/login');
+      return;
+    }
+
       try {
         const response = await axios.get('http://localhost:8080/orders', {
           headers: {
@@ -32,7 +42,7 @@ export default function Orders() {
       }
     };
     fetchOrders();
-  }, []);
+  }, [navigate, token]);
 
   const getProductsList = (products) => {
     return products.map((item) => item.product.name).join(', ');

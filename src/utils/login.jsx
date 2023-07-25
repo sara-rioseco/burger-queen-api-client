@@ -30,6 +30,11 @@ export function LoginLogic() {
         email: name,
         password: password,
       });
+
+      // Guardar el accessToken en el localStorage
+      localStorage.setItem('accessToken', response.data.accessToken);
+      localStorage.setItem('userId', response.data.user.id);
+
       console.log(response);
       console.log(response.data);
       console.log(response.data.accessToken);

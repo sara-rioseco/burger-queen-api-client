@@ -52,6 +52,10 @@
   text-align: center !important;
 }
 
+.buttonsTable img{
+  cursor: pointer;
+}
+
 .out{
   width: 35px;
   margin: 10px;
