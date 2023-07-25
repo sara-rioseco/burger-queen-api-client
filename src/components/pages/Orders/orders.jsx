@@ -6,8 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import './orders.css'
 //COMPONENTES
 import Button from '../../button/button.jsx';
+import LogoutButton from '../../logoutButton/logoutButton';
 //ASSETS
-import Out from '../../../assets/Images/out.png'
 import Edit from '../../../assets/Images/editar.png'
 import Delete from '../../../assets/Images/borrar.png'
 import Check from '../../../assets/Images/listo.png'
@@ -92,7 +92,7 @@ export default function Orders() {
             </table>
           </div>
         )}
-        <img src={Out} className="out" alt="buttonOut" />
+        <LogoutButton />
       </div>
     </>
   );
