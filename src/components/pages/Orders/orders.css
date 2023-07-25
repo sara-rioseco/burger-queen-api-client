@@ -55,3 +55,6 @@
 .buttonsTable img{
   cursor: pointer;
 }
+.buttonsTable img:hover{
+  filter: drop-shadow(0 0 .5em #ffffff);
+}

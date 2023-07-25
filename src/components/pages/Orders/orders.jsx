@@ -16,6 +16,7 @@ export default function Orders() {
   const navigate = useNavigate();
 
   const token = localStorage.getItem('accessToken');
+  const userId = localStorage.getItem('userId');
 
   const [showOrdersTable, setShowOrdersTable] = useState(false);
   const [ordersData, setOrdersData] = useState([]);
@@ -36,13 +37,19 @@ export default function Orders() {
             'Authorization': `Bearer ${token}`,
           },
         });
-        setOrdersData(response.data);
+        console.log(response.data);
+
+        const filteredOrders = response.data.filter((order) => order.userId === Number(userId));
+
+        console.log(filteredOrders);
+
+        setOrdersData(filteredOrders);
       } catch (error) {
         console.error(error);
       }
     };
     fetchOrders();
-  }, [navigate, token]);
+  }, [navigate, token, userId]);
 
   const getProductsList = (products) => {
     return products.map((item) => item.product.name).join(', ');
