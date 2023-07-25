@@ -7,6 +7,9 @@ import './orders.css'
 import Button from '../../button/button.jsx';
 //ASSETS
 import Out from '../../../assets/Images/out.png'
+import Edit from '../../../assets/Images/editar.png'
+import Delete from '../../../assets/Images/borrar.png'
+import Check from '../../../assets/Images/listo.png'
 
 export default function Orders() {
   const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImlhbWF3YWl0ZXJAbWFpbC5jb20iLCJpYXQiOjE2OTAyNDQwNDksImV4cCI6MTY5MDI0NzY0OSwic3ViIjoiMyJ9.nc_F4pbF5mvgfZKwAMOe-51gjqbBVpHyniKtvE5vtWA';
@@ -52,19 +55,27 @@ export default function Orders() {
             <table className='orders-table'>
               <thead>
                 <tr>
-                  <th>CLIENTE</th>
-                  <th>PEDIDO</th>
-                  <th>ESTADO</th>
-                  <th>TOTAL</th>
+                <th className="tableHeader">ID</th>
+                  <th className="tableHeader">CLIENTE</th>
+                  <th className="tableHeader">PEDIDO</th>
+                  <th className="tableHeader">ESTADO</th>
+                  <th className="tableHeader">TOTAL</th>
+                  <th className="tableHeader">EDITAR</th>
+                  <th className="tableHeader">ELIMINAR</th>
+                  <th className="tableHeader">ENTREGADO</th>
                 </tr>
               </thead>
               <tbody>
                 {ordersData.map((order) => (
                   <tr key={order.id}>
+                    <td>{order.id}</td>
                     <td>{order.client}</td>
                     <td>{getProductsList(order.products)}</td>
                     <td>{order.status}</td>
                     <td>${getTotalOrder(order.products)}</td>
+                    <td className='buttonsTable'><img src={Edit} className="edit" alt="buttonEdit" /></td>
+                    <td className='buttonsTable'><img src={Delete} className="delete" alt="buttonDelete" /></td>
+                    <td className='buttonsTable'><img src={Check} className="check" alt="buttonCheck" /></td>
                   </tr>
                 ))}
               </tbody>
