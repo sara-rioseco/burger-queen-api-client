@@ -25,6 +25,7 @@ body{
   padding: 2rem;
   text-align: center;
   height: 100%;
+  display: flex;
 }
 
 footer {
@@ -47,6 +48,7 @@ footer p {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
   }
   
   .logo {

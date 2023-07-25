@@ -12,7 +12,7 @@ import Delete from '../../../assets/Images/borrar.png'
 import Check from '../../../assets/Images/listo.png'
 
 export default function Orders() {
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImlhbWF3YWl0ZXJAbWFpbC5jb20iLCJpYXQiOjE2OTAyNDQwNDksImV4cCI6MTY5MDI0NzY0OSwic3ViIjoiMyJ9.nc_F4pbF5mvgfZKwAMOe-51gjqbBVpHyniKtvE5vtWA';
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImlhbWF3YWl0ZXJAbWFpbC5jb20iLCJpYXQiOjE2OTAyOTQ3MDUsImV4cCI6MTY5MDI5ODMwNSwic3ViIjoiMyJ9._pqzgUhi3w4aASVs3hc_V9iWU0MtpuJjF02LT7XhCM4';
 
   const [showOrdersTable, setShowOrdersTable] = useState(false);
   const [ordersData, setOrdersData] = useState([]);
