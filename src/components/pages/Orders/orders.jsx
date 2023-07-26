@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 // CSS
 import './orders.css'
 //COMPONENTES
 import Button from '../../button/button.jsx';
 import LogoutButton from '../../logoutButton/logoutButton';
+import ApiRequest from '../../../services/apiRequest';
 //ASSETS
 import Edit from '../../../assets/Images/editar.png'
 import Delete from '../../../assets/Images/borrar.png'
@@ -22,34 +22,36 @@ export default function Orders() {
   const [ordersData, setOrdersData] = useState([]);
 
   useEffect(() => {
-    const fetchOrders = async () => {
-      // Verificar si hay un accessToken antes de hacer la solicitud
+
     if (!token) {
       // Redirigir al usuario al inicio de sesión si no hay un accessToken
       navigate('/login');
       return;
     }
 
-      try {
-        const response = await axios.get('http://localhost:8080/orders', {
+        ApiRequest({
+          url: 'http://localhost:8080/orders',
+          method: 'get',
           headers: {
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
           },
-        });
+        }).then((response) => {
+          console.log(response.data);
+        
+
         console.log(response.data);
 
         const filteredOrders = response.data.filter((order) => order.userId === Number(userId));
 
-        console.log(filteredOrders);
+      console.log(filteredOrders);
 
-        setOrdersData(filteredOrders);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchOrders();
-  }, [navigate, token, userId]);
+      setOrdersData(filteredOrders);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}, [navigate, token, userId]);
 
   const getProductsList = (products) => {
     return products.map((item) => item.product.name).join(', ');
