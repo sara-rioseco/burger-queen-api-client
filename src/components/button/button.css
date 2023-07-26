@@ -10,3 +10,6 @@
     font-family: 'Bebas Neue', sans-serif;
     font-weight: bold;
 }
+.buttonDefault:hover {
+    background-color: #715D36;
+}

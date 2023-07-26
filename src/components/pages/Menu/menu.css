@@ -31,6 +31,7 @@ body{
 
 .products-grid {
   display:flex;
+  flex-flow: row wrap;
   width: 600px;
   gap: 20px;
   justify-content: center;
@@ -100,13 +101,11 @@ body{
   width: 90%;
   border-collapse: collapse;
   padding:10%;
-  justify-self: end;
 }
 
 .cart-table th,
 .cart-table td {
-  padding: 10px;
-  text-align: left;
+  padding: 6px;
 }
 
 .cart-text {
@@ -121,19 +120,10 @@ body{
 .cart-input {
   width: 360px;
   height: 40px;
-}
-
-.cart-input::-webkit-outer-spin-button,
-.cart-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-          appearance: none;
-
-  margin: 0;
-}
-
-.cart-input {
-  -moz-appearance: textfield;
-       appearance: textfield;
+  font-size: 20px;
+  font-family: 'Asap condensed', sans-serif;
+  font-weight: normal;
+  text-align: left;
 }
 
 .table-head {

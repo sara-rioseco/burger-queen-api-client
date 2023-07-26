@@ -13,6 +13,8 @@ import Out from '../../../assets/Images/out.png'
 import Edit from '../../../assets/Images/editar.png'
 import Delete from '../../../assets/Images/borrar.png'
 import Check from '../../../assets/Images/listo.png'
+import Add from '../../../assets/Images/add.png'
+import Remove from '../../../assets/Images/remove.png'
 
 export default function Menu() {
   const navigate = useNavigate();
@@ -57,9 +59,22 @@ export default function Menu() {
     console.log('Agregaste un producto al carrito')
   };
   
+  const handleClickAdd = () => {
+    console.log('Agregaste una unidad del producto')
+  };
+
+  const handleClickRemove = () => {
+    console.log('Eliminaste una unidad del producto')
+  };
+
+  const handleClickDelete = () => {
+    console.log('Eliminaste un producto del carrito')
+  }
+
   const handleClickKitchen = () => {
     console.log('Has enviado la orden a cocina')
   }
+
 
   return (
     <>
@@ -97,47 +112,47 @@ export default function Menu() {
       </div>
       <div className='cart-section'>
         <div className='cart-text'>CLIENTE:</div>
-        <div><input className='cart-input' type='text'></input></div>
+        <div><input className='cart-input' type='text' placeholder='Escribe aquí'></input></div>
         <div className='cart-text'>MESA:</div>
-        <div><input className='cart-input' type='number' inputMode='numeric'></input></div>
+        <div><input className='cart-input' type='text' pattern="\d*" maxLength="2" placeholder='Escribe aquí'></input></div>
         <table className='cart-table'>
           <thead>
             <tr key='head' className="table-head">
-              <th className="table-title">CARRITO</th>
+              <th className="table-title" colSpan='4'>CARRITO</th>
             </tr>
           </thead>
           <tbody>
             <tr key='body1'>
               <td className='table-body'> Producto 1</td>
-              <td className='table-body'> </td>
-              <td className='table-body'> </td>
+              <td className='table-body'> <img src={Remove} alt='delete-button' className='delete' onClick={handleClickRemove}/>{'\u00A0'}{'\u00A0'}5{'\u00A0'}{'\u00A0'}<img src={Add} alt='delete-button' className='delete' onClick={handleClickAdd}/></td>
               <td className='table-number'> $ 500</td>
+              <td className='table-number'><img src={Delete} alt='delete-button' className='delete' onClick={handleClickDelete}/></td>
             </tr>
             <tr key='body2'>
               <td className='table-body'> Producto 2</td>
-              <td className='table-body'> </td>
-              <td className='table-body'> </td>
+              <td className='table-body'> <img src={Remove} alt='delete-button' className='delete' onClick={handleClickRemove}/>{'\u00A0'}{'\u00A0'}1{'\u00A0'}{'\u00A0'}<img src={Add} alt='delete-button' className='delete' onClick={handleClickAdd}/></td>
               <td className='table-number'> $ 1000</td>
+              <td className='table-number'><img src={Delete} alt='delete-button' className='delete' onClick={handleClickDelete}/></td>
             </tr>
             <tr key='body3'>
               <td className='table-body'> Producto 3</td>
-              <td className='table-body'> </td>
-              <td className='table-body'> </td>
+              <td className='table-body'> <img src={Remove} alt='delete-button' className='delete' onClick={handleClickRemove}/>{'\u00A0'}{'\u00A0'}2{'\u00A0'}{'\u00A0'}<img src={Add} alt='delete-button' className='delete' onClick={handleClickAdd}/></td>
               <td className='table-number'> $ 500</td>
+              <td className='table-number'><img src={Delete} alt='delete-button' className='delete' onClick={handleClickDelete}/></td>
             </tr>
             <tr key='body4'>
               <td className='table-body'> Producto 4</td> 
-              <td className='table-body'> </td>
-              <td className='table-body'> </td>
+              <td className='table-body'> <img src={Remove} alt='delete-button' className='delete' onClick={handleClickRemove}/>{'\u00A0'}{'\u00A0'}1{'\u00A0'}{'\u00A0'}<img src={Add} alt='delete-button' className='delete' onClick={handleClickAdd}/></td>
               <td className='table-number'> $ 2000</td>
+              <td className='table-number'><img src={Delete} alt='delete-button' className='delete' onClick={handleClickDelete}/></td>
             </tr>
           </tbody>
           <tfoot>
             <tr key='foot' className="table-footer">
               <td className='table-end'> Total : </td>
               <td className='table-body'> </td>
+              <td className='table-number'>$ 4000</td>
               <td className='table-body'> </td>
-              <td className='table-number'> $ 4000</td>
             </tr>
           </tfoot>
         </table>
