@@ -73,7 +73,7 @@ export default function Menu() {
             {breakfastProducts.map(product => (
               <div key={product.id} className='product'> 
                 <div className='image-content'><img src={product.image} alt={product.name} className='image' onClick={handleClickProduct}/></div>
-                <div className='text-content'>
+                <div className='text-content'onClick={handleClickProduct}>
                   <div className='product-name'>{product.name}</div>
                   <div className='product-price'>${product.price}</div>
                 </div>
@@ -86,9 +86,9 @@ export default function Menu() {
             {lunchProducts.map(product => (
               <div key={product.id} className='product'> 
                 <div className='image-content'><img src={product.image} alt={product.name} className='image' onClick={handleClickProduct}/></div>
-                <div className='text-content' >
-                  <div className='product-name' onClick={handleClickProduct}>{product.name}</div>
-                  <div className='product-price' onClick={handleClickProduct}>${product.price}</div>
+                <div className='text-content' onClick={handleClickProduct}>
+                  <div className='product-name'>{product.name}</div>
+                  <div className='product-price'>${product.price}</div>
                 </div>
               </div>
             ))}
@@ -107,25 +107,25 @@ export default function Menu() {
             </tr>
           </thead>
           <tbody>
-            <tr key='body'>
+            <tr key='body1'>
               <td className='table-body'> Producto 1</td>
               <td className='table-body'> </td>
               <td className='table-body'> </td>
               <td className='table-number'> $ 500</td>
             </tr>
-            <tr key='body'>
+            <tr key='body2'>
               <td className='table-body'> Producto 2</td>
               <td className='table-body'> </td>
               <td className='table-body'> </td>
               <td className='table-number'> $ 1000</td>
             </tr>
-            <tr key='body'>
+            <tr key='body3'>
               <td className='table-body'> Producto 3</td>
               <td className='table-body'> </td>
               <td className='table-body'> </td>
               <td className='table-number'> $ 500</td>
             </tr>
-            <tr key='body'>
+            <tr key='body4'>
               <td className='table-body'> Producto 4</td> 
               <td className='table-body'> </td>
               <td className='table-body'> </td>
