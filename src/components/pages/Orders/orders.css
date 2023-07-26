@@ -58,3 +58,11 @@
 .buttonsTable img:hover{
   filter: drop-shadow(0 0 .5em #ffffff);
 }
+
+.yellow{
+  color: yellow;
+}
+
+.green{
+  color: rgb(76, 241, 76);
+}

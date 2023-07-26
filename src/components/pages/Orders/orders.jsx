@@ -54,16 +54,25 @@ export default function Orders() {
 }, [navigate, token, userId]);
 
   const getProductsList = (products) => {
-    return products.map((item) => item.product.name).join(', ');
+    return products.map((item) => `${item.qty} ${item.product.name}`).join(', ');
   };
 
   const getTotalOrder = (prices) => {
-    return prices.reduce((total, item) => total + item.product.price, 0);
+    return prices.reduce((total, item) => total + item.qty * item.product.price, 0);
   };
 
   const handleMenuClick = () => {
     setShowOrdersTable(true);
   };
+
+  const getStatusColor = (status) => {
+    const statusColors = {
+      'Entregado' : 'green',
+      'Listo en barra' : 'yellow',
+      'En preparación' : '',
+    }
+    return statusColors[status];
+  }
 
   return (
     <>
@@ -74,7 +83,7 @@ export default function Orders() {
             <table className='orders-table'>
               <thead>
                 <tr>
-                <th className="tableHeader">ID</th>
+                <th className="tableHeader">MESA</th>
                   <th className="tableHeader">CLIENTE</th>
                   <th className="tableHeader">PEDIDO</th>
                   <th className="tableHeader">ESTADO</th>
@@ -87,10 +96,10 @@ export default function Orders() {
               <tbody>
                 {ordersData.map((order) => (
                   <tr key={order.id}>
-                    <td>{order.id}</td>
+                    <td>#{order.table}</td>
                     <td>{order.client}</td>
                     <td>{getProductsList(order.products)}</td>
-                    <td>{order.status}</td>
+                    <td className={getStatusColor(order.status)}>{order.status}</td>
                     <td>${getTotalOrder(order.products)}</td>
                     <td className='buttonsTable'><img src={Edit} className="edit" alt="buttonEdit" /></td>
                     <td className='buttonsTable'><img src={Delete} className="delete" alt="buttonDelete" /></td>
