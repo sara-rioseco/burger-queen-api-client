@@ -99,21 +99,45 @@ export default function Menu() {
         <div className='cart-text'>CLIENTE:</div>
         <div><input className='cart-input' type='text'></input></div>
         <div className='cart-text'>MESA:</div>
-        <div><input className='cart-input' type='number'></input></div>
+        <div><input className='cart-input' type='number' inputMode='numeric'></input></div>
         <table className='cart-table'>
           <thead>
-            <tr key='head'>
-              <th className="tableHeader">CARRITO</th>
+            <tr key='head' className="table-head">
+              <th className="table-title">CARRITO</th>
             </tr>
           </thead>
           <tbody>
             <tr key='body'>
-              <td className='table-body'> Aquí van los productos del carrito </td>
+              <td className='table-body'> Producto 1</td>
+              <td className='table-body'> </td>
+              <td className='table-body'> </td>
+              <td className='table-number'> $ 500</td>
+            </tr>
+            <tr key='body'>
+              <td className='table-body'> Producto 2</td>
+              <td className='table-body'> </td>
+              <td className='table-body'> </td>
+              <td className='table-number'> $ 1000</td>
+            </tr>
+            <tr key='body'>
+              <td className='table-body'> Producto 3</td>
+              <td className='table-body'> </td>
+              <td className='table-body'> </td>
+              <td className='table-number'> $ 500</td>
+            </tr>
+            <tr key='body'>
+              <td className='table-body'> Producto 4</td> 
+              <td className='table-body'> </td>
+              <td className='table-body'> </td>
+              <td className='table-number'> $ 2000</td>
             </tr>
           </tbody>
           <tfoot>
-            <tr key='foot'>
-              <td className='table-footer'> Total : </td>
+            <tr key='foot' className="table-footer">
+              <td className='table-end'> Total : </td>
+              <td className='table-body'> </td>
+              <td className='table-body'> </td>
+              <td className='table-number'> $ 4000</td>
             </tr>
           </tfoot>
         </table>

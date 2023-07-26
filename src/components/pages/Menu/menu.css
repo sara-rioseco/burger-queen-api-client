@@ -91,7 +91,7 @@ body{
   display:flex;
   flex-flow: column nowrap;
   justify-content:flex-start;
-  gap: 16px;;
+  gap: 8px;;
   align-items: center;
 }
 
@@ -105,27 +105,66 @@ body{
 
 .cart-table th,
 .cart-table td {
-  padding: 15px;
+  padding: 10px;
   text-align: left;
 }
 
 .cart-text {
-  padding-top: 40px;
-}
-.table-body{
-  font-family: 'Bebas Nue', sans-serif;
+  width: 360px;
+  padding-top: 20px;
+  font-size: 30px;
+  font-family: 'Bebas neue', sans-serif;
+  font-weight: bold;
+  text-align: left;
 }
 
-.table-footer {
-  border-top: 2px solid white;
-  font-family:'Asap Condensed', sans-serif;
+.cart-input {
+  width: 360px;
+  height: 40px;
+}
+
+.cart-input::-webkit-outer-spin-button,
+.cart-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+          appearance: none;
+
+  margin: 0;
+}
+
+.cart-input {
+  -moz-appearance: textfield;
+       appearance: textfield;
+}
+
+.table-head {
+  border-bottom: 2px solid white;
+  font-family: 'Bebas Neue', sans-serif;
   font-weight: bold;
   font-size: 1.4em;
 }
 
-.orders-table td {
-  font-family: 'Asap Condensed', sans-serif;
-  font-size: 1.1em;
+
+.table-title {
+  text-align: center;
+}
+
+.table-body{
+  font-family: 'Asap condensed', sans-serif;
+  font-weight: normal;
+  font-size: 0.8em;
+}
+td.table-number{
+  font-family: 'Asap condensed', sans-serif;
+  font-weight:bold;
+  font-size: 0.8em;
+  text-align: right;
+}
+
+.table-footer {
+  border-top: 2px solid white;
+  font-family:'Bebas neue', sans-serif;
+  font-weight: bold;
+  font-size: 1.4em;
 }
 
 .logo {
