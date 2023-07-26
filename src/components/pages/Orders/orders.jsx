@@ -58,7 +58,7 @@ export default function Orders() {
   };
 
   const getTotalOrder = (prices) => {
-    return prices.reduce((total, item) => total + item.product.price, 0);
+    return prices.reduce((total, item) => total + item.qty * item.product.price, 0);
   };
 
   const handleMenuClick = () => {
