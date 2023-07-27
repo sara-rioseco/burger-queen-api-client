@@ -111,6 +111,8 @@ export default function Orders() {
         .then((response) => {
           console.log('Response from server delete:', response.data);
           console.log(orderId);
+
+          setOrdersData(prevOrders => prevOrders.filter(order => order.id !== orderId));
         })
         .catch((error) => {
           console.error(error);
