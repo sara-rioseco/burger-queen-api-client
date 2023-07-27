@@ -36,12 +36,8 @@ export default function Orders() {
             'Content-Type': 'application/json',
           },
         }).then((response) => {
-        
-        console.log(response.data);
 
         const filteredOrders = response.data.filter((order) => order.userId === Number(userId));
-
-      console.log(filteredOrders);
 
       setOrdersData(filteredOrders);
     })
@@ -83,10 +79,8 @@ export default function Orders() {
       body: body,
     })
     .then((response) => {
-      console.log('Response from server:', response.data);
-      console.log('response.data');
+      console.log('Response from server status:', response.data);
       console.log(orderId);
-      console.log(response.data);
 
       setOrdersData(prevOrders => {
         const updatedOrders = prevOrders.map(order => {
@@ -105,32 +99,27 @@ export default function Orders() {
 
   const handleDeleteClick = (orderId) => {
     const orderDelete = ordersData.find(order => order.id === orderId);
-    console.log(orderDelete);
+    console.log('123',orderDelete);
+    
+    const body = orderDelete;
+
+    ApiRequest({
+          url: `http://localhost:8080/orders/${orderId}`,
+          method: 'delete',
+          body: body,
+        })
+        .then((response) => {
+          console.log('Response from server delete:', response.data);
+          console.log(orderId);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
     if (!orderDelete) {
       console.error('Orden no encontrada en el estado local, actualiza la página para actualizar la data.');
-      return;
-    }}
-
-  //   const body = {
-  //     "status": "Entregado"
-  //   };
-
-  //   ApiRequest({
-  //     url: `http://localhost:8080/orders/${orderId}`,
-  //     method: 'delete',
-  //     body: body,
-  //   })
-  //   .then((response) => {
-  //     console.log('Response from server:', response.data);
-  //     console.log('response.data');
-  //     console.log(orderId);
-  //     console.log(response.data);
-
-  //   })
-  //   .catch((error) => {
-  //     console.error(error);
-  //   });
-  // };
+    }
+  }
 
   return (
     <>
