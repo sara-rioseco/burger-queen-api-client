@@ -18,7 +18,6 @@ export default function Orders() {
   const token = localStorage.getItem('accessToken');
   const userId = localStorage.getItem('userId');
 
-  const [showOrdersTable, setShowOrdersTable] = useState(false);
   const [ordersData, setOrdersData] = useState([]);
 
   useEffect(() => {
@@ -37,9 +36,7 @@ export default function Orders() {
             'Content-Type': 'application/json',
           },
         }).then((response) => {
-          console.log(response.data);
         
-
         console.log(response.data);
 
         const filteredOrders = response.data.filter((order) => order.userId === Number(userId));
@@ -62,7 +59,8 @@ export default function Orders() {
   };
 
   const handleMenuClick = () => {
-    setShowOrdersTable(true);
+    console.log('hola');
+    navigate('/menu');
   };
 
   const getStatusColor = (status) => {
@@ -74,11 +72,41 @@ export default function Orders() {
     return statusColors[status];
   }
 
+  const handleCheckClick = (orderId) => {
+    const body = {
+      "status": "Entregado"
+    };
+
+    ApiRequest({
+      url: `http://localhost:8080/orders/${orderId}`,
+      method: 'patch',
+      body: body,
+    })
+    .then((response) => {
+      console.log('Response from server:', response.data);
+      console.log('response.data');
+      console.log(orderId);
+      console.log(response.data);
+
+      setOrdersData(prevOrders => {
+        const updatedOrders = prevOrders.map(order => {
+          if (order.id === orderId) {
+            return { ...order, status: "Entregado" };
+          }
+          return order;
+        });
+        return updatedOrders;
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  };
+
   return (
     <>
-      <div className='container'>
+      <div className='containerOrders'>
       <Button label='MENU' onClick={handleMenuClick} classButton='buttonMenu'/>
-        {showOrdersTable && (
           <div className='orders'>
             <table className='orders-table'>
               <thead>
@@ -103,13 +131,12 @@ export default function Orders() {
                     <td>${getTotalOrder(order.products)}</td>
                     <td className='buttonsTable'><img src={Edit} className="edit" alt="buttonEdit" /></td>
                     <td className='buttonsTable'><img src={Delete} className="delete" alt="buttonDelete" /></td>
-                    <td className='buttonsTable'><img src={Check} className="check" alt="buttonCheck" /></td>
+                    <td className='buttonsTable'><img src={Check} className="check" alt="buttonCheck" onClick={() => handleCheckClick(order.id)}/></td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-        )}
         <LogoutButton />
       </div>
     </>
