@@ -103,6 +103,35 @@ export default function Orders() {
     });
   };
 
+  const handleDeleteClick = (orderId) => {
+    const orderDelete = ordersData.find(order => order.id === orderId);
+    console.log(orderDelete);
+    if (!orderDelete) {
+      console.error('Orden no encontrada en el estado local, actualiza la página para actualizar la data.');
+      return;
+    }}
+
+  //   const body = {
+  //     "status": "Entregado"
+  //   };
+
+  //   ApiRequest({
+  //     url: `http://localhost:8080/orders/${orderId}`,
+  //     method: 'delete',
+  //     body: body,
+  //   })
+  //   .then((response) => {
+  //     console.log('Response from server:', response.data);
+  //     console.log('response.data');
+  //     console.log(orderId);
+  //     console.log(response.data);
+
+  //   })
+  //   .catch((error) => {
+  //     console.error(error);
+  //   });
+  // };
+
   return (
     <>
       <div className='containerOrders'>
@@ -130,7 +159,7 @@ export default function Orders() {
                     <td className={getStatusColor(order.status)}>{order.status}</td>
                     <td>${getTotalOrder(order.products)}</td>
                     <td className='buttonsTable'><img src={Edit} className="edit" alt="buttonEdit" /></td>
-                    <td className='buttonsTable'><img src={Delete} className="delete" alt="buttonDelete" /></td>
+                    <td className='buttonsTable'><img src={Delete} className="delete" alt="buttonDelete" onClick={() => handleDeleteClick(order.id)}/></td>
                     <td className='buttonsTable'><img src={Check} className="check" alt="buttonCheck" onClick={() => handleCheckClick(order.id)}/></td>
                   </tr>
                 ))}
