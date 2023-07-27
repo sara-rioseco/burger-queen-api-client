@@ -43,6 +43,13 @@ export default function Orders() {
     })
     .catch((error) => {
       console.error(error);
+      if (error.response.data === 'jwt expired' && error.response.status === 401) {
+        console.error(error);
+        navigate('/login');
+      } else {
+      console.error(error);
+      error && navigate('/error-page');
+      }
     });
 }, [navigate, token, userId]);
 
@@ -94,6 +101,13 @@ export default function Orders() {
     })
     .catch((error) => {
       console.error(error);
+      if (error.response.data === 'jwt expired' && error.response.status === 401) {
+        console.error(error);
+        navigate('/login');
+      } else {
+      console.error(error);
+      error && navigate('/error-page');
+      }
     });
   };
 
@@ -116,6 +130,13 @@ export default function Orders() {
         })
         .catch((error) => {
           console.error(error);
+          if (error.response.data === 'jwt expired' && error.response.status === 401) {
+            console.error(error);
+            navigate('/login');
+          } else {
+          console.error(error);
+          error && navigate('/error-page');
+          }
         });
 
     if (!orderDelete) {
