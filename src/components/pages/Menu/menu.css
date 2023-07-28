@@ -21,11 +21,16 @@ body{
   padding: 2rem;
   text-align: center;
 }
-
-.container {
+.nav-bar {
+  display:flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: flex-end;
+}
+.menu-container {
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
   height: 95%;
 }
 
@@ -149,12 +154,27 @@ td.table-number{
   font-size: 0.8em;
   text-align: right;
 }
+td.table-count {
+  font-family: 'Asap condensed', sans-serif;
+  font-weight: normal;
+  font-size: 1em;
+}
+
+.action-button {
+  height: 20px;
+  align-self: baseline;
+}
 
 .table-footer {
   border-top: 2px solid white;
   font-family:'Bebas neue', sans-serif;
   font-weight: bold;
   font-size: 1.4em;
+}
+
+.action-button {
+height: 20px;
+align-self: baseline;
 }
 
 .logo {

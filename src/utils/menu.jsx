@@ -1,16 +1,80 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
-import { useState } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ApiRequest from '../services/apiRequest.jsx';
 
-export function menuLogic() {
-  // const navigate = useNavigate();
-  // const [menu, setMenu] = useState('breakfast');
+export function MenuLogic() {
+  const navigate = useNavigate();
+  const token = localStorage.getItem('accessToken');
+  const userId = localStorage.getItem('userId');
 
-	const getProductImg = product => (<img src={product.image} alt={product.name}/>)
+  const [showMenu, setShowMenu] = useState(true);
+  const [productsData, setProductsData] = useState([]);
 
+  useEffect(() => {
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+    ApiRequest({
+      url: 'http://localhost:8080/products',
+      method: 'get',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    }).then(response => {
+      const Products = response.data
+      setProductsData(Products);
+    }).catch((error) => {
+      console.error(error);
+    });
+  }, [navigate, token, userId]);
+
+  const breakfastProducts = productsData.filter(product => product.type === 'Desayuno');
+  const lunchProducts = productsData.filter(product => product.type === 'Almuerzo');
+
+  const handleClickOrders = () => {
+    navigate('/orders');
+  };
+
+  const checkMenuState = () => {
+    showMenu && setShowMenu(false)
+    !showMenu && setShowMenu(true)
+  }
+
+  const handleClickProduct = () => {
+    console.log('Agregaste un producto al carrito')
+  };
+  
+  const handleClickAdd = () => {
+    console.log('Agregaste una unidad del producto')
+  };
+
+  const handleClickRemove = () => {
+    console.log('Eliminaste una unidad del producto')
+  };
+
+  const handleClickDelete = () => {
+    console.log('Eliminaste un producto del carrito')
+  };
+
+  const handleClickKitchen = () => {
+    console.log('Has enviado la orden a cocina')
+  };
   return {
-    getProductImg,
+    navigate,
+    token,
+    userId,
+    showMenu,
+    productsData,
+    breakfastProducts,
+    lunchProducts,
+    handleClickOrders,
+    checkMenuState,
+    handleClickProduct,
+    handleClickAdd,
+    handleClickRemove,
+    handleClickDelete,
+    handleClickKitchen
   }
 }
