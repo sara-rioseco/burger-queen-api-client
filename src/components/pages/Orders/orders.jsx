@@ -20,7 +20,8 @@ export default function Orders() {
   const userId = localStorage.getItem('userId');
 
   const [ordersData, setOrdersData] = useState([]);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpenDelete, setModalOpenDelete] = useState(false);
+  const [modalOrderId, setModalOrderId] = useState(null);
 
   useEffect(() => {
 
@@ -129,7 +130,7 @@ export default function Orders() {
           console.log(orderId);
 
           setOrdersData(prevOrders => prevOrders.filter(order => order.id !== orderId));
-          setModalOpen(false);
+          setModalOpenDelete(false);
         })
         .catch((error) => {
           console.error(error);
@@ -143,12 +144,14 @@ export default function Orders() {
         });
   }
 
-  const handleOpenModal = (orderId) => {
-    setModalOpen(true);
+  const handleOpenModalDelete = (orderId) => {
+    setModalOrderId(orderId); // Establecer el orderId al hacer clic en el botón de eliminar
+    setModalOpenDelete(true); // Abrir la modal
   }
 
-  const handleCloseModal = () => {
-    setModalOpen(false);
+  const handleCloseModal = (orderId) => {
+    setModalOrderId(null); // Limpiar el orderId al cerrar la modal
+    setModalOpenDelete(false); // Cerrar la modal
   };
 
   return (
@@ -178,18 +181,17 @@ export default function Orders() {
                     <td className={getStatusColor(order.status)}>{order.status}</td>
                     <td>${getTotalOrder(order.products)}</td>
                     <td className='buttonsTable'><img src={Edit} className="edit" alt="buttonEdit"/></td>
-                    <td className='buttonsTable'><img src={Delete} className="delete" alt="buttonDelete" onClick={() => handleOpenModal(order.id)}/></td>
+                    <td className='buttonsTable'><img src={Delete} className="delete" alt="buttonDelete" onClick={() => handleOpenModalDelete(order.id)}/></td>
                     <td className='buttonsTable'><img src={Check} className="check" alt="buttonCheck" onClick={() => handleCheckClick(order.id)}/></td>
-                    <td className='modalDelete'><Modal open={modalOpen} onClose={handleCloseModal}>
-                      <h2 className='textModal'>Estas seguro que deseas eliminar el pedido de la mesa {order.table} ?</h2>
-                      <div>
-                        <Button label='CONFIRMAR' onClick={() => handleConfirmDeleteClick(order.id)} 
-                      classButton='buttonConfirmDelete'></Button>
-                        <Button label='CANCELAR' onClick={() => handleCloseModal()} 
-                      classButton='buttonConfirmDelete'></Button>
-                      </div>
-                      
-                    </Modal></td>
+                    <td className='modalDelete'>
+                      <Modal open={modalOpenDelete && modalOrderId === order.id} onClose={handleCloseModal}>
+                        <h2 className='textModal'>Estas seguro que deseas eliminar el pedido de la mesa {order.table} ?</h2>
+                        <div>
+                          <Button label='CONFIRMAR' onClick={() => handleConfirmDeleteClick(order.id)} classButton='buttonConfirmDelete'></Button>
+                          <Button label='CANCELAR' onClick={handleCloseModal} classButton='buttonConfirmDelete'></Button>
+                        </div>
+                      </Modal>
+                    </td>
                   </tr>
                 ))}
               </tbody>
