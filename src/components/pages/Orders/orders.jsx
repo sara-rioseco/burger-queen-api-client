@@ -8,6 +8,7 @@ import Button from '../../button/button.jsx';
 import LogoutButton from '../../logoutButton/logoutButton.jsx';
 import ApiRequest from '../../../services/apiRequest.jsx';
 import Modal from '../../modal/modal.jsx';
+import Input from '../../input/input.jsx'
 //ASSETS
 import Edit from '../../../assets/Images/editar.png'
 import Delete from '../../../assets/Images/borrar.png'
@@ -21,6 +22,7 @@ export default function Orders() {
 
   const [ordersData, setOrdersData] = useState([]);
   const [modalOpenDelete, setModalOpenDelete] = useState(false);
+  const [modalOpenEdit, setModalOpenEdit] = useState(false);
   const [modalOrderId, setModalOrderId] = useState(null);
 
   useEffect(() => {
@@ -149,11 +151,17 @@ export default function Orders() {
     setModalOpenDelete(true); // Abrir la modal
   }
 
-  const handleCloseModal = (orderId) => {
+  const handleCloseModal = () => {
     setModalOrderId(null); // Limpiar el orderId al cerrar la modal
-    setModalOpenDelete(false); // Cerrar la modal
+    setModalOpenDelete(false);
+    setModalOpenEdit(false); // Cerrar la modal
   };
 
+  const handleOpenEditModal = (orderId) => {
+    setModalOrderId(orderId); // Establecer el orderId al abrir la modal de edición
+    setModalOpenEdit(true); // Abrir la modal de edición
+  }
+  
   return (
     <>
       <div className='containerOrders'>
@@ -180,15 +188,22 @@ export default function Orders() {
                     <td>{getProductsList(order.products)}</td>
                     <td className={getStatusColor(order.status)}>{order.status}</td>
                     <td>${getTotalOrder(order.products)}</td>
-                    <td className='buttonsTable'><img src={Edit} className="edit" alt="buttonEdit"/></td>
+                    <td className='buttonsTable'><img src={Edit} className="edit" alt="buttonEdit" onClick={() => handleOpenEditModal(order.id)}/></td>
                     <td className='buttonsTable'><img src={Delete} className="delete" alt="buttonDelete" onClick={() => handleOpenModalDelete(order.id)}/></td>
                     <td className='buttonsTable'><img src={Check} className="check" alt="buttonCheck" onClick={() => handleCheckClick(order.id)}/></td>
                     <td className='modalDelete'>
                       <Modal open={modalOpenDelete && modalOrderId === order.id} onClose={handleCloseModal}>
                         <h2 className='textModal'>Estas seguro que deseas eliminar el pedido de la mesa {order.table} ?</h2>
                         <div>
-                          <Button label='CONFIRMAR' onClick={() => handleConfirmDeleteClick(order.id)} classButton='buttonConfirmDelete'></Button>
-                          <Button label='CANCELAR' onClick={handleCloseModal} classButton='buttonConfirmDelete'></Button>
+                          <Button label='CONFIRMAR' onClick={() => handleConfirmDeleteClick(order.id)} classButton='buttonsModal'></Button>
+                          <Button label='CANCELAR' onClick={handleCloseModal} classButton='buttonsModal'></Button>
+                        </div>
+                      </Modal>
+                      <Modal open={modalOpenEdit && modalOrderId === order.id} onClose={handleCloseModal}>
+                        <h2 className='textModal'>Estas seguro que deseas editar el pedido de la mesa {order.table} ?</h2>
+                        <div>
+                          <Button label='CONFIRMAR' classButton='buttonsModal'></Button>
+                          <Button label='CANCELAR' onClick={handleCloseModal} classButton='buttonsModal'></Button>
                         </div>
                       </Modal>
                     </td>

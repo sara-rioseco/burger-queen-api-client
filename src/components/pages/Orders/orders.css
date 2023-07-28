@@ -69,14 +69,16 @@
 }
 
 .modalDelete{
-  text-align: center;
+  text-align: center !important;
+  width: 0px;
+  padding: 0px !important;
 }
 
 .textModal{
   font-family: 'Bebas Neue', sans-serif;
 }
 
-.buttonConfirmDelete{
+.buttonsModal{
   margin: 15px;
   font-size: 1.8em;
 }
