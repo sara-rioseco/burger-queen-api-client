@@ -68,6 +68,10 @@
   color: rgb(76, 241, 76);
 }
 
+.modalDelete{
+  text-align: center;
+}
+
 .textModal{
   font-family: 'Bebas Neue', sans-serif;
 }

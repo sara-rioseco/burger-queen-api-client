@@ -180,13 +180,16 @@ export default function Orders() {
                     <td className='buttonsTable'><img src={Edit} className="edit" alt="buttonEdit"/></td>
                     <td className='buttonsTable'><img src={Delete} className="delete" alt="buttonDelete" onClick={() => handleOpenModal(order.id)}/></td>
                     <td className='buttonsTable'><img src={Check} className="check" alt="buttonCheck" onClick={() => handleCheckClick(order.id)}/></td>
-                    <Modal open={modalOpen} onClose={handleCloseModal}>
+                    <td className='modalDelete'><Modal open={modalOpen} onClose={handleCloseModal}>
                       <h2 className='textModal'>Estas seguro que deseas eliminar el pedido de la mesa {order.table} ?</h2>
-                      <Button label='CONFIRMAR' onClick={() => handleConfirmDeleteClick(order.id)} 
+                      <div>
+                        <Button label='CONFIRMAR' onClick={() => handleConfirmDeleteClick(order.id)} 
                       classButton='buttonConfirmDelete'></Button>
-                      <Button label='CANCELAR' onClick={() => handleCloseModal()} 
+                        <Button label='CANCELAR' onClick={() => handleCloseModal()} 
                       classButton='buttonConfirmDelete'></Button>
-                    </Modal>
+                      </div>
+                      
+                    </Modal></td>
                   </tr>
                 ))}
               </tbody>

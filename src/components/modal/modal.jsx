@@ -12,7 +12,7 @@ export default function Modal({ open, onClose, children }) {
         <span className="close-btn" onClick={onClose}>
           &times;
         </span>
-        <div>
+        <div className='contentModal'>
             {children}
         </div>
       </div>
