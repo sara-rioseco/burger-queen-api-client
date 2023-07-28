@@ -161,7 +161,13 @@ export default function Orders() {
     setModalOrderId(orderId); // Establecer el orderId al abrir la modal de edición
     setModalOpenEdit(true); // Abrir la modal de edición
   }
-  
+
+  const handleCloseEditModal = () => {
+    setModalOrderId(null); // Limpiar el orderId al cerrar la modal de edición
+    setModalOpenEdit(false); // Cerrar la modal de edición
+  };
+
+
   return (
     <>
       <div className='containerOrders'>
@@ -200,7 +206,31 @@ export default function Orders() {
                         </div>
                       </Modal>
                       <Modal open={modalOpenEdit && modalOrderId === order.id} onClose={handleCloseModal}>
-                        <h2 className='textModal'>Estas seguro que deseas editar el pedido de la mesa {order.table} ?</h2>
+                        <h2 className='textModal'>Editando pedido de la mesa {order.table}:</h2>
+                        <Input 
+                          type='number' 
+                          placeholder='Escribe aquí'   
+                          label='MESA:' 
+                          classInputLabel='labelsModalEdit'
+                          classInput='inputModalEdit'
+                          value= {order.table}
+                        />
+                        <Input 
+                          type='text' 
+                          placeholder='Escribe aquí'   
+                          label='CLIENTE:' 
+                          classInputLabel='labelsModalEdit'
+                          classInput='inputModalEdit'
+                          value= {order.client}
+                        />
+                        <div className='selectStatus'>
+                          <label>ESTADO DEL PEDIDO:</label>
+                          <select value={order.status} >
+                            <option value='Entregado'>Entregado</option>
+                            <option value='Listo en barra'>Listo en barra</option>
+                            <option value='En preparación'>En preparación</option>
+                          </select>
+                        </div>
                         <div>
                           <Button label='CONFIRMAR' classButton='buttonsModal'></Button>
                           <Button label='CANCELAR' onClick={handleCloseModal} classButton='buttonsModal'></Button>
