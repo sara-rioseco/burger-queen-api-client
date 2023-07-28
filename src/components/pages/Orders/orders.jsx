@@ -5,8 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import './orders.css'
 //COMPONENTES
 import Button from '../../button/button.jsx';
-import LogoutButton from '../../logoutButton/logoutButton';
-import ApiRequest from '../../../services/apiRequest';
+import LogoutButton from '../../logoutButton/logoutButton.jsx';
+import ApiRequest from '../../../services/apiRequest.jsx';
+import Modal from '../../modal/modal.jsx';
 //ASSETS
 import Edit from '../../../assets/Images/editar.png'
 import Delete from '../../../assets/Images/borrar.png'
@@ -19,6 +20,7 @@ export default function Orders() {
   const userId = localStorage.getItem('userId');
 
   const [ordersData, setOrdersData] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
 
@@ -111,7 +113,7 @@ export default function Orders() {
     });
   };
 
-  const handleDeleteClick = (orderId) => {
+  const handleConfirmDeleteClick = (orderId) => {
     const orderDelete = ordersData.find(order => order.id === orderId);
     console.log('123',orderDelete);
     
@@ -127,6 +129,7 @@ export default function Orders() {
           console.log(orderId);
 
           setOrdersData(prevOrders => prevOrders.filter(order => order.id !== orderId));
+          setModalOpen(false);
         })
         .catch((error) => {
           console.error(error);
@@ -138,11 +141,15 @@ export default function Orders() {
           error && navigate('/error-page');
           }
         });
-
-    if (!orderDelete) {
-      console.error('Orden no encontrada en el estado local, actualiza la página para actualizar la data.');
-    }
   }
+
+  const handleOpenModal = (orderId) => {
+    setModalOpen(true);
+  }
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
 
   return (
     <>
@@ -170,9 +177,16 @@ export default function Orders() {
                     <td>{getProductsList(order.products)}</td>
                     <td className={getStatusColor(order.status)}>{order.status}</td>
                     <td>${getTotalOrder(order.products)}</td>
-                    <td className='buttonsTable'><img src={Edit} className="edit" alt="buttonEdit" /></td>
-                    <td className='buttonsTable'><img src={Delete} className="delete" alt="buttonDelete" onClick={() => handleDeleteClick(order.id)}/></td>
+                    <td className='buttonsTable'><img src={Edit} className="edit" alt="buttonEdit"/></td>
+                    <td className='buttonsTable'><img src={Delete} className="delete" alt="buttonDelete" onClick={() => handleOpenModal(order.id)}/></td>
                     <td className='buttonsTable'><img src={Check} className="check" alt="buttonCheck" onClick={() => handleCheckClick(order.id)}/></td>
+                    <Modal open={modalOpen} onClose={handleCloseModal}>
+                      <h2 className='textModal'>Estas seguro que deseas eliminar el pedido de la mesa {order.table} ?</h2>
+                      <Button label='CONFIRMAR' onClick={() => handleConfirmDeleteClick(order.id)} 
+                      classButton='buttonConfirmDelete'></Button>
+                      <Button label='CANCELAR' onClick={() => handleCloseModal()} 
+                      classButton='buttonConfirmDelete'></Button>
+                    </Modal>
                   </tr>
                 ))}
               </tbody>
