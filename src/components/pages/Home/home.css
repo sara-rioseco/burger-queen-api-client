@@ -47,7 +47,7 @@ footer {
   left:0px;
   bottom:0px;
   width: 100%;
-  background-color: rgba(217, 217, 217, 0.71);
+  background-color: rgba(217, 217, 217, 0.795);
   text-align: center;
   height: 30px;
   padding: 0px;
@@ -56,6 +56,7 @@ footer p {
   font-size: smaller;
   margin: 8px;
   font-family: 'Asap Condensed', sans-serif;
+  color: black;
 }
 
 .home{

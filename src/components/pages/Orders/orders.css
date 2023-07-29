@@ -1,29 +1,31 @@
 @import url('https://fonts.cdnfonts.com/css/bebas-neue');
 @import url('https://fonts.cdnfonts.com/css/asap-condensed');
 
-.containerOrders{
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      height: 95%;
-    }
+.containerOrders {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 95%;
+}
 
 .buttonMenu {
   margin: 15px;
   font-size: 2em;
 }
 
-.orders{
+.orders {
   background-color: black;
   padding: 20px;
   height: 80%;
   overflow-y: scroll;
 }
 
-.orders-table{
+.orders-table {
   color: white;
-  width: 100%; /* Ajusta el ancho de la tabla según tus necesidades */
-  border-collapse: collapse; /* Para que los bordes de las celdas se combinen */
+  width: 100%;
+  /* Ajusta el ancho de la tabla según tus necesidades */
+  border-collapse: collapse;
+  /* Para que los bordes de las celdas se combinen */
 }
 
 .orders-table th,
@@ -44,39 +46,96 @@
   font-size: 1.1em;
 }
 
-.edit, .delete, .check{
+.edit,
+.delete,
+.check {
   width: 25px;
 }
 
-.buttonsTable{
+.buttonsTable {
   text-align: center !important;
 }
 
-.buttonsTable img{
+.buttonsTable img {
   cursor: pointer;
 }
-.buttonsTable img:hover{
+
+.buttonsTable img:hover {
   filter: drop-shadow(0 0 .5em #ffffff);
-  transform: scale(1.3); 
+  transform: scale(1.3);
 }
 
-.yellow{
+.yellow {
   color: yellow;
 }
 
-.green{
+.green {
   color: rgb(76, 241, 76);
 }
 
-.modalDelete{
+.modalDelete {
+  text-align: center !important;
+  width: 0px;
+  padding: 0px !important;
+}
+
+.textModal {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: xx-large;
+}
+
+.infoOrderModal {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  gap:10px;
+  font-size: larger;
+  padding: 0px 0px 15px 0px;
+}
+
+.inputModalEdit{
+  font-size: large;
+}
+
+.buttonsModal {
+  margin: 15px;
+  font-size: 1.8em;
+}
+
+.infoClientModal {
+  display: flex;
+  margin: 5px;
+  width: 100%;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.bebas{
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: bold;
+  text-align: start;
+    margin-left: 5px;
+    margin-bottom: -13px;
+}
+
+.productsOrdersModal {
+  display: flex;
+  margin: 5px;
+  width: 100%;
+  gap: 5px;
+  font-family: 'Asap Condensed', sans-serif;
+}
+
+.cantidadModal{
+  width: 30px;
   text-align: center;
 }
 
-.textModal{
+.selectStatusModal {
+  display: flex;
+  margin: 5px;
+  width: 100%;
+  gap: 5px;
   font-family: 'Bebas Neue', sans-serif;
-}
-
-.buttonConfirmDelete{
-  margin: 15px;
-  font-size: 1.8em;
+  font-weight: bold;
 }
