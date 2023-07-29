@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
+
 // CSS
 import './menu.css'
 // COMPONENTS
@@ -37,6 +38,10 @@ export default function Menu() {
         <nav className='nav-bar'>
         <Button label='PEDIDOS' onClick={handleClickOrders} classButton='buttonMenu'/> 
         <Switch label="menu" onChange={checkMenuState} />
+        <div className="btn-group" role="group" aria-label="Basic example">
+  <button type="button" className="btn btn-primary">DESAYUNO</button>
+  <button type="button" className="btn btn-primary">ALMUERZO Y CENA</button>
+</div>
         </nav>
         {showMenu && (
           <div className='products-grid'>
