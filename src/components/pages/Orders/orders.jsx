@@ -168,7 +168,12 @@ export default function Orders() {
     setEditModalTable(order.table);
     setEditModalClient(order.client);
     setEditModalStatus(order.status);
-    setEditModalProducts(order.products.map(product => ({ productId: product.product.id, name: product.product.name, qty: product.qty })));
+    setEditModalProducts(order.products.map(product => ({
+      productId: product.product.id,
+      name: product.product.name,
+      qty: product.qty
+    }))
+    );
   }
 
   const handleEditModalProductQtyChange = (productId, event) => {
@@ -179,6 +184,29 @@ export default function Orders() {
       return product;
     });
     setEditModalProducts(updatedProducts);
+  };
+
+  const getUpdatedOrder = () => {
+    const updatedOrder = {
+      client: editModalClient,
+      table: editModalTable,
+      products: editModalProducts.map((product) => ({
+        qty: product.qty,
+        product: {
+          id: product.productId,
+          name: product.name,
+        },
+      })),
+      status: editModalStatus,
+    };
+    return updatedOrder;
+  };
+
+  const handleConfirmEditClick = () => {
+    const orderId = modalOrderId;
+    const updatedOrder = getUpdatedOrder();
+    console.log(orderId);
+    console.log(updatedOrder);
   };
 
   return (
@@ -267,7 +295,7 @@ export default function Orders() {
                             label='MESA:'
                             classInputLabel='labelsModalEdit'
                             classInput='inputModalEdit cantidadModal'
-                            value={order.table}
+                            value={editModalTable}
                             onChange={(event) => setEditModalTable(event.target.value)}
                           />
                           <Input
@@ -276,7 +304,7 @@ export default function Orders() {
                             label='CLIENTE:'
                             classInputLabel='labelsModalEdit'
                             classInput='inputModalEdit'
-                            value={order.client}
+                            value={editModalClient}
                             onChange={(event) => setEditModalClient(event.target.value)}
                           />
                         </div>
@@ -300,7 +328,7 @@ export default function Orders() {
                         ))}
                         <div className='selectStatusModal'>
                           <label>ESTADO: </label>
-                          <select value={order.status} onChange={(event) => setEditModalStatus(event.target.value)}>
+                          <select value={editModalStatus} onChange={(event) => setEditModalStatus(event.target.value)} className='boxSelect'>
                             <option value='Entregado'>Entregado</option>
                             <option value='Listo en barra'>Listo en barra</option>
                             <option value='En preparación'>En preparación</option>
@@ -310,7 +338,9 @@ export default function Orders() {
                       <div>
                         <Button
                           label='CONFIRMAR'
-                          classButton='buttonsModal'>
+                          classButton='buttonsModal'
+                          onClick={handleConfirmEditClick}
+                        >
                         </Button>
                         <Button
                           label='CANCELAR'

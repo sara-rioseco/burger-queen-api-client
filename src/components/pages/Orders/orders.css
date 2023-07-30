@@ -89,12 +89,13 @@
   flex-direction: column;
   width: 90%;
   gap:10px;
-  font-size: larger;
+  font-size: x-large;
   padding: 0px 0px 15px 0px;
 }
 
 .inputModalEdit{
   font-size: large;
+  padding-left: 3%;
 }
 
 .buttonsModal {
@@ -138,4 +139,22 @@
   gap: 5px;
   font-family: 'Bebas Neue', sans-serif;
   font-weight: bold;
+}
+
+.boxSelect {
+  background-color: #D9D9D9;
+  color: black;
+  padding: 1%;
+  font-size: large;
+  border-radius: 5px;
+  font-family: 'Asap Condensed', sans-serif;
+}
+
+.boxSelect option {
+  background-color: #D9D9D9;
+  color: black;
+  padding: 1%;
+  font-size: .8em;
+  border-radius: 5px;
+  font-family: 'Asap Condensed', sans-serif;
 }
