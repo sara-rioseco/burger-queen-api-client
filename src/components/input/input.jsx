@@ -23,7 +23,7 @@ export default function Input({ type, placeholder, value, onChange, label, class
 Input.propTypes = {
     type: PropTypes.string.isRequired,
     placeholder: PropTypes.string,
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     onChange: PropTypes.func,
     label: PropTypes.string,
     classInputLabel: PropTypes.string,

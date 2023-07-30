@@ -28,9 +28,9 @@ export default function Orders() {
   const [editModalClient, setEditModalClient] = useState('');
   const [editModalStatus, setEditModalStatus] = useState(null);
   const [editModalProducts, setEditModalProducts] = useState([]);
+  const [productsData, setProductsData] = useState([]);
 
   useEffect(() => {
-
     if (!token) {
       // Redirigir al usuario al inicio de sesión si no hay un accessToken
       navigate('/login');
@@ -40,16 +40,34 @@ export default function Orders() {
     ApiRequest({
       url: 'http://localhost:8080/orders',
       method: 'get',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    }).then((response) => {
-
-      const filteredOrders = response.data.filter((order) => order.userId === Number(userId));
-
-      setOrdersData(filteredOrders);
     })
+      .then((response) => {
+        console.log('Respuesta del servidor para todos los pedidos:', response.data);
+        const filteredOrders = response.data.filter(
+          (order) => order.userId === Number(userId)
+        );
+
+        setOrdersData(filteredOrders);
+      })
+      .catch((error) => {
+        console.error(error);
+        if (error.response.data === 'jwt expired' && error.response.status === 401) {
+          console.error(error);
+          navigate('/login');
+        } else {
+          console.error(error);
+          error && navigate('/error-page');
+        }
+      });
+
+    ApiRequest({
+      url: 'http://localhost:8080/products',
+      method: 'get',
+    })
+      .then((response) => {
+        setProductsData(response.data);
+        console.log('Respuesta del servidor para los productos:', response.data);
+      })
       .catch((error) => {
         console.error(error);
         if (error.response.data === 'jwt expired' && error.response.status === 401) {
@@ -67,7 +85,10 @@ export default function Orders() {
   };
 
   const getTotalOrder = (prices) => {
-    return prices.reduce((total, item) => total + item.qty * item.product.price, 0);
+    return prices.reduce(
+      (total, item) => total + item.qty * item.product.price,
+      0
+    );
   };
 
   const handleMenuClick = () => {
@@ -122,7 +143,7 @@ export default function Orders() {
 
   const handleConfirmDeleteClick = (orderId) => {
     const orderDelete = ordersData.find(order => order.id === orderId);
-    console.log('123', orderDelete);
+    console.log('delete order', orderDelete);
 
     const body = orderDelete;
 
@@ -168,7 +189,13 @@ export default function Orders() {
     setEditModalTable(order.table);
     setEditModalClient(order.client);
     setEditModalStatus(order.status);
-    setEditModalProducts(order.products.map(product => ({ productId: product.product.id, name: product.product.name, qty: product.qty })));
+    setEditModalProducts(order.products.map(product => ({
+      qty: product.qty,
+      productId: product.product.id,
+      name: product.product.name,
+      price: product.product.price,
+    }))
+    );
   }
 
   const handleEditModalProductQtyChange = (productId, event) => {
@@ -179,6 +206,52 @@ export default function Orders() {
       return product;
     });
     setEditModalProducts(updatedProducts);
+  };
+
+  const getUpdatedOrder = () => {
+    const updatedOrder = {
+      client: editModalClient,
+      table: editModalTable,
+      products: editModalProducts.map((product) => ({
+        qty: product.qty,
+        product: {
+          id: product.productId,
+          name: product.name,
+          price: product.price,
+        },
+      })),
+      status: editModalStatus,
+    };
+    return updatedOrder;
+  };
+
+  const handleConfirmEditClick = () => {
+    const orderId = modalOrderId;
+    const updatedOrder = getUpdatedOrder();
+    console.log(orderId, '1');
+    console.log(updatedOrder, '2');
+  };
+
+  const getUpdatedTotalOrder = () => {
+    return editModalProducts.reduce(
+      (total, product) => total + product.qty * product.price,
+      0
+    );
+  };
+
+  const handleAddProductToOrder = (productId) => {
+    const productToAdd = productsData.find((product) => product.id === Number(productId));
+    if (productToAdd) {
+      setEditModalProducts((prevProducts) => [
+        ...prevProducts,
+        {
+          productId: productToAdd.id,
+          name: productToAdd.name,
+          qty: 1,
+          price: productToAdd.price,
+        },
+      ]);
+    }
   };
 
   return (
@@ -235,11 +308,14 @@ export default function Orders() {
                       onClick={() => handleOpenModalDelete(order.id)} />
                   </td>
                   <td className='buttonsTable'>
-                    <img
-                      src={Check}
-                      className="check"
-                      alt="buttonCheck"
-                      onClick={() => handleCheckClick(order.id)} />
+                    {order.status !== 'Entregado' && (
+                      <img
+                        src={Check}
+                        className="check"
+                        alt="buttonCheck"
+                        onClick={() => handleCheckClick(order.id)}
+                      />
+                    )}
                   </td>
                   <td className='modalDelete'>
                     <Modal open={modalOpenDelete && modalOrderId === order.id} onClose={handleCloseModal}>
@@ -264,53 +340,82 @@ export default function Orders() {
                           <Input
                             type='number'
                             placeholder='Escribe aquí'
-                            label='MESA:'
+                            label='MESA :'
                             classInputLabel='labelsModalEdit'
                             classInput='inputModalEdit cantidadModal'
-                            value={order.table}
+                            value={editModalTable}
                             onChange={(event) => setEditModalTable(event.target.value)}
                           />
                           <Input
                             type='text'
                             placeholder='Escribe aquí'
-                            label='CLIENTE:'
+                            label='CLIENTE :'
                             classInputLabel='labelsModalEdit'
                             classInput='inputModalEdit'
-                            value={order.client}
+                            value={editModalClient}
                             onChange={(event) => setEditModalClient(event.target.value)}
                           />
                         </div>
-                        <label className='bebas'>PEDIDO:</label>
-                        {editModalProducts.map((product) => (
-                          <div key={product.productId} className='productsOrdersModal'>
-                            <Input
-                              key={product.productId}
-                              type='number'
-                              placeholder='Escribe aquí'
-                              label={''}
-                              name={`productQty_${product.productId}`}
-                              classInputLabel='labelsModalEdit'
-                              classInput='inputModalEdit cantidadModal'
-                              value={product.qty}
-                              onChange={(event) => handleEditModalProductQtyChange(product.productId, event)}
-                            />
-                            <label>{product.name}</label>
-                          </div>
-
-                        ))}
                         <div className='selectStatusModal'>
-                          <label>ESTADO: </label>
-                          <select value={order.status} onChange={(event) => setEditModalStatus(event.target.value)}>
+                          <label className='bebas'>ESTADO : </label>
+                          <select value={editModalStatus} onChange={(event) => setEditModalStatus(event.target.value)} className='boxSelect'>
                             <option value='Entregado'>Entregado</option>
                             <option value='Listo en barra'>Listo en barra</option>
                             <option value='En preparación'>En preparación</option>
                           </select>
                         </div>
+                        <div className='selectProductModal'>
+                          <label className='bebas'>AÑADIR PRODUCTO :</label>
+                          <select value={''} onChange={(e) => handleAddProductToOrder(e.target.value)} className='boxSelect'>
+                            <option value='' disabled>Seleccione un producto</option>
+                            {productsData.map((product) => {
+                              const isProductAlreadyAdded = editModalProducts.some(
+                                (addedProduct) => addedProduct.productId === product.id
+                              );
+
+                              if (!isProductAlreadyAdded) {
+                                return (
+                                  <option key={product.id} value={product.id}>
+                                    {product.name} - ${product.price}
+                                  </option>
+                                );
+                              }
+
+                              return null;
+                            })}
+                          </select>
+                        </div>
+                        <label className='bebas'>PEDIDO :</label>
+                        <div className='lineModal'></div>
+                        <div className='allProductsOrdersModal'>
+                          {editModalProducts.map((product) => (
+                            <div key={product.productId} className='productOrdersModal'>
+                              <Input
+                                key={product.productId}
+                                type='number'
+                                placeholder='Escribe aquí'
+                                label={''}
+                                name={`productQty_${product.productId}`}
+                                classInputLabel='labelsModalEdit'
+                                classInput='inputModalEdit cantidadModal'
+                                value={product.qty}
+                                onChange={(event) => handleEditModalProductQtyChange(product.productId, event)}
+                              />
+                              <p className='productPriceModal'><label>{product.name}</label><label>${product.price}</label></p>
+                            </div>
+                          ))}
+                        </div>
+                        <div className='lineModal'></div>
+                        <div className='totalOrderModal'>
+                          <label className='bebas'> TOTAL :</label> <label>${getUpdatedTotalOrder()}</label>
+                        </div>
                       </div>
                       <div>
                         <Button
                           label='CONFIRMAR'
-                          classButton='buttonsModal'>
+                          classButton='buttonsModal'
+                          onClick={handleConfirmEditClick}
+                        >
                         </Button>
                         <Button
                           label='CANCELAR'
