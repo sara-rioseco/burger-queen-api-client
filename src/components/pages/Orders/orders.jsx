@@ -242,16 +242,16 @@ export default function Orders() {
   const handleAddProductToOrder = (productId) => {
     const productToAdd = productsData.find((product) => product.id === Number(productId));
     if (productToAdd) {
-      setEditModalProducts((prevProducts) => [
-        ...prevProducts,
-        {
-          productId: productToAdd.id,
-          name: productToAdd.name,
-          qty: 1,
-          price: productToAdd.price,
-        },
-      ]);
-    }
+        setEditModalProducts((prevProducts) => [
+          ...prevProducts,
+          {
+            productId: productToAdd.id,
+            name: productToAdd.name,
+            qty: 1,
+            price: productToAdd.price,
+          },
+        ]);
+      }
   };
 
   return (
@@ -365,11 +365,21 @@ export default function Orders() {
                           <label className='bebas'>AÑADIR PRODUCTO :</label>
                           <select value={''} onChange={(e) => handleAddProductToOrder(e.target.value)} className='boxSelect'>
                             <option value='' disabled>Seleccione un producto</option>
-                            {productsData.map((product) => (
-                              <option key={product.id} value={product.id}>
-                                {product.name} - ${product.price}
-                              </option>
-                            ))}
+                            {productsData.map((product) => {
+                              const isProductAlreadyAdded = editModalProducts.some(
+                                (addedProduct) => addedProduct.productId === product.id
+                              );
+
+                              if (!isProductAlreadyAdded) {
+                                return (
+                                  <option key={product.id} value={product.id}>
+                                    {product.name} - ${product.price}
+                                  </option>
+                                );
+                              }
+
+                              return null;
+                            })}
                           </select>
                         </div>
                         <label className='bebas'>PEDIDO :</label>
