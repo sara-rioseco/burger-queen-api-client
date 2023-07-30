@@ -242,16 +242,16 @@ export default function Orders() {
   const handleAddProductToOrder = (productId) => {
     const productToAdd = productsData.find((product) => product.id === Number(productId));
     if (productToAdd) {
-        setEditModalProducts((prevProducts) => [
-          ...prevProducts,
-          {
-            productId: productToAdd.id,
-            name: productToAdd.name,
-            qty: 1,
-            price: productToAdd.price,
-          },
-        ]);
-      }
+      setEditModalProducts((prevProducts) => [
+        ...prevProducts,
+        {
+          productId: productToAdd.id,
+          name: productToAdd.name,
+          qty: 1,
+          price: productToAdd.price,
+        },
+      ]);
+    }
   };
 
   return (
@@ -308,11 +308,14 @@ export default function Orders() {
                       onClick={() => handleOpenModalDelete(order.id)} />
                   </td>
                   <td className='buttonsTable'>
-                    <img
-                      src={Check}
-                      className="check"
-                      alt="buttonCheck"
-                      onClick={() => handleCheckClick(order.id)} />
+                    {order.status !== 'Entregado' && (
+                      <img
+                        src={Check}
+                        className="check"
+                        alt="buttonCheck"
+                        onClick={() => handleCheckClick(order.id)}
+                      />
+                    )}
                   </td>
                   <td className='modalDelete'>
                     <Modal open={modalOpenDelete && modalOrderId === order.id} onClose={handleCloseModal}>
