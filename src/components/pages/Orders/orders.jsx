@@ -28,9 +28,9 @@ export default function Orders() {
   const [editModalClient, setEditModalClient] = useState('');
   const [editModalStatus, setEditModalStatus] = useState(null);
   const [editModalProducts, setEditModalProducts] = useState([]);
+  const [productsData, setProductsData] = useState([]);
 
   useEffect(() => {
-
     if (!token) {
       // Redirigir al usuario al inicio de sesión si no hay un accessToken
       navigate('/login');
@@ -40,16 +40,34 @@ export default function Orders() {
     ApiRequest({
       url: 'http://localhost:8080/orders',
       method: 'get',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    }).then((response) => {
-
-      const filteredOrders = response.data.filter((order) => order.userId === Number(userId));
-
-      setOrdersData(filteredOrders);
     })
+      .then((response) => {
+        console.log('Respuesta del servidor para todos los pedidos:', response.data);
+        const filteredOrders = response.data.filter(
+          (order) => order.userId === Number(userId)
+        );
+
+        setOrdersData(filteredOrders);
+      })
+      .catch((error) => {
+        console.error(error);
+        if (error.response.data === 'jwt expired' && error.response.status === 401) {
+          console.error(error);
+          navigate('/login');
+        } else {
+          console.error(error);
+          error && navigate('/error-page');
+        }
+      });
+
+    ApiRequest({
+      url: 'http://localhost:8080/products',
+      method: 'get',
+    })
+      .then((response) => {
+        setProductsData(response.data);
+        console.log('Respuesta del servidor para los productos:', response.data);
+      })
       .catch((error) => {
         console.error(error);
         if (error.response.data === 'jwt expired' && error.response.status === 401) {
@@ -125,7 +143,7 @@ export default function Orders() {
 
   const handleConfirmDeleteClick = (orderId) => {
     const orderDelete = ordersData.find(order => order.id === orderId);
-    console.log('123', orderDelete);
+    console.log('delete order', orderDelete);
 
     const body = orderDelete;
 
@@ -219,6 +237,21 @@ export default function Orders() {
       (total, product) => total + product.qty * product.price,
       0
     );
+  };
+
+  const handleAddProductToOrder = (productId) => {
+    const productToAdd = productsData.find((product) => product.id === Number(productId));
+    if (productToAdd) {
+      setEditModalProducts((prevProducts) => [
+        ...prevProducts,
+        {
+          productId: productToAdd.id,
+          name: productToAdd.name,
+          qty: 1,
+          price: productToAdd.price,
+        },
+      ]);
+    }
   };
 
   return (
@@ -326,6 +359,17 @@ export default function Orders() {
                             <option value='Entregado'>Entregado</option>
                             <option value='Listo en barra'>Listo en barra</option>
                             <option value='En preparación'>En preparación</option>
+                          </select>
+                        </div>
+                        <div className='selectProductModal'>
+                          <label className='bebas'>AÑADIR PRODUCTO :</label>
+                          <select value={''} onChange={(e) => handleAddProductToOrder(e.target.value)} className='boxSelect'>
+                            <option value='' disabled>Seleccione un producto</option>
+                            {productsData.map((product) => (
+                              <option key={product.id} value={product.id}>
+                                {product.name} - ${product.price}
+                              </option>
+                            ))}
                           </select>
                         </div>
                         <label className='bebas'>PEDIDO :</label>

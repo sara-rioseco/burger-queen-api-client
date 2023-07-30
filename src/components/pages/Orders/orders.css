@@ -123,6 +123,11 @@
   font-size: 1.2em;
 }
 
+.selectPeoductModal {
+  display: flex;
+  flex-direction: column;
+}
+
 .productOrdersModal {
   display: flex;
   margin-left: 8px;
@@ -144,12 +149,12 @@
   text-align: center;
 }
 
-.lineModal{
+.lineModal {
   background-color: white;
-    height: 1px;
-    margin-top: -5px;
-    width: 105%;
-  }
+  height: 1px;
+  margin-top: -5px;
+  width: 105%;
+}
 
 .totalOrderModal {
   display: flex;

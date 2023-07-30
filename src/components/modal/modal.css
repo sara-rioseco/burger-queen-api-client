@@ -17,6 +17,8 @@
     position: relative;
     color: white;
     width: max-content;
+    max-height: 80%;
+    overflow-x: scroll;
   }
   
   .close-btn {
