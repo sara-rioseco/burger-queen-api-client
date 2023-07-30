@@ -88,14 +88,18 @@
   display: flex;
   flex-direction: column;
   width: 90%;
-  gap:10px;
-  font-size: x-large;
+  gap: 10px;
+  font-size: 1.1em;
   padding: 0px 0px 15px 0px;
 }
 
-.inputModalEdit{
-  font-size: large;
+.inputModalEdit {
+  font-size: 1em;
   padding-left: 3%;
+}
+
+.labelsModalEdit {
+  font-size: 1.2em;
 }
 
 .buttonsModal {
@@ -111,32 +115,51 @@
   gap: 20px;
 }
 
-.bebas{
+.bebas {
   font-family: 'Bebas Neue', sans-serif;
   font-weight: bold;
   text-align: start;
-    margin-left: 5px;
-    margin-bottom: -13px;
+  margin-left: 5px;
+  font-size: 1.2em;
 }
 
-.productsOrdersModal {
+.productOrdersModal {
   display: flex;
-  margin: 5px;
+  margin-left: 8px;
   width: 100%;
-  gap: 5px;
+  gap: 10px;
   font-family: 'Asap Condensed', sans-serif;
+  align-items: center;
 }
 
-.cantidadModal{
+.productPriceModal {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.cantidadModal {
   width: 30px;
   text-align: center;
 }
 
+.lineModal{
+  background-color: white;
+    height: 1px;
+    margin-top: -5px;
+    width: 105%;
+  }
+
+.totalOrderModal {
+  display: flex;
+  justify-content: space-between;
+}
+
 .selectStatusModal {
   display: flex;
-  margin: 5px;
   width: 100%;
-  gap: 5px;
+  gap: 10px;
   font-family: 'Bebas Neue', sans-serif;
   font-weight: bold;
 }

@@ -16,6 +16,7 @@
     border-radius: 8px;
     position: relative;
     color: white;
+    width: max-content;
   }
   
   .close-btn {
@@ -34,5 +35,6 @@
     display: grid;
     justify-content: center;
     justify-items: center;
+    width: max-content;
   }
   

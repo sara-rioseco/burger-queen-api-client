@@ -67,7 +67,10 @@ export default function Orders() {
   };
 
   const getTotalOrder = (prices) => {
-    return prices.reduce((total, item) => total + item.qty * item.product.price, 0);
+    return prices.reduce(
+      (total, item) => total + item.qty * item.product.price,
+      0
+    );
   };
 
   const handleMenuClick = () => {
@@ -169,9 +172,10 @@ export default function Orders() {
     setEditModalClient(order.client);
     setEditModalStatus(order.status);
     setEditModalProducts(order.products.map(product => ({
+      qty: product.qty,
       productId: product.product.id,
       name: product.product.name,
-      qty: product.qty
+      price: product.product.price,
     }))
     );
   }
@@ -195,6 +199,7 @@ export default function Orders() {
         product: {
           id: product.productId,
           name: product.name,
+          price: product.price,
         },
       })),
       status: editModalStatus,
@@ -207,6 +212,13 @@ export default function Orders() {
     const updatedOrder = getUpdatedOrder();
     console.log(orderId, '1');
     console.log(updatedOrder, '2');
+  };
+
+  const getUpdatedTotalOrder = () => {
+    return editModalProducts.reduce(
+      (total, product) => total + product.qty * product.price,
+      0
+    );
   };
 
   return (
@@ -292,7 +304,7 @@ export default function Orders() {
                           <Input
                             type='number'
                             placeholder='Escribe aquí'
-                            label='MESA:'
+                            label='MESA :'
                             classInputLabel='labelsModalEdit'
                             classInput='inputModalEdit cantidadModal'
                             value={editModalTable}
@@ -301,38 +313,44 @@ export default function Orders() {
                           <Input
                             type='text'
                             placeholder='Escribe aquí'
-                            label='CLIENTE:'
+                            label='CLIENTE :'
                             classInputLabel='labelsModalEdit'
                             classInput='inputModalEdit'
                             value={editModalClient}
                             onChange={(event) => setEditModalClient(event.target.value)}
                           />
                         </div>
-                        <label className='bebas'>PEDIDO:</label>
-                        {editModalProducts.map((product) => (
-                          <div key={product.productId} className='productsOrdersModal'>
-                            <Input
-                              key={product.productId}
-                              type='number'
-                              placeholder='Escribe aquí'
-                              label={''}
-                              name={`productQty_${product.productId}`}
-                              classInputLabel='labelsModalEdit'
-                              classInput='inputModalEdit cantidadModal'
-                              value={product.qty}
-                              onChange={(event) => handleEditModalProductQtyChange(product.productId, event)}
-                            />
-                            <label>{product.name}</label>
-                          </div>
-
-                        ))}
                         <div className='selectStatusModal'>
-                          <label>ESTADO: </label>
+                          <label className='bebas'>ESTADO : </label>
                           <select value={editModalStatus} onChange={(event) => setEditModalStatus(event.target.value)} className='boxSelect'>
                             <option value='Entregado'>Entregado</option>
                             <option value='Listo en barra'>Listo en barra</option>
                             <option value='En preparación'>En preparación</option>
                           </select>
+                        </div>
+                        <label className='bebas'>PEDIDO :</label>
+                        <div className='lineModal'></div>
+                        <div className='allProductsOrdersModal'>
+                          {editModalProducts.map((product) => (
+                            <div key={product.productId} className='productOrdersModal'>
+                              <Input
+                                key={product.productId}
+                                type='number'
+                                placeholder='Escribe aquí'
+                                label={''}
+                                name={`productQty_${product.productId}`}
+                                classInputLabel='labelsModalEdit'
+                                classInput='inputModalEdit cantidadModal'
+                                value={product.qty}
+                                onChange={(event) => handleEditModalProductQtyChange(product.productId, event)}
+                              />
+                              <p className='productPriceModal'><label>{product.name}</label><label>${product.price}</label></p>
+                            </div>
+                          ))}
+                        </div>
+                        <div className='lineModal'></div>
+                        <div className='totalOrderModal'>
+                          <label className='bebas'> TOTAL :</label> <label>${getUpdatedTotalOrder()}</label>
                         </div>
                       </div>
                       <div>
