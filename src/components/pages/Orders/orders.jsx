@@ -205,8 +205,8 @@ export default function Orders() {
   const handleConfirmEditClick = () => {
     const orderId = modalOrderId;
     const updatedOrder = getUpdatedOrder();
-    console.log(orderId);
-    console.log(updatedOrder);
+    console.log(orderId, '1');
+    console.log(updatedOrder, '2');
   };
 
   return (
