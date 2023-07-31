@@ -238,7 +238,19 @@ export default function Orders() {
       body: body,
     })
       .then((response) => {
-        console.log('Response from server edit order', response)
+        console.log('Response from server edit order', response.data);
+        console.log(orderId);
+
+        setOrdersData(prevOrders => {
+          const updatedOrders = prevOrders.map(order => {
+            if (order.id === orderId) {
+              return { ...order, body };
+            }
+            return order;
+          });
+          return updatedOrders;
+        });
+        handleCloseModal();
       })
       .catch((error) => {
         console.error(error);
@@ -273,6 +285,11 @@ export default function Orders() {
         },
       ]);
     }
+  };
+
+  const handleEditModalProductDelete = (productId) => {
+    const updatedProducts = editModalProducts.filter((product) => product.productId !== productId);
+    setEditModalProducts(updatedProducts);
   };
 
   return (
@@ -411,6 +428,11 @@ export default function Orders() {
                         <div className='allProductsOrdersModal'>
                           {editModalProducts.map((product) => (
                             <div key={product.productId} className='productOrdersModal'>
+                              <img
+                                src={Delete}
+                                className="deleteModal"
+                                alt="buttonDelete"
+                                onClick={() => handleEditModalProductDelete(product.productId)} />
                               <Input
                                 key={product.productId}
                                 type='number'
