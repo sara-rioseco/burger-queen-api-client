@@ -47,8 +47,29 @@
     padding: 5px;
   }
 
+.password{
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+}
+
+.togglePassword{
+  width: 36px;
+  height: 28px;
+  position: fixed;
+  margin-left: 415px;
+  margin-top: 50px;
+  cursor: pointer;
+}
+
 .buttonEnter{
   font-size: 3em;
   width: 180px;
   margin-top: 30px;
+}
+
+.gif {
+  width: 25em;
+  height: 25em;
+  margin: 20px;
 }

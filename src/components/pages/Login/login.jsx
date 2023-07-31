@@ -1,32 +1,32 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+// CSS
 import './login.css'
-import gif from '../../../assets/Images/hamb.gif'
+//COMPONENTES
 import Input from '../../input/input.jsx'
 import Button from '../../button/button.jsx'
+import { LoginLogic } from '../../../utils/login';
+//ASSETS
+import gif from '../../../assets/Images/hamb.gif'
+import hide from '../../../assets/Images/hide.png'
+import show from '../../../assets/Images/show.png'
+
 
 export default function Login() {
+  const {
+    name,
+    password,
+    showPassword,
+    handleNameChange,
+    handlePasswordChange,
+    togglePasswordVisibility,
+    getPasswordInputType,
+    handleLoginClick,
+  } = LoginLogic();
 
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
-
-
-  const handleNameChange = (event) => {
-    setName(event.target.value);
-    console.log(event.target.value)
-    console.log('hola CAMBIO NAME')
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-    console.log(event.target.value)
-    console.log('hola CAMBIO PASSWORD')
-  };
-
-  const handleClick = () => {
-    console.log('Hola ENTRAR');
-  };
-
+  // RENDERIZADO
   return (
     <>
       <div className='login'>
@@ -42,19 +42,26 @@ export default function Login() {
             classInputLabel='labels'
             classInput='inputs'
           />
-          <Input 
-            type='text' 
-            placeholder='*************' 
-            value={password} 
-            onChange={handlePasswordChange} 
-            label='CONTRASEÑA:' 
-            classInputLabel='labels'
-            classInput='inputs'
-            classContainer='containerInput'
-          />
-          <Button label="ENTRAR" onClick={handleClick} classButton='buttonEnter'/>
+          <div className='password'>
+            <Input 
+              type={getPasswordInputType()} 
+              placeholder='*************' 
+              value={password} 
+              onChange={handlePasswordChange} 
+              label='CONTRASEÑA:' 
+              classInputLabel='labels'
+              classInput='inputs'
+              classContainer='containerInput'
+            />
+            <img 
+              src={showPassword ? hide : show} 
+              className="togglePassword"
+              onClick={togglePasswordVisibility}
+            />
+          </div>
+          <Button label="ENTRAR" onClick={handleLoginClick} classButton='buttonEnter'/>
         </div>
-         <img src={gif} className="logo" alt="img logo" />
+         <img src={gif} className="gif" alt="gif" />
       </div>
     </>
   )
