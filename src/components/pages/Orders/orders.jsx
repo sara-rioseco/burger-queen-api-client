@@ -227,9 +227,30 @@ export default function Orders() {
 
   const handleConfirmEditClick = () => {
     const orderId = modalOrderId;
-    const updatedOrder = getUpdatedOrder();
+    const body = getUpdatedOrder();
     console.log(orderId, '1');
-    console.log(updatedOrder, '2');
+    console.log(body, '2');
+
+
+    ApiRequest({
+      url: `http://localhost:8080/orders/${orderId}`,
+      method: 'patch',
+      body: body,
+    })
+      .then((response) => {
+        console.log('Response from server edit order', response)
+      })
+      .catch((error) => {
+        console.error(error);
+        if (error.response.data === 'jwt expired' && error.response.status === 401) {
+          console.error(error);
+          navigate('/login');
+        } else {
+          console.error(error);
+          error && navigate('/error-page');
+        }
+      });
+
   };
 
   const getUpdatedTotalOrder = () => {
