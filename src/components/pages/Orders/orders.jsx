@@ -244,7 +244,7 @@ export default function Orders() {
         setOrdersData(prevOrders => {
           const updatedOrders = prevOrders.map(order => {
             if (order.id === orderId) {
-              return { ...order, body };
+              return { ...order, ...body };
             }
             return order;
           });
