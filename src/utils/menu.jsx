@@ -7,7 +7,7 @@ export function MenuLogic() {
   const token = localStorage.getItem('accessToken');
   const userId = localStorage.getItem('userId');
 
-  const [showMenu, setShowMenu] = useState(true);
+  const [showMenu, setShowMenu] = useState('Desayuno');
   const [productsData, setProductsData] = useState([]);
 
   useEffect(() => {
@@ -37,9 +37,9 @@ export function MenuLogic() {
     navigate('/orders');
   };
 
-  const checkMenuState = () => {
-    showMenu && setShowMenu(false)
-    !showMenu && setShowMenu(true)
+  const checkMenuState = (state) => {
+    state === 'Desayuno' && setShowMenu('Desayuno')
+    state === 'Almuerzo' && setShowMenu('Almuerzo')
   }
 
   const handleClickProduct = () => {

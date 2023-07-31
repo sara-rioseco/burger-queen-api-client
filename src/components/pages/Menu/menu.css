@@ -1,6 +1,5 @@
 @import url('https://fonts.cdnfonts.com/css/asap-condensed');
 @import url('https://fonts.cdnfonts.com/css/bebas-neue');
-/*@import "../../../../node_modules/bootstrap/scss/_button-group.scss";*/
 
 body{
   width: 100%;
@@ -25,8 +24,9 @@ body{
 .nav-bar {
   display:flex;
   flex-flow: row wrap;
-  justify-content: center;
+  justify-content: left;
   align-items: flex-end;
+  align-self: flex-start;
 }
 .menu-container {
   display: flex;
@@ -40,7 +40,7 @@ body{
   flex-flow: row wrap;
   width: 600px;
   gap: 20px;
-  justify-content: center;
+  justify-content: left;
 }
 
 .product {
@@ -186,4 +186,26 @@ align-self: baseline;
 
 .logo:hover {
     filter: drop-shadow(0 0 1em #ffffffaa);
+}
+
+.logout-button {
+  align-self: left;
+}
+
+.btn {
+  margin: 15px 0 15px 15px;
+  height: 68px;
+  --bs-btn-font-family: 'Bebas Neue', sans-serif;
+  --bs-btn-font-size: 2em;
+  --bs-btn-font-weight: bold;
+  --bs-btn-color: var(--bs-black);
+  --bs-btn-bg:  rgba(209, 166, 80, 1);
+  --bs-btn-border-color:  rgba(209, 166, 80, 1);
+  --bs-btn-hover-color: var(--bs-black);
+  --bs-btn-hover-bg:  rgba(113,93,54,1);
+  --bs-btn-hover-border-color: rgba(113,93,54,1);
+  --bs-btn-focus-shadow-rgb: var(rgba(209, 166, 80, 1));
+  --bs-btn-active-color: var(--bs-black);
+  --bs-btn-active-bg:   rgba(113,93,54,1);
+  --bs-btn-active-border-color: #{shade-color(rgba(209, 166, 80, 1), 100%)};
 }

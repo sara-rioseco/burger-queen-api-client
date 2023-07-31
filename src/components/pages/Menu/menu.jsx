@@ -1,6 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-
+// Import our custom CSS
+import '../../../scss/styles.scss'
+// Import all of Bootstrap's JS
+import * as bootstrap from 'bootstrap'
 // CSS
 import './menu.css'
 // COMPONENTS
@@ -36,12 +39,11 @@ export default function Menu() {
     <>
       <div className='menu-container'>
         <nav className='nav-bar'>
-        <Button label='PEDIDOS' onClick={handleClickOrders} classButton='buttonMenu'/> 
-        <Switch label="menu" onChange={checkMenuState} />
-        <div className="btn-group" role="group" aria-label="Basic example">
-  <button type="button" className="btn btn-primary">DESAYUNO</button>
-  <button type="button" className="btn btn-primary">ALMUERZO Y CENA</button>
-</div>
+          <Button label='PEDIDOS' onClick={handleClickOrders} classButton='buttonMenu'/> 
+          <div className="btn-group" role="group" aria-label="Basic example">
+            <button type="button" className="btn btn-primary" onClick={checkMenuState(() => 'Desayuno')}>DESAYUNO</button>
+            <button type="button" className="btn btn-primary" onClick={checkMenuState(() => 'Almuerzo')}>ALMUERZO Y CENA</button>
+          </div>
         </nav>
         {showMenu && (
           <div className='products-grid'>
@@ -54,6 +56,7 @@ export default function Menu() {
                 </div>
               </div>
             ))}
+            <div className='logout-button'><LogoutButton /></div>
           </div>
         )}
         {!showMenu && (
@@ -67,6 +70,7 @@ export default function Menu() {
                 </div>
               </div>
             ))}
+            <div className='logout-button'><LogoutButton /></div>
           </div>
         )}
       </div>
@@ -118,6 +122,7 @@ export default function Menu() {
         </table>
         <Button label='ENVIAR A COCINA' onClick={handleClickKitchen} classButton='buttonMenu'/>
       </div>
+
     </>
   )
 }
