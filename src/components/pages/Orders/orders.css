@@ -192,6 +192,7 @@
   width: 18px;
   cursor: pointer;
 }
+
 .deleteModal:hover {
   filter: drop-shadow(0 0 .5em #ffffff);
   transform: scale(1.3);

@@ -1,12 +1,8 @@
-/* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 // CSS
 import './orders.css'
 //COMPONENTES
 import Button from '../../button/button.jsx';
 import LogoutButton from '../../logoutButton/logoutButton.jsx';
-import ApiRequest from '../../../services/apiRequest.jsx';
 import Modal from '../../modal/modal.jsx';
 import Input from '../../input/input.jsx'
 import { useOrdersLogic } from '../../../utils/orders';
@@ -16,6 +12,7 @@ import Delete from '../../../assets/Images/borrar.png'
 import Check from '../../../assets/Images/listo.png'
 
 export default function Orders() {
+  // DESESTRUCTURACIÓN DE HOOK PERSONALIZADO
   const {
     getProductsList,
     getTotalOrder,
@@ -27,7 +24,6 @@ export default function Orders() {
     handleCloseModal,
     handleOpenEditModal,
     handleEditModalProductQtyChange,
-    getUpdatedOrder,
     handleConfirmEditClick,
     getUpdatedTotalOrder,
     handleAddProductToOrder,
@@ -46,6 +42,7 @@ export default function Orders() {
     editModalProducts,
   } = useOrdersLogic();
 
+  // RENDERIZADO
   return (
     <>
       <div className='containerOrders'>
@@ -158,12 +155,14 @@ export default function Orders() {
                         </div>
                         <div className='selectProductModal'>
                           <label className='bebas'>AÑADIR PRODUCTO :</label>
-                          <select value={''} onChange={(e) => handleAddProductToOrder(e.target.value)} className='boxSelect'>
+                          <select
+                            value={''}
+                            onChange={(e) => handleAddProductToOrder(e.target.value)}
+                            className='boxSelect'
+                          >
                             <option value='' disabled>Seleccione un producto</option>
                             {productsData.map((product) => {
-                              const isProductAlreadyAdded = editModalProducts.some(
-                                (addedProduct) => addedProduct.productId === product.id
-                              );
+                              const isProductAlreadyAdded = editModalProducts.some((addedProduct) => addedProduct.productId === product.id);
 
                               if (!isProductAlreadyAdded) {
                                 return (
@@ -186,7 +185,8 @@ export default function Orders() {
                                 src={Delete}
                                 className="deleteModal"
                                 alt="buttonDelete"
-                                onClick={() => handleEditModalProductDelete(product.productId)} />
+                                onClick={() => handleEditModalProductDelete(product.productId)}
+                              />
                               <Input
                                 key={product.productId}
                                 type='number'
@@ -198,13 +198,17 @@ export default function Orders() {
                                 value={product.qty}
                                 onChange={(event) => handleEditModalProductQtyChange(product.productId, event)}
                               />
-                              <p className='productPriceModal'><label>{product.name}</label><label>${product.price}</label></p>
+                              <p className='productPriceModal'>
+                                <label>{product.name}</label>
+                                <label>${product.price}</label>
+                              </p>
                             </div>
                           ))}
                         </div>
                         <div className='lineModal'></div>
                         <div className='totalOrderModal'>
-                          <label className='bebas'> TOTAL :</label> <label>${getUpdatedTotalOrder()}</label>
+                          <label className='bebas'> TOTAL :</label>
+                          <label>${getUpdatedTotalOrder()}</label>
                         </div>
                       </div>
                       <div>
