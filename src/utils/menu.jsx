@@ -29,7 +29,7 @@ export function MenuLogic() {
     }).catch((error) => {
       console.error(error);
     });
-  }, [navigate, token, userId, showMenu, cartData, setCartData]);
+  }, [navigate, token, userId, showMenu, cartData]);
 
   const breakfastProducts = productsData.filter(product => product.type === 'Desayuno');
   const lunchProducts = productsData.filter(product => product.type === 'Almuerzo');
@@ -48,21 +48,35 @@ export function MenuLogic() {
 
   const handleClickProduct = (product) => {
     const productsArr = cartData;
-    productsArr.push(product)
-    console.log('array del carrito', productsArr)
-    return productsArr;
+    if (product.qty === undefined) {
+      product.qty = 0;
+      productsArr.push(product);
+    }
+    if (checkProductExists(product, productsArr)){
+      product.qty += 1;
+    } 
+    console.log('el carrito tiene:', productsArr)
+    setCartData(productsArr);
+    return cartData;
   };
 
-  const productsArr = product => handleClickProduct(product)
+  const countProducts = (id, arr) => arr.filter(p => p.id === id).length;
 
-  const handleCountProducts = (product, arr) => arr.filter(p => p === product).length;
+  const checkProductExists = (product, arr) => countProducts(product.id, arr) > 0;
 
-  const handleClickAdd = () => {
-        console.log('Agregaste una unidad del producto')
+  const handleClickAdd = (product, arr) => {
+    const result = arr.find(p => p === product)
+    if (result) {
+      product.qty += 1
+    } else {
+      arr.push(product)
+    }
   };
 
-  const handleClickRemove = () => {
-    console.log('Eliminaste una unidad del producto')
+  const handleClickRemove = (product) => {
+    if (product.qty > 1){
+      product.qty -= 1;
+    }
   };
 
   const handleClickDelete = () => {
@@ -81,13 +95,13 @@ export function MenuLogic() {
     productsData,
     breakfastProducts,
     lunchProducts,
+    cartData,
     setCartData,
-    productsArr,
     handleClickOrders,
     handleClickDesayuno,
     handleClickAlmuerzo,
     handleClickProduct,
-    handleCountProducts,
+    countProducts,
     handleClickAdd,
     handleClickRemove,
     handleClickDelete,

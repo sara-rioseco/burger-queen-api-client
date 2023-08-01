@@ -27,6 +27,7 @@ export default function Menu() {
     setCartData,
     breakfastProducts,
     lunchProducts,
+    cartProducts,
     handleClickOrders,
     handleClickDesayuno,
     handleClickAlmuerzo,
@@ -98,14 +99,14 @@ export default function Menu() {
             </tr>
           </thead>
           <tbody>
-            {cartData && cartData.map(product => {
+            {cartData && cartData.map((product) => (
               <tr key={product.id}>
                 <td className='table-body'>{product.name}</td>
-                <td className='table-count'><img src={Remove} alt='remove-button' className='action-button' onClick={handleClickRemove}/>{'\u00A0'}{'\u00A0'}{() => {handleCountProducts(product)}}{'\u00A0'}{'\u00A0'}<img src={Add} alt='add-button' className='action-button' onClick={handleClickAdd}/></td>
+                <td className='table-count'><img src={Remove} alt='remove-button' className='action-button' onClick={handleClickRemove}/>{'\u00A0'}{'\u00A0'}{product.qty}{'\u00A0'}{'\u00A0'}<img src={Add} alt='add-button' className='action-button' onClick={() => handleClickAdd(product, cartData)}/></td>
                 <td className='table-number'>${product.price}</td>
                 <td className='table-number'><img src={Delete} alt='delete-button' className='action-button' onClick={handleClickDelete}/></td>
               </tr>
-            })}  
+            ))}  
           </tbody>
           <tfoot>
             <tr key='foot' className="table-footer">
@@ -118,7 +119,6 @@ export default function Menu() {
         </table>
         <Button label='ENVIAR A COCINA' onClick={handleClickKitchen} classButton='buttonMenu'/>
       </div>
-
     </>
   )
 }
