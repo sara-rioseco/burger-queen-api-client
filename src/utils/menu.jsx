@@ -28,7 +28,7 @@ export function MenuLogic() {
     }).catch((error) => {
       console.error(error);
     });
-  }, [navigate, token, userId]);
+  }, [navigate, token, userId, showMenu]);
 
   const breakfastProducts = productsData.filter(product => product.type === 'Desayuno');
   const lunchProducts = productsData.filter(product => product.type === 'Almuerzo');
@@ -37,9 +37,9 @@ export function MenuLogic() {
     navigate('/orders');
   };
 
-  const checkMenuState = (state) => {
-    state === 'Desayuno' && setShowMenu('Desayuno')
-    state === 'Almuerzo' && setShowMenu('Almuerzo')
+  const checkMenuState = () => {
+    showMenu === 'Desayuno' && setShowMenu('Desayuno')
+    showMenu === 'Almuerzo' && setShowMenu('Almuerzo')
   }
 
   const handleClickProduct = () => {

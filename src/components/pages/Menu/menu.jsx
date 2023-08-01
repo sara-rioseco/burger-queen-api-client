@@ -41,8 +41,8 @@ export default function Menu() {
         <nav className='nav-bar'>
           <Button label='PEDIDOS' onClick={handleClickOrders} classButton='buttonMenu'/> 
           <div className="btn-group" role="group" aria-label="Basic example">
-            <button type="button" className="btn btn-primary" onClick={checkMenuState(() => 'Desayuno')}>DESAYUNO</button>
-            <button type="button" className="btn btn-primary" onClick={checkMenuState(() => 'Almuerzo')}>ALMUERZO Y CENA</button>
+            <button type="button" className="btn btn-primary" onClick={checkMenuState}>DESAYUNO</button>
+            <button type="button" className="btn btn-primary" onClick={checkMenuState}>ALMUERZO Y CENA</button>
           </div>
         </nav>
         {showMenu && (
