@@ -1,19 +1,19 @@
-/* eslint-disable no-unused-vars */
-import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'; // valida tipos de propiedades y restricciones del componente
+// CSS
 import './Modal.css';
 
 export default function Modal({ open, onClose, children }) {
-  if (!open) return null;
+  if (!open) return null; // No renderiza nada si no está abierta
 
+  // RENDERIZADO
   return (
     <div className="modal">
       <div className="modal-content">
         <span className="close-btn" onClick={onClose}>
-          &times;
+          &times; {/* Síbolo de x en HTML */}
         </span>
         <div className='contentModal'>
-            {children}
+          {children}
         </div>
       </div>
     </div>
@@ -21,7 +21,7 @@ export default function Modal({ open, onClose, children }) {
 }
 
 Modal.propTypes = {
-    open: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired,
-    children: PropTypes.node.isRequired,
-  };
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+};

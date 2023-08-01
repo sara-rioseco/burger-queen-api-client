@@ -1,18 +1,18 @@
-/* eslint-disable no-unused-vars */
-import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'; // valida tipos de propiedades y restricciones del componente
+// CSS
 import './button.css';
 
-export default function Button({label, onClick, classButton}) {
-    return (
-      <button className={`buttonDefault ${classButton}`} onClick={onClick}>
-        {label}
-      </button>
-    );
-  }
+export default function Button({ label, onClick, classButton }) {
+  // RENDERIZADO
+  return (
+    <button className={`buttonDefault ${classButton}`} onClick={onClick}>
+      {label}
+    </button>
+  );
+}
 
-  Button.propTypes = {
-    label: PropTypes.string.isRequired,
-    onClick: PropTypes.func,
-    classButton: PropTypes.string
-  };
+Button.propTypes = {
+  label: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
+  classButton: PropTypes.string
+};

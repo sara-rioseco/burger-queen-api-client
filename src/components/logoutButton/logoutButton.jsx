@@ -1,22 +1,22 @@
-/* eslint-disable no-unused-vars */
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-
+// HOOK
+import { useNavigate } from 'react-router-dom'; // Navegar por el router
+// CSS
 import './logoutButton.css'
-
+// ASSETS
 import Out from '../../assets/Images/out.png'
 
-const LogoutButton = () => {
+export default function LogoutButton() {
   const navigate = useNavigate();
 
+  // FUNCIÓN PARA ENVIAR A HOME Y ELIMINAR INFO DEL USUARIO EN LOCALSTORAGE
   const handleLogout = () => {
-    // Limpiar el localStorage eliminando el token y el userId
     localStorage.removeItem('accessToken');
     localStorage.removeItem('userId');
-    // Redirigir al usuario a la ruta inicial
+
     navigate('/');
   };
 
+  // RENDERIZADO
   return (
     <img
       src={Out}
@@ -25,6 +25,4 @@ const LogoutButton = () => {
       className="out"
     />
   );
-};
-
-export default LogoutButton;
+}
