@@ -29,11 +29,10 @@ export function MenuLogic() {
     }).catch((error) => {
       console.error(error);
     });
-  }, [navigate, token, userId, showMenu, cartData]);
+  }, [navigate, token, userId, showMenu, cartData, setCartData]);
 
   const breakfastProducts = productsData.filter(product => product.type === 'Desayuno');
   const lunchProducts = productsData.filter(product => product.type === 'Almuerzo');
-  const cartProducts = cartData;
 
   const handleClickOrders = () => {
     navigate('/orders');
@@ -47,19 +46,19 @@ export function MenuLogic() {
     setShowMenu(false)
   };
 
-  const handleClickProduct = product => {
+  const handleClickProduct = (product) => {
     const productsArr = cartData;
-    let total = 0;
     productsArr.push(product)
-    productsArr.forEach(product => total += product.price)
-    console.log(productsArr, total)
-    setCartData(productsArr);
+    console.log('array del carrito', productsArr)
+    return productsArr;
   };
+
+  const productsArr = product => handleClickProduct(product)
 
   const handleCountProducts = (product, arr) => arr.filter(p => p === product).length;
 
   const handleClickAdd = () => {
-    console.log('Agregaste una unidad del producto')
+        console.log('Agregaste una unidad del producto')
   };
 
   const handleClickRemove = () => {
@@ -82,8 +81,8 @@ export function MenuLogic() {
     productsData,
     breakfastProducts,
     lunchProducts,
-    cartProducts,
     setCartData,
+    productsArr,
     handleClickOrders,
     handleClickDesayuno,
     handleClickAlmuerzo,

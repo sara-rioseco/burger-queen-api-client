@@ -23,10 +23,10 @@ export default function Menu() {
     userId,
     showMenu,
     productsData,
+    cartData,
     setCartData,
     breakfastProducts,
     lunchProducts,
-    cartProducts,
     handleClickOrders,
     handleClickDesayuno,
     handleClickAlmuerzo,
@@ -71,10 +71,10 @@ export default function Menu() {
           <div className='products-grid'>
             {lunchProducts.map(product => (
               <div key={product.id} className='product'> 
-                <div className='image-content'><img src={product.image} alt={product.name} className='image' onClick={() => {
+                <div className='image-content'><img src={product.image} alt={product.name} className='image'  onClick={() => {
                   handleClickProduct(product);
                   }}/></div>
-                <div className='text-content' onClick={() => {
+                <div className='text-content'  onClick={() => {
                   handleClickProduct(product);
                   }}>
                   <div className='product-name'>{product.name}</div>
@@ -90,7 +90,7 @@ export default function Menu() {
         <div className='cart-text'>CLIENTE:</div>
         <div><input className='cart-input' type='text' placeholder='Escribe aquí'></input></div>
         <div className='cart-text'>MESA:</div>
-        <div><input className='cart-input' type='text' pattern="\d*" maxLength="2" placeholder='Escribe aquí'></input></div>
+        <div><input className='cart-input' type='text' pattern="^[0-9]+$" maxLength="2" placeholder='Escribe aquí'></input></div>
         <table className='cart-table'>
           <thead>
             <tr key='head' className="table-head">
@@ -98,10 +98,10 @@ export default function Menu() {
             </tr>
           </thead>
           <tbody>
-            {cartProducts.map(product => {
+            {cartData && cartData.map(product => {
               <tr key={product.id}>
                 <td className='table-body'>{product.name}</td>
-                <td className='table-count'><img src={Remove} alt='remove-button' className='action-button' onClick={handleClickRemove}/>{'\u00A0'}{'\u00A0'}{() => {handleCountProducts(product, cartProducts)}}{'\u00A0'}{'\u00A0'}<img src={Add} alt='add-button' className='action-button' onClick={handleClickAdd}/></td>
+                <td className='table-count'><img src={Remove} alt='remove-button' className='action-button' onClick={handleClickRemove}/>{'\u00A0'}{'\u00A0'}{() => {handleCountProducts(product)}}{'\u00A0'}{'\u00A0'}<img src={Add} alt='add-button' className='action-button' onClick={handleClickAdd}/></td>
                 <td className='table-number'>${product.price}</td>
                 <td className='table-number'><img src={Delete} alt='delete-button' className='action-button' onClick={handleClickDelete}/></td>
               </tr>
