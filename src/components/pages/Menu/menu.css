@@ -1,34 +1,211 @@
+@import url('https://fonts.cdnfonts.com/css/asap-condensed');
+@import url('https://fonts.cdnfonts.com/css/bebas-neue');
+
 body{
-    width: 100%;
-    height: 100%;
-    margin: 0px;
-    background-image: url('../../../assets/Images/fondo.png');
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-color: black;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  background-image: url('../../../assets/Images/fondo.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
   
-  #root {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
-  }
-.home{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .logo {
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+.nav-bar {
+  display:flex;
+  flex-flow: row wrap;
+  justify-content: left;
+  align-items: flex-end;
+  align-self: flex-start;
+}
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 95%;
+}
+
+.products-grid {
+  display:flex;
+  flex-flow: row wrap;
+  width: 600px;
+  gap: 20px;
+  justify-content: left;
+}
+
+.product {
+  height: 260px;
+  width: 260px;
+  border: 4px solid #ffffff;
+  border-radius: 6px;
+  color:#ffffffaa;
+  font-family:'Asap Condensed', sans-serif;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  row-gap: 20px;
+}
+
+.image-content {
+  height: 160px;
+}
+
+.image {
+  height: 160px;
+}
+
+.image:hover{
+  filter: drop-shadow(0 0 .5em #ffffff);
+}
+
+.text-content {
+  display:flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+}
+.text-content:hover{
+  filter: drop-shadow(0 0 .5em #ffffff);
+}
+
+.product-name{
+  font-weight: lighter;
+}
+
+.product-price{
+  font-weight: bold;
+}
+
+.cart-section {
+  background: #000000;
+  height: 95%;
+  width: 400px;
+  border: 4px solid #ffffff;
+  border-radius: 6px;
+  color:#ffffffaa;
+  font-family:'Asap Condensed', sans-serif;
+  font-size: 20px;
+  display:flex;
+  flex-flow: column nowrap;
+  justify-content:flex-start;
+  gap: 8px;;
+  align-items: center;
+}
+
+.cart-table{
+  color: white;
+  width: 90%;
+  border-collapse: collapse;
+  padding:10%;
+}
+
+.cart-table th,
+.cart-table td {
+  padding: 6px;
+}
+
+.cart-text {
+  width: 360px;
+  padding-top: 20px;
+  font-size: 30px;
+  font-family: 'Bebas neue', sans-serif;
+  font-weight: bold;
+  text-align: left;
+}
+
+.cart-input {
+  width: 360px;
+  height: 40px;
+  font-size: 20px;
+  font-family: 'Asap condensed', sans-serif;
+  font-weight: normal;
+  text-align: left;
+}
+
+.table-head {
+  border-bottom: 2px solid white;
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: bold;
+  font-size: 1.4em;
+}
+
+
+.table-title {
+  text-align: center;
+}
+
+.table-body{
+  font-family: 'Asap condensed', sans-serif;
+  font-weight: normal;
+  font-size: 0.8em;
+}
+td.table-number{
+  font-family: 'Asap condensed', sans-serif;
+  font-weight:bold;
+  font-size: 0.8em;
+  text-align: right;
+}
+td.table-count {
+  font-family: 'Asap condensed', sans-serif;
+  font-weight: normal;
+  font-size: 1em;
+}
+
+.action-button {
+  height: 20px;
+  align-self: baseline;
+}
+
+.table-footer {
+  border-top: 2px solid white;
+  font-family:'Bebas neue', sans-serif;
+  font-weight: bold;
+  font-size: 1.4em;
+}
+
+.action-button {
+height: 20px;
+align-self: baseline;
+}
+
+.logo {
     width: 25em;
     height: 25em;
     margin: 20px;
-  }
-  .logo:hover {
+}
+
+.logo:hover {
     filter: drop-shadow(0 0 1em #ffffffaa);
-  }
+}
+
+.logout-button {
+  align-self: left;
+}
+
+.btn {
+  margin: 15px 0 15px 15px;
+  height: 68px;
+  --bs-btn-font-family: 'Bebas Neue', sans-serif;
+  --bs-btn-font-size: 2em;
+  --bs-btn-font-weight: bold;
+  --bs-btn-color: var(--bs-black);
+  --bs-btn-bg:  rgba(209, 166, 80, 1);
+  --bs-btn-border-color:  rgba(209, 166, 80, 1);
+  --bs-btn-hover-color: var(--bs-black);
+  --bs-btn-hover-bg:  rgba(113,93,54,1);
+  --bs-btn-hover-border-color: rgba(113,93,54,1);
+  --bs-btn-focus-shadow-rgb: var(rgba(209, 166, 80, 1));
+  --bs-btn-active-color: var(--bs-black);
+  --bs-btn-active-bg:   rgba(113,93,54,1);
+  --bs-btn-active-border-color: #{shade-color(rgba(209, 166, 80, 1), 100%)};
+}

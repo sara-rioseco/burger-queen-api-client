@@ -1,13 +1,18 @@
-import { useState } from 'react';
+// HOOKS
+import { useState } from 'react'; // manejar estados en los cambios
+import { useNavigate } from 'react-router-dom'; // navegar entre router
+// BIBLIOTECAS
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
+// LÓGICA DE LA SECCIÓN DE LOGIN
 export function LoginLogic() {
   const navigate = useNavigate();
+
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
+  // MANEJO DE CAMBIOS DE INPUTS
   const handleNameChange = (event) => {
     setName(event.target.value);
   };
@@ -16,6 +21,7 @@ export function LoginLogic() {
     setPassword(event.target.value);
   };
 
+  // MANEJO DE MOSTRAR U OCULTAR CONTRASEÑA
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -24,17 +30,18 @@ export function LoginLogic() {
     return showPassword ? 'text' : 'password';
   };
 
+  // API REQUEST LOGIN
   const handleLoginClick = async () => {
     try {
       const response = await axios.post('http://localhost:8080/login', {
         email: name,
         password: password,
       });
-      console.log(response);
-      console.log(response.data);
-      console.log(response.data.accessToken);
-      console.log(response.data.user);
-      console.log(response.data.user.role);
+
+      // Guardar el accessToken en el localStorage
+      localStorage.setItem('accessToken', response.data.accessToken);
+      localStorage.setItem('userId', response.data.user.id);
+
       response.data.user.role === 'admin' && navigate('/users');
       response.data.user.role === 'waiter' && navigate('/orders');
       response.data.user.role === 'chef' && navigate('/kitchen');
