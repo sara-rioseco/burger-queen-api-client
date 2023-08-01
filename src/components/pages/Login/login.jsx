@@ -1,7 +1,3 @@
-/* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 // CSS
 import './login.css'
 //COMPONENTES
@@ -15,6 +11,7 @@ import show from '../../../assets/Images/show.png'
 
 
 export default function Login() {
+  // DESESTRUCTURACIÓN DE HOOK PERSONALIZADO
   const {
     name,
     password,
@@ -33,35 +30,35 @@ export default function Login() {
         <div className='form'>
           <h2 className='title'>INICIAR SESIÓN</h2>
           <div className='line'></div>
-          <Input 
-            type='text' 
-            placeholder='Escribe aquí' 
-            value={name} 
-            onChange={handleNameChange} 
-            label='NOMBRE:' 
+          <Input
+            type='text'
+            placeholder='Escribe aquí'
+            value={name}
+            onChange={handleNameChange}
+            label='NOMBRE:'
             classInputLabel='labels'
             classInput='inputs'
           />
           <div className='password'>
-            <Input 
-              type={getPasswordInputType()} 
-              placeholder='*************' 
-              value={password} 
-              onChange={handlePasswordChange} 
-              label='CONTRASEÑA:' 
+            <Input
+              type={getPasswordInputType()}
+              placeholder='*************'
+              value={password}
+              onChange={handlePasswordChange}
+              label='CONTRASEÑA:'
               classInputLabel='labels'
               classInput='inputs'
               classContainer='containerInput'
             />
-            <img 
-              src={showPassword ? hide : show} 
+            <img
+              src={showPassword ? hide : show}
               className="togglePassword"
               onClick={togglePasswordVisibility}
             />
           </div>
-          <Button label="ENTRAR" onClick={handleLoginClick} classButton='buttonEnter'/>
+          <Button label="ENTRAR" onClick={handleLoginClick} classButton='buttonEnter' />
         </div>
-         <img src={gif} className="gif" alt="gif" />
+        <img src={gif} className="gif" alt="gif" />
       </div>
     </>
   )

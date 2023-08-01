@@ -1,25 +1,25 @@
 @import url('https://fonts.cdnfonts.com/css/asap-condensed');
 
-*::-webkit-scrollbar{
+*::-webkit-scrollbar {
   width: 5px;
 }
 
-*::-webkit-scrollbar-track{
+*::-webkit-scrollbar-track {
   background: transparent;
 
 }
 
-*::-webkit-scrollbar-thumb{
+*::-webkit-scrollbar-thumb {
   background: rgba(209, 166, 80, 1);
   border-radius: 5px;
 }
 
-html{
+html {
   width: 100%;
   height: 100%;
 }
 
-body{
+body {
   width: 100%;
   height: 100%;
   margin: 0px;
@@ -44,14 +44,15 @@ body{
 
 footer {
   position: fixed;
-  left:0px;
-  bottom:0px;
+  left: 0px;
+  bottom: 0px;
   width: 100%;
   background-color: rgba(217, 217, 217, 0.795);
   text-align: center;
   height: 30px;
   padding: 0px;
 }
+
 footer p {
   font-size: smaller;
   margin: 8px;
@@ -59,23 +60,24 @@ footer p {
   color: black;
 }
 
-.home{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .logo {
-    width: 25em;
-    height: 25em;
-    margin: 20px;
-  }
-  .logo:hover {
-    filter: drop-shadow(0 0 1em #ffffffaa);
-  }
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
-  .enter{
-    width: 6em;
-    font-size: 3em;
-  }
+.logo {
+  width: 25em;
+  height: 25em;
+  margin: 20px;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 1em #ffffffaa);
+}
+
+.enter {
+  width: 6em;
+  font-size: 3em;
+}

@@ -1,8 +1,7 @@
-/* eslint-disable no-unused-vars */
-import React from 'react'
 import { createBrowserRouter } from 'react-router-dom';
+// CSS
 import './App.css'
-
+// COMPONENTES/VISTAS
 import Home from './components/pages/Home/home.jsx';
 import Login from './components/pages/Login/login.jsx';
 import Menu from './components/pages/Menu/menu.jsx';
@@ -12,7 +11,8 @@ import Users from './components/pages/Users/users.jsx';
 import Products from './components/pages/Products/products.jsx';
 import ErrorPage from './components/pages/Error/error-page.jsx';
 
-export const router = createBrowserRouter([
+// CREACIÓN DEL ROUTER
+export const Router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
