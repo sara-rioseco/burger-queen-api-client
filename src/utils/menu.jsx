@@ -11,26 +11,7 @@ export function useMenuLogic() {
   const [showMenu, setShowMenu] = useState(true);
   const [productsData, setProductsData] = useState([]);
   const [cartData, setCartData] = useState([]);
-
-  const handleClickAdd = useCallback((product, arr) => {
-    const result = arr.find(p => p.id === product.id);
-    if (result !== undefined) {
-      product.qty += 1
-    } else {
-      product.qty = 1
-      arr.push(product)
-    }
-  }, []);
-
-  const handleClickRemove = useCallback((product) => {
-    if (product.qty > 1){
-      product.qty -= 1;
-    }
-  }, []);
-
-  const handleClickDelete = useCallback(() => {
-    console.log('Eliminaste un producto del carrito')
-  }, []);
+  const [productCount, setProductCount] = useState(0);
 
   useEffect(() => {
     if (!token) {
@@ -58,7 +39,7 @@ export function useMenuLogic() {
         error && navigate('/error-page');
       }
     });
-  }, [navigate, token, userId, showMenu, cartData, handleClickAdd, handleClickDelete, handleClickRemove]);
+  }, [navigate, token, userId, showMenu, cartData, productCount]);
 
   const breakfastProducts = productsData.filter(product => product.type === 'Desayuno');
   const lunchProducts = productsData.filter(product => product.type === 'Almuerzo');
@@ -74,6 +55,26 @@ export function useMenuLogic() {
   const handleLunchClick = () => {
     setShowMenu(false)
   };
+
+  const handleClickAdd = useCallback((product, arr) => {
+    const result = arr.find(p => p.id === product.id);
+    if (result !== undefined) {
+      product.qty += 1
+    } else {
+      product.qty = 1
+      arr.push(product)
+    }
+  }, []);
+
+  const handleClickRemove = useCallback((product) => {
+    if (product.qty > 1){
+      product.qty -= 1;
+    }
+  }, []);
+
+  const handleClickDelete = useCallback(() => {
+    console.log('Eliminaste un producto del carrito')
+  }, []);
 
   /* const addQtyProperty = (productId, arr, newProperty) => {
     return arr.map(product => {
@@ -100,6 +101,7 @@ export function useMenuLogic() {
 
   const handleClickProduct = (product) => {
     const productsArr = cartData
+    console.log('antes de agregar', productsArr)
     if (product.qty === undefined) {
       product.qty = 0;
       productsArr.push(product);
@@ -108,12 +110,11 @@ export function useMenuLogic() {
       product.qty += 1;
     } 
     setCartData(productsArr);
+    console.log('después de agregar', cartData)
     return cartData;
   };
 
-  const countProducts = (id, arr) => arr.filter(p => p.id === id).length;
-
-  const checkProductExists = (product, arr) => countProducts(product.id, arr) > 0;
+  const checkProductExists = (product, arr) => arr.filter(p => p.id === product.id).length > 0;
 
   const handleClickKitchen = () => {
     console.log('Has enviado la orden a cocina')
@@ -129,11 +130,12 @@ export function useMenuLogic() {
     lunchProducts,
     cartData,
     setCartData,
+    productCount,
+    setProductCount,
     handleOrdersClick,
     handleBreakfastClick,
     handleLunchClick,
     handleClickProduct,
-    countProducts,
     handleClickAdd,
     handleClickRemove,
     handleClickDelete,
