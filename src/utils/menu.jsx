@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ApiRequest from '../services/apiRequest.jsx';
 
-export function MenuLogic() {
+export function useMenuLogic() {
   const navigate = useNavigate();
+
   const token = localStorage.getItem('accessToken');
   const userId = localStorage.getItem('userId');
 
@@ -11,11 +12,32 @@ export function MenuLogic() {
   const [productsData, setProductsData] = useState([]);
   const [cartData, setCartData] = useState([]);
 
+  const handleClickAdd = useCallback((product, arr) => {
+    const result = arr.find(p => p.id === product.id);
+    if (result !== undefined) {
+      product.qty += 1
+    } else {
+      product.qty = 1
+      arr.push(product)
+    }
+  }, []);
+
+  const handleClickRemove = useCallback((product) => {
+    if (product.qty > 1){
+      product.qty -= 1;
+    }
+  }, []);
+
+  const handleClickDelete = useCallback(() => {
+    console.log('Eliminaste un producto del carrito')
+  }, []);
+
   useEffect(() => {
     if (!token) {
       navigate('/login');
       return;
     }
+
     ApiRequest({
       url: 'http://localhost:8080/products',
       method: 'get',
@@ -28,26 +50,56 @@ export function MenuLogic() {
       setProductsData(Products);
     }).catch((error) => {
       console.error(error);
+      if (error.response.data === 'jwt expired' && error.response.status === 401) {
+        console.error(error);
+        navigate('/login');
+      } else {
+        console.error(error);
+        error && navigate('/error-page');
+      }
     });
-  }, [navigate, token, userId, showMenu, cartData]);
+  }, [navigate, token, userId, showMenu, cartData, handleClickAdd, handleClickDelete, handleClickRemove]);
 
   const breakfastProducts = productsData.filter(product => product.type === 'Desayuno');
   const lunchProducts = productsData.filter(product => product.type === 'Almuerzo');
 
-  const handleClickOrders = () => {
+  const handleOrdersClick = () => {
     navigate('/orders');
   };
 
-  const handleClickDesayuno = () => {
+  const handleBreakfastClick = () => {
     setShowMenu(true)
   };
 
-  const handleClickAlmuerzo = () => {
+  const handleLunchClick = () => {
     setShowMenu(false)
   };
 
+  /* const addQtyProperty = (productId, arr, newProperty) => {
+    return arr.map(product => {
+      if (product.id === productId) {
+        return {
+          ...product,
+          ...newProperty
+        };
+      }
+      return product;
+    });
+  };
+
+  const addItemToQtyProperty = (productId, arr) => {
+    return arr.map(product => {
+      if (product.id === productId) {
+        product.qty += 1;
+        console.log(product)
+        return product;
+      }
+      return product;
+    });
+  }; */
+
   const handleClickProduct = (product) => {
-    const productsArr = cartData;
+    const productsArr = cartData
     if (product.qty === undefined) {
       product.qty = 0;
       productsArr.push(product);
@@ -55,7 +107,6 @@ export function MenuLogic() {
     if (checkProductExists(product, productsArr)){
       product.qty += 1;
     } 
-    console.log('el carrito tiene:', productsArr)
     setCartData(productsArr);
     return cartData;
   };
@@ -63,25 +114,6 @@ export function MenuLogic() {
   const countProducts = (id, arr) => arr.filter(p => p.id === id).length;
 
   const checkProductExists = (product, arr) => countProducts(product.id, arr) > 0;
-
-  const handleClickAdd = (product, arr) => {
-    const result = arr.find(p => p === product)
-    if (result) {
-      product.qty += 1
-    } else {
-      arr.push(product)
-    }
-  };
-
-  const handleClickRemove = (product) => {
-    if (product.qty > 1){
-      product.qty -= 1;
-    }
-  };
-
-  const handleClickDelete = () => {
-    console.log('Eliminaste un producto del carrito')
-  };
 
   const handleClickKitchen = () => {
     console.log('Has enviado la orden a cocina')
@@ -97,9 +129,9 @@ export function MenuLogic() {
     lunchProducts,
     cartData,
     setCartData,
-    handleClickOrders,
-    handleClickDesayuno,
-    handleClickAlmuerzo,
+    handleOrdersClick,
+    handleBreakfastClick,
+    handleLunchClick,
     handleClickProduct,
     countProducts,
     handleClickAdd,

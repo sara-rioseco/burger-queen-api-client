@@ -2,52 +2,42 @@
 import React from 'react';
 // Import our custom CSS
 import '../../../scss/styles.scss'
-// Import all of Bootstrap's JS
-import * as bootstrap from 'bootstrap'
 // CSS
 import './menu.css'
 // COMPONENTS
 import Button from '../../button/button.jsx';
-import Switch from '../../switch/switch';
 import LogoutButton from '../../logoutButton/logoutButton';
 // ASSETS
 import Delete from '../../../assets/Images/borrar.png'
 import Add from '../../../assets/Images/add.png'
 import Remove from '../../../assets/Images/remove.png'
-import { MenuLogic } from '../../../utils/menu';
+import { useMenuLogic } from '../../../utils/menu';
 
 export default function Menu() {
   const {
-    navigate,
-    token,
-    userId,
     showMenu,
-    productsData,
     cartData,
-    setCartData,
     breakfastProducts,
     lunchProducts,
-    cartProducts,
-    handleClickOrders,
-    handleClickDesayuno,
-    handleClickAlmuerzo,
+    handleOrdersClick,
+    handleBreakfastClick,
+    handleLunchClick,
     handleClickProduct,
-    handleCountProducts,
     handleClickAdd,
     handleClickRemove,
     handleClickDelete,
     handleClickKitchen
-  } = MenuLogic();
+  } = useMenuLogic();
 
 // =========== RENDERIZADO ===========
   return (
     <>
       <div className='menu-container'>
         <nav className='nav-bar'>
-          <Button label='PEDIDOS' onClick={handleClickOrders} classButton='buttonMenu'/> 
+          <Button label='PEDIDOS' onClick={handleOrdersClick} classButton='buttonMenu'/> 
           <div className="btn-group" role="group" aria-label="Basic example">
-            <button type="button" className="btn btn-primary" onClick={handleClickDesayuno}>DESAYUNO</button>
-            <button type="button" className="btn btn-primary" onClick={handleClickAlmuerzo}>ALMUERZO Y CENA</button>
+            <button type="button" className="btn btn-primary" onClick={handleBreakfastClick}>DESAYUNO</button>
+            <button type="button" className="btn btn-primary" onClick={handleLunchClick}>ALMUERZO Y CENA</button>
           </div>
         </nav>
         {showMenu && (
