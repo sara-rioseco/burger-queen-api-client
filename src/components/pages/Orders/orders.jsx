@@ -90,11 +90,14 @@ export default function Orders() {
                       onClick={() => handleOpenEditModal(order.id)} />
                   </td>
                   <td className='buttonsTable'>
-                    <img
-                      src={Delete}
-                      className="delete"
-                      alt="buttonDelete"
-                      onClick={() => handleOpenModalDelete(order.id)} />
+                    {order.status !== 'Entregado' && (
+                      <img
+                        src={Delete}
+                        className="delete"
+                        alt="buttonDelete"
+                        onClick={() => handleOpenModalDelete(order.id)}
+                      />
+                    )}
                   </td>
                   <td className='buttonsTable'>
                     {order.status !== 'Entregado' && (
