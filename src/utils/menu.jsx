@@ -11,6 +11,8 @@ export function useMenuLogic() {
   const [showMenu, setShowMenu] = useState(true);
   const [productsData, setProductsData] = useState([]);
   const [cartData, setCartData] = useState([]);
+  const [modalOpenDelete, setModalOpenDelete] = useState(false);
+  const [ModalProductId, setModalProductId] = useState(null);
 
   useEffect(() => {
     if (!token) {
@@ -39,7 +41,7 @@ export function useMenuLogic() {
       }
     });
   }, [navigate, token, userId, showMenu]);
-
+  
   const breakfastProducts = productsData.filter(product => product.type === 'Desayuno');
   const lunchProducts = productsData.filter(product => product.type === 'Almuerzo');
 
@@ -58,14 +60,16 @@ export function useMenuLogic() {
   const handleClickProduct = (product) => {
     setCartData(prevCartData => {
       const updatedCartData = [...prevCartData];
-      const existingProductIndex = updatedCartData.findIndex((p) => p.id === product.id);
-      if (checkProductExists(product, updatedCartData)){
-        updatedCartData[existingProductIndex].qty += 1
-      }
-      if (!checkProductExists(product, updatedCartData)) {
-        product.qty = 1;
-        updatedCartData.push(product)
-      }
+        if (checkProductExists(product, updatedCartData)){
+          const existingProductIndex = updatedCartData.findIndex((p) => p.id === product.id);
+          // Clonar el objeto del producto para evitar modificar el objeto original
+          const clonedProduct = { ...updatedCartData[existingProductIndex] };
+          clonedProduct.qty += 1;
+          updatedCartData[existingProductIndex] = clonedProduct;
+        } else {
+          product.qty = 1;
+          updatedCartData.push(product);
+        }
       return updatedCartData;
     })
   };
@@ -79,7 +83,9 @@ export function useMenuLogic() {
       const updatedCartData = [...prevCartData];
       const existingProductIndex = updatedCartData.findIndex((p) => p.id === product.id);
       if (checkProductExists(product, updatedCartData)) {
-        updatedCartData[existingProductIndex].qty += 1;
+        const clonedProduct = { ...updatedCartData[existingProductIndex] };
+        clonedProduct.qty += 1;
+        updatedCartData[existingProductIndex] = clonedProduct;
       }
       return updatedCartData;
     });
@@ -90,14 +96,27 @@ export function useMenuLogic() {
       const updatedCartData = [...prevCartData];
       const existingProductIndex = updatedCartData.findIndex((p) => p.id === product.id);
       if (checkProductExists(product, updatedCartData)) {
-        updatedCartData[existingProductIndex].qty -= 1;
+        const clonedProduct = { ...updatedCartData[existingProductIndex] };
+        clonedProduct.qty -= 1;
+        updatedCartData[existingProductIndex] = clonedProduct;
       }
       return updatedCartData;
     });
   };
 
-  const handleClickDelete = () => {
-    console.log('Eliminaste un producto del carrito')
+  const handleClickDelete = (product) => {
+      setModalProductId(product.id);
+      setModalOpenDelete(true);
+  }
+  
+
+  const handleDelete = (product) => {
+    setCartData(prevCartData => {
+      const updatedCartData = [...prevCartData];
+      const existingProductIndex = updatedCartData.findIndex((p) => p.id === product.id);
+       updatedCartData.splice(existingProductIndex, 1);
+      return updatedCartData;
+    });
   };
 
   const handleClickKitchen = () => {
@@ -115,6 +134,10 @@ export function useMenuLogic() {
     cartData,
     setCartData,
     getTotalPrice,
+    modalOpenDelete,
+    setModalOpenDelete,
+    ModalProductId,
+    setModalProductId,
     handleOrdersClick,
     handleBreakfastClick,
     handleLunchClick,
@@ -122,6 +145,7 @@ export function useMenuLogic() {
     handleClickAdd,
     handleClickRemove,
     handleClickDelete,
+    handleDelete,
     handleClickKitchen
   }
 }

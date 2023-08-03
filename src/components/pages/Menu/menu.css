@@ -104,11 +104,15 @@ body{
 
 .cart-table{
   color: white;
-  width: 90%;
+  width: 98%;
   border-collapse: collapse;
   padding:10%;
 }
-
+.cart-table-container{
+  width:95%;
+  overflow-y: scroll;
+  justify-content: center;
+}
 .cart-table th,
 .cart-table td {
   padding: 6px;
@@ -160,6 +164,7 @@ td.table-count {
   font-family: 'Asap condensed', sans-serif;
   font-weight: normal;
   font-size: 1em;
+  width: 84px;
 }
 
 .action-button {
