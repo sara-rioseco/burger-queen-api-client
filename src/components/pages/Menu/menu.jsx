@@ -22,6 +22,7 @@ export default function Menu() {
     handleOrdersClick,
     handleBreakfastClick,
     handleLunchClick,
+    getTotalPrice,
     handleClickProduct,
     handleClickAdd,
     handleClickRemove,
@@ -43,13 +44,9 @@ export default function Menu() {
         {showMenu && (
           <div className='products-grid'>
             {breakfastProducts.map(product => (
-              <div key={product.id} className='product'> 
-                <div className='image-content'><img src={product.image} alt={product.name} className='image' onClick={() => {
-                  handleClickProduct(product);
-                  }}/></div>
-                <div className='text-content' onClick={() => {
-                  handleClickProduct(product);
-                  }}>
+              <div key={product.id} className='product' onClick={() => handleClickProduct(product)}> 
+                <div className='image-content'><img src={product.image} alt={product.name} className='image' /></div>
+                <div className='text-content'>
                   <div className='product-name'>{product.name}</div>
                   <div className='product-price'>${product.price}</div>
                 </div>
@@ -61,13 +58,9 @@ export default function Menu() {
         {!showMenu && (
           <div className='products-grid'>
             {lunchProducts.map(product => (
-              <div key={product.id} className='product'> 
-                <div className='image-content'><img src={product.image} alt={product.name} className='image'  onClick={() => {
-                  handleClickProduct(product);
-                  }}/></div>
-                <div className='text-content'  onClick={() => {
-                  handleClickProduct(product);
-                  }}>
+              <div key={product.id} className='product'  onClick={() => handleClickProduct(product)}> 
+                <div className='image-content'><img src={product.image} alt={product.name} className='image' /></div>
+                <div className='text-content' >
                   <div className='product-name'>{product.name}</div>
                   <div className='product-price'>${product.price}</div>
                 </div>
@@ -79,9 +72,21 @@ export default function Menu() {
       </div>
       <div className='cart-section'>
         <div className='cart-text'>CLIENTE:</div>
-        <div><input className='cart-input' type='text' placeholder='Escribe aquí'></input></div>
+        <div><input className='cart-input form-control' type='text' placeholder='Escribe aquí'></input></div>
         <div className='cart-text'>MESA:</div>
-        <div><input className='cart-input' type='text' pattern="^[0-9]+$" maxLength="2" placeholder='Escribe aquí'></input></div>
+        <div>
+          <select className='form-select cart-input' aria-label='select-input' defaultValue={'default'}>
+            <option value='default' disabled>Selecciona la mesa</option>
+            <option value='1'>Mesa 1</option>
+            <option value='2'>Mesa 2</option>
+            <option value='3'>Mesa 3</option>
+            <option value='4'>Mesa 4</option>
+            <option value='5'>Mesa 5</option>
+            <option value='6'>Mesa 6</option>
+            <option value='7'>Mesa 7</option>
+            <option value='8'>Mesa 8</option>
+          </select>
+        </div>
         <table className='cart-table'>
           <thead>
             <tr key='head' className="table-head">
@@ -92,9 +97,9 @@ export default function Menu() {
             {cartData && cartData.map((product) => (
               <tr key={product.id}>
                 <td className='table-body'>{product.name}</td>
-                <td className='table-count'><img src={Remove} alt='remove-button' className='action-button' onClick={handleClickRemove}/>{'\u00A0'}{'\u00A0'}{product.qty}{'\u00A0'}{'\u00A0'}<img src={Add} alt='add-button' className='action-button' onClick={() => handleClickAdd(product, cartData)}/></td>
-                <td className='table-number'>${product.price}</td>
-                <td className='table-number'><img src={Delete} alt='delete-button' className='action-button' onClick={handleClickDelete}/></td>
+                <td className='table-count'><img src={Remove} alt='remove-button' className='action-button' onClick={()=> handleClickRemove(product)}/>{'\u00A0'}{'\u00A0'}{product.qty}{'\u00A0'}{'\u00A0'}<img src={Add} alt='add-button' className='action-button' onClick={()=> handleClickAdd(product)}/></td>
+                <td className='table-number'>${product.qty*product.price}</td>
+                <td className='table-number'><img src={Delete} alt='delete-button' className='action-button' onClick={()=> handleClickDelete(product)}/></td>
               </tr>
             ))}  
           </tbody>
@@ -102,7 +107,7 @@ export default function Menu() {
             <tr key='foot' className="table-footer">
               <td className='table-end'> Total : </td>
               <td className='table-body'> </td>
-                <td className='table-number'>$ 0</td>
+              <td className='table-number'>${getTotalPrice()}</td>
               <td className='table-body'> </td>
             </tr>
           </tfoot>

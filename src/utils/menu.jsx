@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ApiRequest from '../services/apiRequest.jsx';
 
@@ -11,7 +11,6 @@ export function useMenuLogic() {
   const [showMenu, setShowMenu] = useState(true);
   const [productsData, setProductsData] = useState([]);
   const [cartData, setCartData] = useState([]);
-  const [productCount, setProductCount] = useState(0);
 
   useEffect(() => {
     if (!token) {
@@ -39,7 +38,7 @@ export function useMenuLogic() {
         error && navigate('/error-page');
       }
     });
-  }, [navigate, token, userId, showMenu, cartData, productCount]);
+  }, [navigate, token, userId, showMenu]);
 
   const breakfastProducts = productsData.filter(product => product.type === 'Desayuno');
   const lunchProducts = productsData.filter(product => product.type === 'Almuerzo');
@@ -55,69 +54,54 @@ export function useMenuLogic() {
   const handleLunchClick = () => {
     setShowMenu(false)
   };
-
-  const handleClickAdd = useCallback((product, arr) => {
-    const result = arr.find(p => p.id === product.id);
-    if (result !== undefined) {
-      product.qty += 1
-    } else {
-      product.qty = 1
-      arr.push(product)
-    }
-  }, []);
-
-  const handleClickRemove = useCallback((product) => {
-    if (product.qty > 1){
-      product.qty -= 1;
-    }
-  }, []);
-
-  const handleClickDelete = useCallback(() => {
-    console.log('Eliminaste un producto del carrito')
-  }, []);
-
-  /* const addQtyProperty = (productId, arr, newProperty) => {
-    return arr.map(product => {
-      if (product.id === productId) {
-        return {
-          ...product,
-          ...newProperty
-        };
-      }
-      return product;
-    });
-  };
-
-  const addItemToQtyProperty = (productId, arr) => {
-    return arr.map(product => {
-      if (product.id === productId) {
-        product.qty += 1;
-        console.log(product)
-        return product;
-      }
-      return product;
-    });
-  }; */
-
+  
   const handleClickProduct = (product) => {
-    const productsArr = cartData
-    console.log('antes de agregar', productsArr)
-    if (product.qty === undefined) {
-      product.qty = 0;
-      productsArr.push(product);
-    }
-    if (checkProductExists(product, productsArr)){
-      product.qty += 1;
-    } 
-    setCartData(productsArr);
-    console.log('después de agregar', cartData)
-    return cartData;
+    setCartData(prevCartData => {
+      const updatedCartData = [...prevCartData];
+      const existingProductIndex = updatedCartData.findIndex((p) => p.id === product.id);
+      if (checkProductExists(product, updatedCartData)){
+        updatedCartData[existingProductIndex].qty += 1
+      }
+      if (!checkProductExists(product, updatedCartData)) {
+        product.qty = 1;
+        updatedCartData.push(product)
+      }
+      return updatedCartData;
+    })
   };
 
-  const checkProductExists = (product, arr) => arr.filter(p => p.id === product.id).length > 0;
+  const checkProductExists = (item, arr) => arr.filter(p => p.id === item.id).length > 0;
+
+  const getTotalPrice = () => cartData.reduce((acc, curr) => acc + curr.price * curr.qty, 0);
+
+  const handleClickAdd = (product) => {
+    setCartData(prevCartData => {
+      const updatedCartData = [...prevCartData];
+      const existingProductIndex = updatedCartData.findIndex((p) => p.id === product.id);
+      if (checkProductExists(product, updatedCartData)) {
+        updatedCartData[existingProductIndex].qty += 1;
+      }
+      return updatedCartData;
+    });
+  };
+
+  const handleClickRemove = (product) => {
+    setCartData(prevCartData => {
+      const updatedCartData = [...prevCartData];
+      const existingProductIndex = updatedCartData.findIndex((p) => p.id === product.id);
+      if (checkProductExists(product, updatedCartData)) {
+        updatedCartData[existingProductIndex].qty -= 1;
+      }
+      return updatedCartData;
+    });
+  };
+
+  const handleClickDelete = () => {
+    console.log('Eliminaste un producto del carrito')
+  };
 
   const handleClickKitchen = () => {
-    console.log('Has enviado la orden a cocina')
+    console.log('Se ha creado la orden y se ha enviado a la cocina')
   };
 
   return {
@@ -130,8 +114,7 @@ export function useMenuLogic() {
     lunchProducts,
     cartData,
     setCartData,
-    productCount,
-    setProductCount,
+    getTotalPrice,
     handleOrdersClick,
     handleBreakfastClick,
     handleLunchClick,
