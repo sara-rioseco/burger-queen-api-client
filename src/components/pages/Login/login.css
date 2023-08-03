@@ -51,14 +51,17 @@
   background-color: transparent;
   display: flex;
   flex-direction: row;
+  align-items: center;
+  position: relative;
 }
 
 .togglePassword {
-  width: 36px;
-  height: 28px;
-  position: fixed;
-  margin-left: 415px;
-  margin-top: 50px;
+  width: 34px;
+  height: 24px;
+  position: absolute;
+  right: 10px;
+  top: 75%;
+  transform: translateY(-25%);
   cursor: pointer;
 }
 
