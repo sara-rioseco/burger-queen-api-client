@@ -39,7 +39,6 @@ export function useMenuLogic() {
       }
     });
   }, [navigate, token, userId, showMenu]);
-
   const breakfastProducts = productsData.filter(product => product.type === 'Desayuno');
   const lunchProducts = productsData.filter(product => product.type === 'Almuerzo');
 
@@ -58,14 +57,17 @@ export function useMenuLogic() {
   const handleClickProduct = (product) => {
     setCartData(prevCartData => {
       const updatedCartData = [...prevCartData];
-      const existingProductIndex = updatedCartData.findIndex((p) => p.id === product.id);
-      if (checkProductExists(product, updatedCartData)){
-        updatedCartData[existingProductIndex].qty += 1
-      }
-      if (!checkProductExists(product, updatedCartData)) {
-        product.qty = 1;
-        updatedCartData.push(product)
-      }
+        if (checkProductExists(product, updatedCartData)){
+          const existingProductIndex = updatedCartData.findIndex((p) => p.id === product.id);
+          console.log(1, product.qty)
+          console.log('hola', updatedCartData[existingProductIndex].qty)
+          updatedCartData[existingProductIndex].qty += 1;
+          console.log(2, product.qty)
+        }
+        if (!checkProductExists(product, updatedCartData)) {
+          product.qty = 1;
+          updatedCartData.push(product)
+        }
       return updatedCartData;
     })
   };

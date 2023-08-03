@@ -87,6 +87,7 @@ export default function Menu() {
             <option value='8'>Mesa 8</option>
           </select>
         </div>
+        <div className='cart-table-container'>
         <table className='cart-table'>
           <thead>
             <tr key='head' className="table-head">
@@ -112,6 +113,7 @@ export default function Menu() {
             </tr>
           </tfoot>
         </table>
+        </div>
         <Button label='ENVIAR A COCINA' onClick={handleClickKitchen} classButton='buttonMenu'/>
       </div>
     </>
