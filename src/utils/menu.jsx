@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ApiRequest from '../services/apiRequest.jsx';
 
-export function MenuLogic() {
+export function useMenuLogic() {
   const navigate = useNavigate();
+
   const token = localStorage.getItem('accessToken');
   const userId = localStorage.getItem('userId');
 
@@ -16,6 +17,7 @@ export function MenuLogic() {
       navigate('/login');
       return;
     }
+
     ApiRequest({
       url: 'http://localhost:8080/products',
       method: 'get',
@@ -28,41 +30,70 @@ export function MenuLogic() {
       setProductsData(Products);
     }).catch((error) => {
       console.error(error);
+      if (error.response.data === 'jwt expired' && error.response.status === 401) {
+        console.error(error);
+        navigate('/login');
+      } else {
+        console.error(error);
+        error && navigate('/error-page');
+      }
     });
-  }, [navigate, token, userId, showMenu, cartData, setCartData]);
+  }, [navigate, token, userId, showMenu]);
 
   const breakfastProducts = productsData.filter(product => product.type === 'Desayuno');
   const lunchProducts = productsData.filter(product => product.type === 'Almuerzo');
 
-  const handleClickOrders = () => {
+  const handleOrdersClick = () => {
     navigate('/orders');
   };
 
-  const handleClickDesayuno = () => {
+  const handleBreakfastClick = () => {
     setShowMenu(true)
   };
 
-  const handleClickAlmuerzo = () => {
+  const handleLunchClick = () => {
     setShowMenu(false)
   };
-
+  
   const handleClickProduct = (product) => {
-    const productsArr = cartData;
-    productsArr.push(product)
-    console.log('array del carrito', productsArr)
-    return productsArr;
+    setCartData(prevCartData => {
+      const updatedCartData = [...prevCartData];
+      const existingProductIndex = updatedCartData.findIndex((p) => p.id === product.id);
+      if (checkProductExists(product, updatedCartData)){
+        updatedCartData[existingProductIndex].qty += 1
+      }
+      if (!checkProductExists(product, updatedCartData)) {
+        product.qty = 1;
+        updatedCartData.push(product)
+      }
+      return updatedCartData;
+    })
   };
 
-  const productsArr = product => handleClickProduct(product)
+  const checkProductExists = (item, arr) => arr.filter(p => p.id === item.id).length > 0;
 
-  const handleCountProducts = (product, arr) => arr.filter(p => p === product).length;
+  const getTotalPrice = () => cartData.reduce((acc, curr) => acc + curr.price * curr.qty, 0);
 
-  const handleClickAdd = () => {
-        console.log('Agregaste una unidad del producto')
+  const handleClickAdd = (product) => {
+    setCartData(prevCartData => {
+      const updatedCartData = [...prevCartData];
+      const existingProductIndex = updatedCartData.findIndex((p) => p.id === product.id);
+      if (checkProductExists(product, updatedCartData)) {
+        updatedCartData[existingProductIndex].qty += 1;
+      }
+      return updatedCartData;
+    });
   };
 
-  const handleClickRemove = () => {
-    console.log('Eliminaste una unidad del producto')
+  const handleClickRemove = (product) => {
+    setCartData(prevCartData => {
+      const updatedCartData = [...prevCartData];
+      const existingProductIndex = updatedCartData.findIndex((p) => p.id === product.id);
+      if (checkProductExists(product, updatedCartData)) {
+        updatedCartData[existingProductIndex].qty -= 1;
+      }
+      return updatedCartData;
+    });
   };
 
   const handleClickDelete = () => {
@@ -70,7 +101,7 @@ export function MenuLogic() {
   };
 
   const handleClickKitchen = () => {
-    console.log('Has enviado la orden a cocina')
+    console.log('Se ha creado la orden y se ha enviado a la cocina')
   };
 
   return {
@@ -81,13 +112,13 @@ export function MenuLogic() {
     productsData,
     breakfastProducts,
     lunchProducts,
+    cartData,
     setCartData,
-    productsArr,
-    handleClickOrders,
-    handleClickDesayuno,
-    handleClickAlmuerzo,
+    getTotalPrice,
+    handleOrdersClick,
+    handleBreakfastClick,
+    handleLunchClick,
     handleClickProduct,
-    handleCountProducts,
     handleClickAdd,
     handleClickRemove,
     handleClickDelete,
