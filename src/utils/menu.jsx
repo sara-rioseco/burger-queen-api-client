@@ -11,8 +11,8 @@ export function useMenuLogic() {
   const [showMenu, setShowMenu] = useState(true);
   const [productsData, setProductsData] = useState([]);
   const [cartData, setCartData] = useState([]);
-  const [modalOpenDelete, setModalOpenDelete] = useState(false);
-  const [ModalProductId, setModalProductId] = useState(null);
+  const [modalDelete, setModalDelete] = useState(false);
+  const [modalProductId, setModalProductId] = useState(null);
 
   useEffect(() => {
     if (!token) {
@@ -40,7 +40,7 @@ export function useMenuLogic() {
         error && navigate('/error-page');
       }
     });
-  }, [navigate, token, userId, showMenu]);
+  }, [navigate, token, userId]);
   
   const breakfastProducts = productsData.filter(product => product.type === 'Desayuno');
   const lunchProducts = productsData.filter(product => product.type === 'Almuerzo');
@@ -104,10 +104,17 @@ export function useMenuLogic() {
     });
   };
 
-  const handleClickDelete = (product) => {
-      setModalProductId(product.id);
-      setModalOpenDelete(true);
-  }
+  const handleClickOpenDelete = (product) => {
+    const updatedProductId = product.id;
+    setModalProductId(updatedProductId);
+    setModalDelete(true);
+    console.log(modalProductId, product.id)
+  };
+
+  const handleCloseModal = () => {
+    setModalProductId(null);
+    setModalDelete(false);
+  };
   
 
   const handleDelete = (product) => {
@@ -115,7 +122,9 @@ export function useMenuLogic() {
       const updatedCartData = [...prevCartData];
       const existingProductIndex = updatedCartData.findIndex((p) => p.id === product.id);
        updatedCartData.splice(existingProductIndex, 1);
-      return updatedCartData;
+       setModalProductId(null);
+       setModalDelete(false);
+       return updatedCartData;
     });
   };
 
@@ -134,9 +143,9 @@ export function useMenuLogic() {
     cartData,
     setCartData,
     getTotalPrice,
-    modalOpenDelete,
-    setModalOpenDelete,
-    ModalProductId,
+    modalDelete,
+    setModalDelete,
+    modalProductId,
     setModalProductId,
     handleOrdersClick,
     handleBreakfastClick,
@@ -144,7 +153,8 @@ export function useMenuLogic() {
     handleClickProduct,
     handleClickAdd,
     handleClickRemove,
-    handleClickDelete,
+    handleClickOpenDelete,
+    handleCloseModal,
     handleDelete,
     handleClickKitchen
   }

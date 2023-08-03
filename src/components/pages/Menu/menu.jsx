@@ -20,6 +20,11 @@ export default function Menu() {
     cartData,
     breakfastProducts,
     lunchProducts,
+    modalDelete,
+    setModalDelete,
+    modalProductId,
+    setModalProductId,
+    handleCloseModal,
     handleOrdersClick,
     handleBreakfastClick,
     handleLunchClick,
@@ -27,7 +32,7 @@ export default function Menu() {
     handleClickProduct,
     handleClickAdd,
     handleClickRemove,
-    handleClickDelete,
+    handleClickOpenDelete,
     handleDelete,
     handleClickKitchen
   } = useMenuLogic();
@@ -102,7 +107,24 @@ export default function Menu() {
                 <td className='table-body'>{product.name}</td>
                 <td className='table-count'><img src={Remove} alt='remove-button' className='action-button' onClick={()=> handleClickRemove(product)}/>{'\u00A0'}{'\u00A0'}{product.qty}{'\u00A0'}{'\u00A0'}<img src={Add} alt='add-button' className='action-button' onClick={()=> handleClickAdd(product)}/></td>
                 <td className='table-number'>${product.qty*product.price}</td>
-                <td className='table-number'><img src={Delete} alt='delete-button' className='action-button' onClick={()=> handleDelete(product)}/></td>
+                <td className='modalDelete'>
+                  <Modal open={modalDelete && modalProductId === product.id} onClose={handleCloseModal}>
+                    <h2 className='textModal'>¿Deseas eliminar este producto?</h2>
+                    <h2 className='textModal'>{product.name} x {product.qty}</h2>
+                    <div>
+                      <Button
+                        label='CONFIRMAR'
+                        onClick={() => handleDelete(product)}
+                        classButton='buttonsModal'>
+                      </Button>
+                      <Button
+                        label='CANCELAR'
+                        onClick={handleCloseModal}
+                        classButton='buttonsModal'>
+                      </Button>
+                    </div>
+                  </Modal></td>
+                <td className='table-number'><img src={Delete} alt='delete-button' className='action-button' onClick={()=> handleClickOpenDelete(product)}/></td> 
               </tr>
             ))}  
           </tbody>
