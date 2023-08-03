@@ -14,6 +14,7 @@ export function useOrdersLogic() {
   const userId = localStorage.getItem('userId');
 
   const [ordersData, setOrdersData] = useState([]);
+  const [selectedStatus, setSelectedStatus] = useState([]);
   const [modalOpenDelete, setModalOpenDelete] = useState(false);
   const [modalOpenEdit, setModalOpenEdit] = useState(false);
   const [modalOrderId, setModalOrderId] = useState(null);
@@ -60,7 +61,6 @@ export function useOrdersLogic() {
     })
       .then((response) => {
         setProductsData(response.data);
-        console.log('Respuesta del servidor para los productos:', response.data);
       })
       .catch((error) => {
         console.error(error);
@@ -78,6 +78,23 @@ export function useOrdersLogic() {
   const handleMenuClick = () => {
     navigate('/menu');
   };
+
+  // MANEJA CAMBIOS DE LOS CHECKBOX Y ALMACENA LA SELECCIÓN EN UN ARRAY
+  const handleStatusChange = (event) => {
+    const statusValue = event.target.value;
+    if (event.target.checked) {
+      setSelectedStatus((prevSelectedStatus) => [...prevSelectedStatus, statusValue]);
+    } else {
+      setSelectedStatus((prevSelectedStatus) =>
+        prevSelectedStatus.filter((status) => status !== statusValue)
+      );
+    }
+  };
+
+  // FILTRAR ORDENES POR ESTATUS
+  const filteredOrdersData = selectedStatus.length === 0 ? ordersData : ordersData.filter((order) =>selectedStatus.includes(order.status)
+  );
+
 
   // OBTENER PRODUCTOS DE CADA ORDEN PARA LA TABLA
   const getProductsList = (products) => {
@@ -318,5 +335,8 @@ export function useOrdersLogic() {
     setEditModalStatus,
     productsData,
     editModalProducts,
+    handleStatusChange,
+    filteredOrdersData,
+    selectedStatus,
   };
 }

@@ -8,6 +8,49 @@
   height: 95%;
 }
 
+.navOrders {
+  display: flex;
+  width: webkit-device-width;
+}
+
+.filterOrders {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: max-content;
+}
+
+.textFilterOrders {
+  font-family: 'Bebas Neue', sans-serif;
+  color: #ffffff;
+  width: 11em;
+  font-weight: bold;
+}
+
+.checkboxesContainer {
+  display: flex;
+  gap: 25px;
+}
+
+.optionsFilterOrders {
+  font-family: 'Asap Condensed', sans-serif;
+  color: #ffffff;
+  font-size: 1.3em;
+  font-weight: normal;
+  display: flex;
+  gap: 5px;
+}
+
+input[type='checkbox'] {
+  width: 15px;
+}
+
+input[type='checkbox']:checked {
+  background-color: rgba(209, 166, 80, 1);
+  width: 25px;
+}
+
+
 .buttonMenu {
   margin: 15px;
   font-size: 2em;
@@ -23,9 +66,7 @@
 .orders-table {
   color: white;
   width: 100%;
-  /* Ajusta el ancho de la tabla según tus necesidades */
   border-collapse: collapse;
-  /* Para que los bordes de las celdas se combinen */
 }
 
 .orders-table th,

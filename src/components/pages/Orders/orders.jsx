@@ -28,7 +28,6 @@ export default function Orders() {
     getUpdatedTotalOrder,
     handleAddProductToOrder,
     handleEditModalProductDelete,
-    ordersData,
     modalOpenDelete,
     modalOrderId,
     modalOpenEdit,
@@ -40,16 +39,49 @@ export default function Orders() {
     setEditModalStatus,
     productsData,
     editModalProducts,
+    handleStatusChange,
+    filteredOrdersData
   } = useOrdersLogic();
 
   // RENDERIZADO
   return (
     <>
       <div className='containerOrders'>
-        <Button
-          label='MENU'
-          onClick={handleMenuClick}
-          classButton='buttonMenu' />
+        <nav className='navOrders'>
+          <Button
+            label='MENU'
+            onClick={handleMenuClick}
+            classButton='buttonMenu' />
+          <div className='filterOrders'>
+            <h2 className='textFilterOrders'>Filtrar ordenes por estatus :</h2>
+            <div className='checkboxesContainer'>
+              <label className='optionsFilterOrders'>
+                <input
+                  type='checkbox'
+                  value='Entregado'
+                  onChange={handleStatusChange}
+                />
+                Entregado
+              </label>
+              <label className='optionsFilterOrders'>
+                <input
+                  type='checkbox'
+                  value='Listo en barra'
+                  onChange={handleStatusChange}
+                />
+                Listo en barra
+              </label>
+              <label className='optionsFilterOrders'>
+                <input
+                  type='checkbox'
+                  value='En preparación'
+                  onChange={handleStatusChange}
+                />
+                En preparación
+              </label>
+            </div>
+          </div>
+        </nav>
         <div className='orders'>
           <table className='orders-table'>
             <thead>
@@ -57,7 +89,7 @@ export default function Orders() {
                 <th className="tableHeader">MESA</th>
                 <th className="tableHeader">CLIENTE</th>
                 <th className="tableHeader">PEDIDO</th>
-                <th className="tableHeader">ESTADO</th>
+                <th className="tableHeader">ESTATUS</th>
                 <th className="tableHeader">TOTAL</th>
                 <th className="tableHeader">EDITAR</th>
                 <th className="tableHeader">ELIMINAR</th>
@@ -65,7 +97,7 @@ export default function Orders() {
               </tr>
             </thead>
             <tbody>
-              {ordersData.map((order) => (
+              {filteredOrdersData.map((order) => (
                 <tr key={order.id}>
                   <td>
                     #{order.table}
