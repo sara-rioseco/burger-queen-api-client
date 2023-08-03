@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ApiRequest from '../services/apiRequest.jsx';
+import ApiRequest from '../services/apiRequest.jsx';6
 
 export function useMenuLogic() {
   const navigate = useNavigate();
@@ -13,6 +13,9 @@ export function useMenuLogic() {
   const [cartData, setCartData] = useState([]);
   const [modalDelete, setModalDelete] = useState(false);
   const [modalProductId, setModalProductId] = useState(null);
+  const [clientName, setClientName] = useState('cliente1');
+  const [tableNumber, setTableNumber] = useState('1');
+  const [orderProducts, setOrderProducts] = useState([]);
 
   useEffect(() => {
     if (!token) {
@@ -108,7 +111,6 @@ export function useMenuLogic() {
     const updatedProductId = product.id;
     setModalProductId(updatedProductId);
     setModalDelete(true);
-    console.log(modalProductId, product.id)
   };
 
   const handleCloseModal = () => {
@@ -128,9 +130,57 @@ export function useMenuLogic() {
     });
   };
 
-  const handleClickKitchen = () => {
-    console.log('Se ha creado la orden y se ha enviado a la cocina')
+// setear info de nueva orden
+  const handleNewOrderData = () => {
+    setClientName()
+    setTableNumber()
+    setOrderProducts()
   };
+
+// construir nueva orden
+  const getOrderData = () => {
+    const newOrder = {
+      userId: userId,
+      client: clientName,
+      table: tableNumber,
+      products: orderProducts.map((product) => ({
+        qty: product.qty,
+        product: {
+          id: product.id,
+          name: product.name,
+          price: product.price,
+        },
+      })),
+      status: 'En preparación',
+    };
+    return newOrder;
+  };
+
+  //enviar info de nueva orden a la API
+  const handleCreateOrder = (cartData) => {
+    console.log('Se está creando la orden con estos productos: ', cartData)
+    console.log('Se está creando la orden con este userId: ', userId)
+    console.log('Se está creando la orden para este cliente y mesa: ', clientName, tableNumber)
+    const body = getOrderData();
+      ApiRequest({
+        url: 'http://localhost:8080/orders',
+        method: 'post',
+        body: body,
+      })
+        .then(() => {
+          
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response.data === 'jwt expired' && error.response.status === 401) {
+            console.error(error);
+            navigate('/login');
+          } else {
+            console.error(error);
+            error && navigate('/error-page');
+          }
+        });
+    };
 
   return {
     navigate,
@@ -146,6 +196,7 @@ export function useMenuLogic() {
     modalDelete,
     setModalDelete,
     modalProductId,
+    handleNewOrderData,
     setModalProductId,
     handleOrdersClick,
     handleBreakfastClick,
@@ -156,6 +207,6 @@ export function useMenuLogic() {
     handleClickOpenDelete,
     handleCloseModal,
     handleDelete,
-    handleClickKitchen
+    handleCreateOrder,
   }
 }
