@@ -11,6 +11,8 @@ export function useMenuLogic() {
   const [showMenu, setShowMenu] = useState(true);
   const [productsData, setProductsData] = useState([]);
   const [cartData, setCartData] = useState([]);
+  const [modalOpenDelete, setModalOpenDelete] = useState(false);
+  const [ModalProductId, setModalProductId] = useState(null);
 
   useEffect(() => {
     if (!token) {
@@ -39,6 +41,7 @@ export function useMenuLogic() {
       }
     });
   }, [navigate, token, userId, showMenu]);
+  
   const breakfastProducts = productsData.filter(product => product.type === 'Desayuno');
   const lunchProducts = productsData.filter(product => product.type === 'Almuerzo');
 
@@ -59,14 +62,13 @@ export function useMenuLogic() {
       const updatedCartData = [...prevCartData];
         if (checkProductExists(product, updatedCartData)){
           const existingProductIndex = updatedCartData.findIndex((p) => p.id === product.id);
-          console.log(1, product.qty)
-          console.log('hola', updatedCartData[existingProductIndex].qty)
-          updatedCartData[existingProductIndex].qty += 1;
-          console.log(2, product.qty)
-        }
-        if (!checkProductExists(product, updatedCartData)) {
+          // Clonar el objeto del producto para evitar modificar el objeto original
+          const clonedProduct = { ...updatedCartData[existingProductIndex] };
+          clonedProduct.qty += 1;
+          updatedCartData[existingProductIndex] = clonedProduct;
+        } else {
           product.qty = 1;
-          updatedCartData.push(product)
+          updatedCartData.push(product);
         }
       return updatedCartData;
     })
@@ -81,7 +83,9 @@ export function useMenuLogic() {
       const updatedCartData = [...prevCartData];
       const existingProductIndex = updatedCartData.findIndex((p) => p.id === product.id);
       if (checkProductExists(product, updatedCartData)) {
-        updatedCartData[existingProductIndex].qty += 1;
+        const clonedProduct = { ...updatedCartData[existingProductIndex] };
+        clonedProduct.qty += 1;
+        updatedCartData[existingProductIndex] = clonedProduct;
       }
       return updatedCartData;
     });
@@ -92,13 +96,21 @@ export function useMenuLogic() {
       const updatedCartData = [...prevCartData];
       const existingProductIndex = updatedCartData.findIndex((p) => p.id === product.id);
       if (checkProductExists(product, updatedCartData)) {
-        updatedCartData[existingProductIndex].qty -= 1;
+        const clonedProduct = { ...updatedCartData[existingProductIndex] };
+        clonedProduct.qty -= 1;
+        updatedCartData[existingProductIndex] = clonedProduct;
       }
       return updatedCartData;
     });
   };
 
   const handleClickDelete = (product) => {
+      setModalProductId(product.id);
+      setModalOpenDelete(true);
+  }
+  
+
+  const handleDelete = (product) => {
     setCartData(prevCartData => {
       const updatedCartData = [...prevCartData];
       const existingProductIndex = updatedCartData.findIndex((p) => p.id === product.id);
@@ -122,6 +134,10 @@ export function useMenuLogic() {
     cartData,
     setCartData,
     getTotalPrice,
+    modalOpenDelete,
+    setModalOpenDelete,
+    ModalProductId,
+    setModalProductId,
     handleOrdersClick,
     handleBreakfastClick,
     handleLunchClick,
@@ -129,6 +145,7 @@ export function useMenuLogic() {
     handleClickAdd,
     handleClickRemove,
     handleClickDelete,
+    handleDelete,
     handleClickKitchen
   }
 }

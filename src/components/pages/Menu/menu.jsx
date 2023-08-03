@@ -7,6 +7,7 @@ import './menu.css'
 // COMPONENTS
 import Button from '../../button/button.jsx';
 import LogoutButton from '../../logoutButton/logoutButton';
+import Modal from '../../modal/modal.jsx';
 // ASSETS
 import Delete from '../../../assets/Images/borrar.png'
 import Add from '../../../assets/Images/add.png'
@@ -27,6 +28,7 @@ export default function Menu() {
     handleClickAdd,
     handleClickRemove,
     handleClickDelete,
+    handleDelete,
     handleClickKitchen
   } = useMenuLogic();
 
@@ -100,7 +102,7 @@ export default function Menu() {
                 <td className='table-body'>{product.name}</td>
                 <td className='table-count'><img src={Remove} alt='remove-button' className='action-button' onClick={()=> handleClickRemove(product)}/>{'\u00A0'}{'\u00A0'}{product.qty}{'\u00A0'}{'\u00A0'}<img src={Add} alt='add-button' className='action-button' onClick={()=> handleClickAdd(product)}/></td>
                 <td className='table-number'>${product.qty*product.price}</td>
-                <td className='table-number'><img src={Delete} alt='delete-button' className='action-button' onClick={()=> handleClickDelete(product)}/></td>
+                <td className='table-number'><img src={Delete} alt='delete-button' className='action-button' onClick={()=> handleDelete(product)}/></td>
               </tr>
             ))}  
           </tbody>
