@@ -12,7 +12,7 @@ export function useMenuLogic() {
   const [productsData, setProductsData] = useState([]);
   const [cartData, setCartData] = useState([]);
   const [modalDelete, setModalDelete] = useState(false);
-  const [ModalProductId, setModalProductId] = useState(null);
+  const [modalProductId, setModalProductId] = useState(null);
 
   useEffect(() => {
     if (!token) {
@@ -104,15 +104,11 @@ export function useMenuLogic() {
     });
   };
 
-  const handleProductIdChange = (id) => {
-    setModalProductId(id)
-  };
-
   const handleClickOpenDelete = (product) => {
-    console.log('you pressed delete')
-      handleProductIdChange(product.id)
-      setModalDelete(true);
-      console.log(ModalProductId, product.id)
+    const updatedProductId = product.id;
+    setModalProductId(updatedProductId);
+    setModalDelete(true);
+    console.log(modalProductId, product.id)
   };
 
   const handleCloseModal = () => {
@@ -149,7 +145,7 @@ export function useMenuLogic() {
     getTotalPrice,
     modalDelete,
     setModalDelete,
-    ModalProductId,
+    modalProductId,
     setModalProductId,
     handleOrdersClick,
     handleBreakfastClick,
