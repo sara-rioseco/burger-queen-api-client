@@ -98,8 +98,13 @@ export function useMenuLogic() {
     });
   };
 
-  const handleClickDelete = () => {
-    console.log('Eliminaste un producto del carrito')
+  const handleClickDelete = (product) => {
+    setCartData(prevCartData => {
+      const updatedCartData = [...prevCartData];
+      const existingProductIndex = updatedCartData.findIndex((p) => p.id === product.id);
+       updatedCartData.splice(existingProductIndex, 1);
+      return updatedCartData;
+    });
   };
 
   const handleClickKitchen = () => {
