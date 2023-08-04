@@ -47,7 +47,7 @@ export default function Login() {
               onChange={handlePasswordChange}
               label='CONTRASEÑA:'
               classInputLabel='labels'
-              classInput='inputs'
+              classInput='inputs passwd'
               classContainer='containerInput'
             />
             <img
