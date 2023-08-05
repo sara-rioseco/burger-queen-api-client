@@ -8,34 +8,32 @@ import axios from 'axios';
 export function LoginLogic() {
   const navigate = useNavigate();
 
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    password: "",
+    showPassword: false
+  });
 
   // MANEJO DE CAMBIOS DE INPUTS
-  const handleNameChange = (event) => {
-    setName(event.target.value);
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
+  const handleFieldChange = (field, event) => {
+    if (field === 'name') {
+      setFormData({ ...formData, name: event.target.value });
+    } else if (field === 'password') {
+      setFormData({ ...formData, password: event.target.value });
+    }
   };
 
   // MANEJO DE MOSTRAR U OCULTAR CONTRASEÑA
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+  const togglePasswordVisibility = () => setFormData({ ...formData, showPassword: !formData.showPassword });
 
-  const getPasswordInputType = () => {
-    return showPassword ? 'text' : 'password';
-  };
+  const getPasswordInputType = () => formData.showPassword ? 'text' : 'password';
 
   // API REQUEST LOGIN
   const handleLoginClick = async () => {
     try {
       const response = await axios.post('http://localhost:8080/login', {
-        email: name,
-        password: password,
+        email: formData.name,
+        password: formData.password,
       });
 
       // Guardar el accessToken en el localStorage
@@ -52,11 +50,8 @@ export function LoginLogic() {
   };
 
   return {
-    name,
-    password,
-    showPassword,
-    handleNameChange,
-    handlePasswordChange,
+    formData,
+    handleFieldChange,
     togglePasswordVisibility,
     getPasswordInputType,
     handleLoginClick,

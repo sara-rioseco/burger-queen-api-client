@@ -13,11 +13,8 @@ import show from '../../../assets/Images/show.png'
 export default function Login() {
   // DESESTRUCTURACIÓN DE HOOK PERSONALIZADO
   const {
-    name,
-    password,
-    showPassword,
-    handleNameChange,
-    handlePasswordChange,
+    formData,
+    handleFieldChange,
     togglePasswordVisibility,
     getPasswordInputType,
     handleLoginClick,
@@ -33,8 +30,8 @@ export default function Login() {
           <Input
             type='text'
             placeholder='Escribe aquí'
-            value={name}
-            onChange={handleNameChange}
+            value={formData.name}
+            onChange={(e) => handleFieldChange('name', e)}
             label='NOMBRE:'
             classInputLabel='labels'
             classInput='inputs'
@@ -43,15 +40,15 @@ export default function Login() {
             <Input
               type={getPasswordInputType()}
               placeholder='*************'
-              value={password}
-              onChange={handlePasswordChange}
+              value={formData.password}
+              onChange={(e) => handleFieldChange('password', e)}
               label='CONTRASEÑA:'
               classInputLabel='labels'
               classInput='inputs passwd'
               classContainer='containerInput'
             />
             <img
-              src={showPassword ? hide : show}
+              src={formData.showPassword ? hide : show}
               className="togglePassword"
               onClick={togglePasswordVisibility}
             />
