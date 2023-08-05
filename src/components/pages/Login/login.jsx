@@ -15,6 +15,7 @@ export default function Login() {
   const {
     formData,
     handleFieldChange,
+    errorLabel,
     togglePasswordVisibility,
     getPasswordInputType,
     handleLoginClick,
@@ -53,6 +54,7 @@ export default function Login() {
               onClick={togglePasswordVisibility}
             />
           </div>
+          <label className='labelErrorLogin'>{errorLabel}</label>
           <Button label="ENTRAR" onClick={handleLoginClick} classButton='buttonEnter' />
         </div>
         <img src={gif} className="gif" alt="gif" />
