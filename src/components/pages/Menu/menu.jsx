@@ -21,9 +21,7 @@ export default function Menu() {
     breakfastProducts,
     lunchProducts,
     modalDelete,
-    setModalDelete,
     modalProductId,
-    setModalProductId,
     handleCloseModal,
     handleOrdersClick,
     handleBreakfastClick,
@@ -34,7 +32,7 @@ export default function Menu() {
     handleClickRemove,
     handleClickOpenDelete,
     handleDelete,
-    handleClickKitchen
+    handleCreateOrder,
   } = useMenuLogic();
 
 // =========== RENDERIZADO ===========
@@ -79,10 +77,10 @@ export default function Menu() {
       </div>
       <div className='cart-section'>
         <div className='cart-text'>CLIENTE:</div>
-        <div><input className='cart-input form-control' type='text' placeholder='Escribe aquí'></input></div>
+        <div><input className='cart-input form-control' type='text' id='client' placeholder='Escribe aquí'></input></div>
         <div className='cart-text'>MESA:</div>
         <div>
-          <select className='form-select cart-input' aria-label='select-input' defaultValue={'default'}>
+          <select className='form-select cart-input' aria-label='select-input' id='table' defaultValue={'default'}>
             <option value='default' disabled>Selecciona la mesa</option>
             <option value='1'>Mesa 1</option>
             <option value='2'>Mesa 2</option>
@@ -138,7 +136,7 @@ export default function Menu() {
           </tfoot>
         </table>
         </div>
-        <Button label='ENVIAR A COCINA' onClick={handleClickKitchen} classButton='buttonMenu'/>
+        <Button label='ENVIAR A COCINA' onClick={() => handleCreateOrder(cartData)} classButton='buttonMenu'/>
       </div>
     </>
   )
