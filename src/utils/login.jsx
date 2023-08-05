@@ -11,6 +11,7 @@ export function LoginLogic() {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [errorLabel, setErrorLabel] = useState('');
 
   // MANEJO DE CAMBIOS DE INPUTS
   const handleNameChange = (event) => {
@@ -46,12 +47,21 @@ export function LoginLogic() {
       response.data.user.role === 'waiter' && navigate('/orders');
       response.data.user.role === 'chef' && navigate('/kitchen');
     } catch (error) {
-      console.error(error);
-      error && navigate('/error-page');
+      if (error.response.data === 'Email and password are required') {
+        setErrorLabel('Completa los campos requeridos');
+      } else if (error.response.data === 'Cannot find user') {
+        setErrorLabel('Usuario no registrado');
+      } else if (error.response.data === 'Incorrect password') {
+        setErrorLabel('Credenciales  incorrectas');
+      } else {
+        console.error(error);
+        error && navigate('/error-page');
+      }
     }
   };
 
   return {
+    errorLabel,
     name,
     password,
     showPassword,
