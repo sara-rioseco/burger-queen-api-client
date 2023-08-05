@@ -13,6 +13,7 @@ import show from '../../../assets/Images/show.png'
 export default function Login() {
   // DESESTRUCTURACIÓN DE HOOK PERSONALIZADO
   const {
+    errorLabel,
     name,
     password,
     showPassword,
@@ -56,6 +57,7 @@ export default function Login() {
               onClick={togglePasswordVisibility}
             />
           </div>
+          <label className='labelErrorLogin'>{errorLabel}</label>
           <Button label="ENTRAR" onClick={handleLoginClick} classButton='buttonEnter' />
         </div>
         <img src={gif} className="gif" alt="gif" />
