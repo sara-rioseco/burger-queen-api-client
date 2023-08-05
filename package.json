@@ -22,6 +22,8 @@
     "@babel/core": "^7.22.9",
     "@babel/preset-env": "^7.22.9",
     "@babel/preset-react": "^7.22.5",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^14.0.0",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
     "@vitejs/plugin-react": "^4.0.1",
@@ -31,13 +33,16 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.1",
     "jest": "^29.6.2",
+    "jest-environment-jsdom": "^29.6.2",
     "react-test-renderer": "^18.2.0",
     "sass": "^1.64.1",
     "vite": "^4.4.0"
   },
   "jest": {
     "moduleNameMapper": {
-      "\\.(css|less)$": "<rootDir>/mock-css.js"
-    }
+      "\\.(css|less)$": "<rootDir>/mock-css.js",
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/mock-assets.js"
+    },
+    "testEnvironment": "jsdom"
   }
 }
