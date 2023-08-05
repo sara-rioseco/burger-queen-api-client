@@ -13,8 +13,8 @@ export function useMenuLogic() {
   const [cartData, setCartData] = useState([]);
   const [modalDelete, setModalDelete] = useState(false);
   const [modalProductId, setModalProductId] = useState(null);
-  const [clientName, setClientName] = useState('cliente1');
-  const [tableNumber, setTableNumber] = useState('1');
+  const [clientName, setClientName] = useState('');
+  const [tableNumber, setTableNumber] = useState('');
   const [orderProducts, setOrderProducts] = useState([]);
 
   useEffect(() => {
@@ -156,11 +156,22 @@ export function useMenuLogic() {
     return newOrder;
   };
 
+  const getClientAndTable = async () => {
+    const client = await document.getElementById('client').value;
+    const table = await document.getElementById('table').value;
+    return {
+      client,
+      table,
+    }
+  };
+
   //enviar info de nueva orden a la API
-  const handleCreateOrder = (cartData) => {
+  const handleCreateOrder = async (cartData) => {
+    const result = await getClientAndTable();
     console.log('Se está creando la orden con estos productos: ', cartData)
     console.log('Se está creando la orden con este userId: ', userId)
-    console.log('Se está creando la orden para este cliente y mesa: ', clientName, tableNumber)
+    console.log('Se está creando la orden para este cliente: ', result.client)
+    console.log('Se está creando la orden para esta mesa: ', result.table)
     const body = getOrderData();
       ApiRequest({
         url: 'http://localhost:8080/orders',
