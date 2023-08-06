@@ -100,8 +100,12 @@ export function useMenuLogic() {
       const existingProductIndex = updatedCartData.findIndex((p) => p.id === product.id);
       if (checkProductExists(product, updatedCartData)) {
         const clonedProduct = { ...updatedCartData[existingProductIndex] };
+        if (clonedProduct.qty === 1) {
+          handleClickOpenDelete(product);
+        } else {
         clonedProduct.qty -= 1;
         updatedCartData[existingProductIndex] = clonedProduct;
+        }
       }
       return updatedCartData;
     });
@@ -130,32 +134,36 @@ export function useMenuLogic() {
     });
   };
 
-// setear info de nueva orden
-  const handleNewOrderData = () => {
-    setClientName()
-    setTableNumber()
-    setOrderProducts()
-  };
+// obtener fecha y hora actuales en formato correcto
+const getDateAndTime = () => {
+  const now = new Date();
+  return now.toISOString().replace(/[TZ]+/gm, ' ').substring(0, 19)
+}
 
 // construir nueva orden
-  const getOrderData = () => {
+  const getOrderData = async (client, table, products) => {
     const newOrder = {
       userId: userId,
-      client: clientName,
-      table: tableNumber,
-      products: orderProducts.map((product) => ({
+      client: client,
+      table: table,
+      products: products.map((product) => ({
         qty: product.qty,
         product: {
           id: product.id,
           name: product.name,
           price: product.price,
+          image: product.image,
+          type: product.type,
+          dateEntry: product.dateEntry
         },
       })),
       status: 'En preparación',
+      dateEntry: getDateAndTime(),
     };
     return newOrder;
   };
 
+  //obtener info de cliente y mesa
   const getClientAndTable = async () => {
     const client = await document.getElementById('client').value;
     const table = await document.getElementById('table').value;
@@ -165,21 +173,44 @@ export function useMenuLogic() {
     }
   };
 
+  //limpiar inputs
+  const clearClientAndTable = async () => {
+    document.getElementById('client').value = '';
+    document.getElementById('table').value = 'default'
+  }
+
   //enviar info de nueva orden a la API
   const handleCreateOrder = async (cartData) => {
-    const result = await getClientAndTable();
-    console.log('Se está creando la orden con estos productos: ', cartData)
-    console.log('Se está creando la orden con este userId: ', userId)
-    console.log('Se está creando la orden para este cliente: ', result.client)
-    console.log('Se está creando la orden para esta mesa: ', result.table)
-    const body = getOrderData();
+    //obtener data de inputs
+    const response = await getClientAndTable();
+    const client = response.client;
+    const table = response.table;
+    if (cartData.length === 0) {
+      alert('No se han seleccionado productos');
+      return;
+    } else if (response.client === '' || response.table === 'default') {
+      alert('No se ha indicado un cliente o una mesa');
+      return;
+    } else {
+      setClientName(client);
+      setTableNumber(table);
+      setOrderProducts(cartData);
+      const updatedOrderProducts = [...cartData];
+      const updatedClient = client;
+      const updatedTableNumber = table;
+      const body = await getOrderData(updatedClient, updatedTableNumber, updatedOrderProducts);
+      console.log(body)
       ApiRequest({
         url: 'http://localhost:8080/orders',
         method: 'post',
         body: body,
       })
         .then(() => {
-          
+          console.log ('Orden creada y en preparación')
+          setCartData([]);
+          setClientName('');
+          setTableNumber('default');
+          clearClientAndTable();
         })
         .catch((error) => {
           console.error(error);
@@ -191,7 +222,8 @@ export function useMenuLogic() {
             error && navigate('/error-page');
           }
         });
-    };
+    }
+  };
 
   return {
     navigate,
@@ -206,8 +238,10 @@ export function useMenuLogic() {
     getTotalPrice,
     modalDelete,
     setModalDelete,
+    clientName,
+    tableNumber,
+    orderProducts,
     modalProductId,
-    handleNewOrderData,
     setModalProductId,
     handleOrdersClick,
     handleBreakfastClick,
