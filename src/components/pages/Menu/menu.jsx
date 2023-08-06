@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-import React from 'react';
 // Import our custom CSS
 import '../../../scss/styles.scss'
 // CSS
@@ -17,22 +15,34 @@ import { useMenuLogic } from '../../../utils/menu';
 export default function Menu() {
   const {
     showMenu,
-    cartData,
     breakfastProducts,
     lunchProducts,
+    cartData,
+    getTotalPrice,
     modalDelete,
     modalProductId,
-    handleCloseModal,
+    modalClientName,
+    handleCloseModalClientName,
+    modalTableNumber,
+    handleCloseModalTableNumber,
+    modalOrderProducts,
+    handleCloseModalOrderProducts,
+    modalOrderConfirmation,
+    handleOpenModalOrderConfirmation,
+    handleCloseModalOrderConfirmation,
+    modalOrderSuccess,
+    handleCloseModalOrderSuccess,
     handleOrdersClick,
     handleBreakfastClick,
     handleLunchClick,
-    getTotalPrice,
     handleClickProduct,
     handleClickAdd,
     handleClickRemove,
     handleClickOpenDelete,
+    handleCloseModal,
     handleDelete,
     handleCreateOrder,
+    validateInputs
   } = useMenuLogic();
 
 // =========== RENDERIZADO ===========
@@ -136,7 +146,72 @@ export default function Menu() {
           </tfoot>
         </table>
         </div>
-        <Button label='ENVIAR A COCINA' onClick={() => handleCreateOrder(cartData)} classButton='buttonMenu'/>
+        <div>
+                  <Modal open={modalOrderConfirmation} onClose={handleCloseModalOrderConfirmation}>
+            <h2 className='textModal'>¿Deseas enviar la orden a la cocina?</h2>
+            <div>
+              <Button
+                label='CONFIRMAR'
+                onClick={() => handleCreateOrder(cartData)}
+                classButton='buttonsModal'>
+              </Button>
+              <Button
+                label='CANCELAR'
+                onClick={handleCloseModalOrderConfirmation}
+                classButton='buttonsModal'>
+              </Button>
+            </div>
+          </Modal>
+          <Modal open={modalClientName} onClose={handleCloseModalClientName}>
+            <h2 className='textModal'>Ingresa el nombre del cliente</h2>
+            <div>
+                <Button
+                label='ACEPTAR'
+                onClick={handleCloseModalClientName}
+                classButton='buttonsModal'>
+              </Button>
+            </div>
+          </Modal>
+          <Modal open={modalTableNumber} onClose={handleCloseModalTableNumber}>
+            <h2 className='textModal'>Selecciona el número de mesa</h2>
+            <div>
+                <Button
+                label='ACEPTAR'
+                onClick={handleCloseModalTableNumber}
+                classButton='buttonsModal'>
+              </Button>
+            </div>
+          </Modal>
+          <Modal open={modalOrderProducts} onClose={handleCloseModalOrderProducts}>
+            <h2 className='textModal'>Ingresa los productos al carrito</h2>
+            <div>
+                <Button
+                label='ACEPTAR'
+                onClick={handleCloseModalOrderProducts}
+                classButton='buttonsModal'>
+              </Button>
+            </div>
+          </Modal>
+          <Modal open={modalOrderSuccess} onClose={handleCloseModalOrderSuccess}>
+            <h2 className='textModal'>La ha orden se ha creado exitosamente</h2>
+            <div>
+                <Button
+                label='ACEPTAR'
+                onClick={handleCloseModalOrderSuccess}
+                classButton='buttonsModal'>
+              </Button>
+            </div>
+          </Modal>
+        </div>
+        <Button label='ENVIAR A COCINA' onClick={() => {
+          try {
+            validateInputs(cartData)
+          } catch {
+            (e) => console.log(e, 'error validating data')
+          } finally {
+            validateInputs(cartData) ? handleOpenModalOrderConfirmation(): console.log('error validating data');
+          }
+        }} classButton='buttonMenu'/>
       </div>
     </>
   )

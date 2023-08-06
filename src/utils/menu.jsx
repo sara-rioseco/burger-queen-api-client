@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ApiRequest from '../services/apiRequest.jsx';6
 
+// LÓGICA DE LA SECCIÓN MENÚ
 export function useMenuLogic() {
   const navigate = useNavigate();
 
@@ -13,6 +14,11 @@ export function useMenuLogic() {
   const [cartData, setCartData] = useState([]);
   const [modalDelete, setModalDelete] = useState(false);
   const [modalProductId, setModalProductId] = useState(null);
+  const [modalClientName, setModalClientName] = useState(false);
+  const [modalTableNumber, setModalTableNumber] = useState(false);
+  const [modalOrderProducts, setModalOrderProducts] = useState(false);
+  const [modalOrderConfirmation, setModalOrderConfirmation] = useState(false);
+  const [modalOrderSuccess, setModalOrderSuccess] = useState(false);
   const [clientName, setClientName] = useState('');
   const [tableNumber, setTableNumber] = useState('');
   const [orderProducts, setOrderProducts] = useState([]);
@@ -48,18 +54,22 @@ export function useMenuLogic() {
   const breakfastProducts = productsData.filter(product => product.type === 'Desayuno');
   const lunchProducts = productsData.filter(product => product.type === 'Almuerzo');
 
+  //navegar a orders 
   const handleOrdersClick = () => {
     navigate('/orders');
   };
 
+  //mostrar productos de desayuno
   const handleBreakfastClick = () => {
     setShowMenu(true)
   };
 
+  //mostrar productos de almuerzo
   const handleLunchClick = () => {
     setShowMenu(false)
   };
   
+  //agregar producto al carrito
   const handleClickProduct = (product) => {
     setCartData(prevCartData => {
       const updatedCartData = [...prevCartData];
@@ -77,10 +87,13 @@ export function useMenuLogic() {
     })
   };
 
+  //chequear si el producto ya existe en el carrito
   const checkProductExists = (item, arr) => arr.filter(p => p.id === item.id).length > 0;
 
+  //obtener precio total de todos los productos en el carrito
   const getTotalPrice = () => cartData.reduce((acc, curr) => acc + curr.price * curr.qty, 0);
 
+  //agregar una unidad del producto con botón '+'
   const handleClickAdd = (product) => {
     setCartData(prevCartData => {
       const updatedCartData = [...prevCartData];
@@ -94,6 +107,7 @@ export function useMenuLogic() {
     });
   };
 
+  //eliminar una unidad del producto con botón '-' (mínimo 1 unidad)
   const handleClickRemove = (product) => {
     setCartData(prevCartData => {
       const updatedCartData = [...prevCartData];
@@ -111,18 +125,20 @@ export function useMenuLogic() {
     });
   };
 
+  // abrir modal para confirmar eliminación del producto
   const handleClickOpenDelete = (product) => {
     const updatedProductId = product.id;
     setModalProductId(updatedProductId);
     setModalDelete(true);
   };
 
+  // cerrar modal
   const handleCloseModal = () => {
     setModalProductId(null);
     setModalDelete(false);
   };
   
-
+  // eliminar producto del carrito (todas las unidades)
   const handleDelete = (product) => {
     setCartData(prevCartData => {
       const updatedCartData = [...prevCartData];
@@ -134,13 +150,47 @@ export function useMenuLogic() {
     });
   };
 
-// obtener fecha y hora actuales en formato correcto
-const getDateAndTime = () => {
-  const now = new Date();
-  return now.toISOString().replace(/[TZ]+/gm, ' ').substring(0, 19)
-}
+  //manejo de modales de alerta
+  const handleOpenModalClientName = () => { // alerta de falta de cliente
+    setModalClientName(true);
+    setModalOrderConfirmation(false);
+  };
 
-// construir nueva orden
+  const handleOpenModalTableNumber = () => { // alerta de falta de mesa
+    setModalTableNumber(true);
+    setModalOrderConfirmation(false);
+  };
+
+  const handleOpenModalOrderProducts = () => { // alerta de falta de productos en el carrito
+    setModalOrderProducts(true);
+    setModalOrderConfirmation(false);
+  };
+
+  const handleOpenModalOrderConfirmation = () => setModalOrderConfirmation(true); // confirmación de creación de orden
+
+  const handleOpenModalOrderSuccess = () => setModalOrderSuccess(true); // alerta de orden creada
+
+  // cerrar modales
+  const handleCloseModalClientName = () => setModalClientName(false); 
+
+  const handleCloseModalTableNumber = () => setModalTableNumber(false);
+
+  const handleCloseModalOrderProducts = () => setModalOrderProducts(false);
+
+  const handleCloseModalOrderConfirmation = () => setModalOrderConfirmation(false);
+
+  const handleCloseModalOrderSuccess = () => {
+    setModalOrderSuccess(false);
+    setModalOrderConfirmation(false);
+  }
+
+  // obtener fecha y hora actuales en formato correcto
+  const getDateAndTime = () => {
+    const now = new Date();
+    return now.toISOString().replace(/[TZ]+/gm, ' ').substring(0, 19)
+  }
+
+  // construir nueva orden
   const getOrderData = async (client, table, products) => {
     const newOrder = {
       userId: userId,
@@ -179,20 +229,29 @@ const getDateAndTime = () => {
     document.getElementById('table').value = 'default'
   }
 
-  //enviar info de nueva orden a la API
+  // validar inputs
+  const validateInputs = async (cartData) => {
+    const response = await getClientAndTable();
+    if (cartData.length === 0) {
+      handleOpenModalOrderProducts();
+      return false;
+    } else if (response.client === '') {
+      handleOpenModalClientName();
+      return false;
+    } else if (response.table === 'default') {
+      handleOpenModalTableNumber();
+      return false;
+    } else {
+      return true
+    }
+  }
+
+  // enviar petición para crear nueva orden a la API
   const handleCreateOrder = async (cartData) => {
-    //obtener data de inputs
     const response = await getClientAndTable();
     const client = response.client;
     const table = response.table;
-    if (cartData.length === 0) {
-      alert('No se han seleccionado productos');
-      return;
-    } else if (response.client === '' || response.table === 'default') {
-      alert('No se ha indicado un cliente o una mesa');
-      return;
-    } else {
-      setClientName(client);
+    setClientName(client);
       setTableNumber(table);
       setOrderProducts(cartData);
       const updatedOrderProducts = [...cartData];
@@ -211,6 +270,7 @@ const getDateAndTime = () => {
           setClientName('');
           setTableNumber('default');
           clearClientAndTable();
+          handleOpenModalOrderSuccess();
         })
         .catch((error) => {
           console.error(error);
@@ -222,9 +282,8 @@ const getDateAndTime = () => {
             error && navigate('/error-page');
           }
         });
-    }
   };
-
+  
   return {
     navigate,
     token,
@@ -243,6 +302,26 @@ const getDateAndTime = () => {
     orderProducts,
     modalProductId,
     setModalProductId,
+    modalClientName,
+    handleOpenModalClientName,
+    handleCloseModalClientName,
+    modalTableNumber,
+    handleOpenModalTableNumber,
+    handleCloseModalTableNumber,
+    modalOrderProducts,
+    handleOpenModalOrderProducts,
+    handleCloseModalOrderProducts,
+    modalOrderConfirmation,
+    handleOpenModalOrderConfirmation,
+    handleCloseModalOrderConfirmation,
+    modalOrderSuccess,
+    handleOpenModalOrderSuccess,
+    handleCloseModalOrderSuccess,
+    setModalClientName,
+    setModalTableNumber,
+    setModalOrderProducts,
+    setModalOrderConfirmation,
+    setModalOrderSuccess,
     handleOrdersClick,
     handleBreakfastClick,
     handleLunchClick,
@@ -253,5 +332,6 @@ const getDateAndTime = () => {
     handleCloseModal,
     handleDelete,
     handleCreateOrder,
+    validateInputs
   }
 }
