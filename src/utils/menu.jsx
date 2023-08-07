@@ -20,7 +20,7 @@ export function useMenuLogic() {
   const [modalOrderConfirmation, setModalOrderConfirmation] = useState(false);
   const [modalOrderSuccess, setModalOrderSuccess] = useState(false);
   const [clientName, setClientName] = useState('');
-  const [tableNumber, setTableNumber] = useState('');
+  const [tableNumber, setTableNumber] = useState(0);
   const [orderProducts, setOrderProducts] = useState([]);
 
   useEffect(() => {
@@ -193,9 +193,9 @@ export function useMenuLogic() {
   // construir nueva orden
   const getOrderData = async (client, table, products) => {
     const newOrder = {
-      userId: userId,
+      userId: Number(userId),
       client: client,
-      table: table,
+      table: Number(table),
       products: products.map((product) => ({
         qty: product.qty,
         product: {
