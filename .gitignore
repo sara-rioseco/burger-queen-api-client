@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Agregar carpetas manualmente
+coverage/
+node_modules/
