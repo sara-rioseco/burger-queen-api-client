@@ -5,7 +5,6 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { MemoryRouter } from 'react-router-dom';
 import { LoginLogic } from '../../../utils/login';
-import axios from 'axios';
 import Login from './login.jsx';
 
 // Mockear el módulo que contiene el hook personalizado (LoginLogic)
@@ -37,22 +36,6 @@ jest.mock('../../../utils/login', () => {
     })),
   };
 });
-
-// Simulamos una respuesta exitosa del servidor al logearse
-const mockResponse = {
-  data: {
-    accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImlhbWF3YWl0ZXJAbWFpbC5jb20iLCJpYXQiOjE2OTE0NDgwMDksImV4cCI6MTY5MTQ1MTYwOSwic3ViIjoiMyJ9.Y7fSgmw3cAJcow_YvSQdit2MxZdoCU-TzfwOOIZHYMU",
-    user: {
-      email: "iamawaiter@mail.com",
-      role: "waiter",
-      id: 3
-    }
-  }
-};
-
-// Simulamos la respuesta exitosa usando axios
-jest.mock('axios');
-axios.post.mockResolvedValue(mockResponse);
 
 describe('Componente Login', () => {
   it('Renderiza el componente correctamente', () => {
