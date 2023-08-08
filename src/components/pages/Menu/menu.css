@@ -41,6 +41,14 @@ body{
   width: 600px;
   gap: 20px;
   justify-content: left;
+  overflow-y: scroll;
+}
+.logout-section {
+  display:flex;
+  flex-flow: row wrap;
+  justify-content: left;
+  align-items: flex-end;
+  align-self: flex-start;
 }
 
 .product {

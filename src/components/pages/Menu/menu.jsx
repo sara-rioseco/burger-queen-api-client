@@ -67,7 +67,6 @@ export default function Menu() {
                 </div>
               </div>
             ))}
-            <div className='logout-button'><LogoutButton /></div>
           </div>
         )}
         {!showMenu && (
@@ -81,9 +80,11 @@ export default function Menu() {
                 </div>
               </div>
             ))}
-            <div className='logout-button'><LogoutButton /></div>
           </div>
         )}
+        <div className='logout-section'>
+          <div className='logout-button'><LogoutButton /></div>
+        </div>
       </div>
       <div className='cart-section'>
         <div className='cart-text'>CLIENTE:</div>
