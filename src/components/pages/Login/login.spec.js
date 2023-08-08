@@ -31,7 +31,7 @@ jest.mock('../../../utils/login', () => {
       handleFieldChange,
       errorLabel: '',
       togglePasswordVisibility: jest.fn(),
-      getPasswordInputType: jest.fn(),
+      getPasswordInputType: jest.fn().mockReturnValue('text'),
       handleLoginClick,
     })),
   };
@@ -88,8 +88,8 @@ describe('Componente Login', () => {
 
     // Simular obtener respuesta del login
     const response = await loginLogicInstance.handleLoginClick()
-    console.log(response.data ,'holaaaaa');
-
+ 
+    // Verificar que la respuesta sea correcta
     expect(response.data).toEqual({
       accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImlhbWF3YWl0ZXJAbWFpbC5jb20iLCJpYXQiOjE2OTE0NDgwMDksImV4cCI6MTY5MTQ1MTYwOSwic3ViIjoiMyJ9.Y7fSgmw3cAJcow_YvSQdit2MxZdoCU-TzfwOOIZHYMU',
       user: { email: 'iamawaiter@mail.com', role: 'waiter', id: 3 }
