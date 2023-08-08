@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'; // navegar entre router
 import axios from 'axios';
 
 // LÓGICA DE LA SECCIÓN DE LOGIN
-export default function LoginLogic() {
+export function LoginLogic() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
