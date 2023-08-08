@@ -46,8 +46,6 @@ body{
 .logout-section {
   display:flex;
   flex-flow: row wrap;
-  justify-content: left;
-  align-items: flex-end;
   align-self: flex-start;
 }
 
