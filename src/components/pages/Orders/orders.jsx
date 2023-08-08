@@ -5,7 +5,7 @@ import Button from '../../button/button.jsx';
 import LogoutButton from '../../logoutButton/logoutButton.jsx';
 import Modal from '../../modal/modal.jsx';
 import Input from '../../input/input.jsx'
-import { useOrdersLogic } from '../../../utils/orders';
+import { OrdersLogic } from '../../../utils/orders';
 //ASSETS
 import Edit from '../../../assets/Images/editar.png'
 import Delete from '../../../assets/Images/borrar.png'
@@ -41,7 +41,7 @@ export default function Orders() {
     editModalProducts,
     handleStatusChange,
     filteredOrdersData
-  } = useOrdersLogic();
+  } = OrdersLogic();
 
   // RENDERIZADO
   return (

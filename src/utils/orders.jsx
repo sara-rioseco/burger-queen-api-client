@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'; // navegar entre router
 import ApiRequest from '../services/apiRequest.jsx';
 
 // LÓGICA DE LA SECCIÓN DE PEDIDOS
-export function useOrdersLogic() {
+export function OrdersLogic() {
   const navigate = useNavigate();
 
   const token = localStorage.getItem('accessToken');

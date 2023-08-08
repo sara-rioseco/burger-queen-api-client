@@ -49,6 +49,7 @@ export default function Login() {
               classContainer='containerInput'
             />
             <img
+              alt='toggle-password-button'
               src={formData.showPassword ? hide : show}
               className="togglePassword"
               onClick={togglePasswordVisibility}

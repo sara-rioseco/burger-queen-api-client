@@ -4,11 +4,11 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { MemoryRouter } from 'react-router-dom';
-import { LoginLogic } from '../../../utils/login';
+import * as LoginLogicFile from '../../../utils/login';
 import Login from './login.jsx';
 
 // Mockear el módulo que contiene el hook personalizado (LoginLogic)
-jest.mock('../../../utils/login', () => {
+/* jest.mock('../../../utils/login', () => {
   const handleFieldChange = jest.fn();
   const handleLoginClick = jest.fn(async () => ({
     data: {
@@ -35,7 +35,7 @@ jest.mock('../../../utils/login', () => {
       handleLoginClick,
     })),
   };
-});
+}); */
 
 describe('Componente Login', () => {
   it('Renderiza el componente correctamente', () => {
@@ -62,16 +62,21 @@ describe('Componente Login', () => {
     render(<MemoryRouter><Login /></MemoryRouter>);
 
     // Acceder a la instancia de LoginLogic
-    const loginLogicInstance = LoginLogic();
+    jest.spyOn(LoginLogicFile, 'LoginLogic').getMockImplementation(() => {
+      return {
+        ...LoginLogicFile.LoginLogic(),
+        handleFieldChange: jest.fn()
+      };
+    });
 
     // Simular cambios en los campos de entrada
     const nameInputElement = screen.getByPlaceholderText('Escribe aquí');
     fireEvent.change(nameInputElement, { target: { value: 'iamawaiter@mail.com' } });
-    expect(loginLogicInstance.handleFieldChange).toHaveBeenCalledWith('name', expect.objectContaining({ target: nameInputElement }));
+    expect(LoginLogicFile.LoginLogic.handleFieldChange).toHaveBeenCalledWith('name', expect.objectContaining({ target: nameInputElement }));
 
     const passwordInputElement = screen.getByPlaceholderText('*************');
     fireEvent.change(passwordInputElement, { target: { value: '123456' } });
-    expect(loginLogicInstance.handleFieldChange).toHaveBeenCalledWith('password', expect.objectContaining({ target: passwordInputElement }));
+    expect(LoginLogicFile.LoginLogic.handleFieldChange).toHaveBeenCalledWith('password', expect.objectContaining({ target: passwordInputElement }));
   });
 
   it('Llama la función adecuada al interactuar con el botón "ENTRAR"', async () => {
@@ -83,7 +88,6 @@ describe('Componente Login', () => {
     // Simular clic en el botón "ENTRAR"
     const enterButtonElement = screen.getByText('ENTRAR');
     fireEvent.click(enterButtonElement);
-
     expect(loginLogicInstance.handleLoginClick).toHaveBeenCalled();
 
     // Simular obtener respuesta del login
