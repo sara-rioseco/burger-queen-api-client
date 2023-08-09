@@ -2,33 +2,35 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { MemoryRouter } from 'react-router-dom';
+import { useNavigate, MemoryRouter } from 'react-router-dom';
 import { useMenuLogic } from '../../../utils/login';
 import Menu from './menu.jsx';
 
+
+
 jest.mock('../../../utils/menu', () => {
-  const handleFieldChange = jest.fn();
-  const handleLoginClick = jest.fn(async () => ({
-    data: {
-      accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImlhbWF3YWl0ZXJAbWFpbC5jb20iLCJpYXQiOjE2OTE0NDgwMDksImV4cCI6MTY5MTQ1MTYwOSwic3ViIjoiMyJ9.Y7fSgmw3cAJcow_YvSQdit2MxZdoCU-TzfwOOIZHYMU",
-      user: {
-        email: "iamawaiter@mail.com",
-        role: "waiter",
-        id: 3
-      }
-    }
-  }));
-  
+  const handleOrdersClickMock = jest.fn();
+  const useNavigate = jest.fn();
+    
   return {
     useMenuLogic: jest.fn(() => ({
-      formData: {
-        name: '',
-        password: '',
-        showPassword: false,
-      },
       showMenu: true,
-      breakfastProducts: [],
-      lunchProducts: [],
+      breakfastProducts: [ 
+        {dateEntry: "2022-03-05 15:14:10",
+        id: 1,
+        image: 
+        "https://github.com/KarlaMacedo/DEV007-burger-queen-api-client/blob/feature-orders/src/assets/Images/cafe.png?raw=true",
+        name: "Test café",
+        price: 500,
+        type: "Desayuno"}],
+      lunchProducts: [
+        {dateEntry: "2022-03-05 15:14:10",
+        id: 1,
+        image: "https://github.com/KarlaMacedo/DEV007-burger-queen-api-client/blob/feature-orders/src/assets/Images/sandw.png?raw=true",
+        name: "Test sandwich",
+        price: 1000,
+        type: "Almuerzo"}
+      ],
       cartData: [], 
       errorLabel: '',
       getTotalPrice: jest.fn(),
@@ -45,7 +47,7 @@ jest.mock('../../../utils/menu', () => {
       handleOpenModalOrderConfirmation: jest.fn(),
       modalOrderSuccess: false,
       handleCloseModalOrderSuccess: jest.fn(),
-      handleOrdersClick: jest.fn(),
+      handleOrdersClick: jest.fn().mockImplementation(handleOrdersClickMock),
       handleBreakfastClick: jest.fn(),
       handleLunchClick: jest.fn(),
       handleClickProduct: jest.fn(),
@@ -70,17 +72,60 @@ jest.mock('../../../utils/menu', () => {
       const pedidosOption = screen.getByText('PEDIDOS');
       expect(pedidosOption).toBeInTheDocument();
   
-      // Verificar que los campos de entrada estén presentes
+      // Verificar que los campos de entrada del carrito estén presentes
       const clientInputElement = screen.getByPlaceholderText('Escribe aquí');
       const tableSelectElement = screen.getByDisplayValue('Selecciona la mesa');
       expect(clientInputElement).toBeInTheDocument();
       expect(tableSelectElement).toBeInTheDocument();
-  
-      // Verificar que el botón de dasayuno esté presente
-      const breakfastButtonElement = screen.getByText('DESAYUNO');
-      expect(breakfastButtonElement).toBeInTheDocument();
-      // Verificar que el botón de almuerzo esté presente
-      const lunchButtonElement = screen.getByText('ALMUERZO Y CENA');
-      expect(lunchButtonElement).toBeInTheDocument();
+
     });
+
+    it('Navega a la vista de pedidos al presionar el botón de pedidos', () => {
+      render(<MemoryRouter><Menu /></MemoryRouter>);
+      const useNavigateMock = jest.fn();
+      fireEvent(screen.getByText('PEDIDOS') , new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+      }),);
+      expect(useNavigateMock).toHaveBeenCalled();
+    })
+
+    it('Muestra menú de desayuno al entrar a la vista', () => {
+      render(<MemoryRouter><Menu /></MemoryRouter>);
+      const breakfastButtonElement = screen.getByText('DESAYUNO');
+      fireEvent(breakfastButtonElement , new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+      }),)
+      const breakfastProduct = screen.getByText('Test café');
+      expect(breakfastProduct).toBeInTheDocument();
+    })
+
+    it('Cambia al menú de almuerzo y cena al presionar el botón de almuerzo', () => {
+      render(<MemoryRouter><Menu /></MemoryRouter>);
+      const lunchButtonElement = screen.getByText('ALMUERZO Y CENA');
+      fireEvent(lunchButtonElement, new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        showMenu: false,
+      }),)
+      const lunchProduct = screen.getByText('Test sandwich');
+      expect(lunchProduct).toBeInTheDocument();
+    })
+
+    it('Se desloguea al presionar el botón de logout y vuelve a la vista de login', () => {
+      render(<MemoryRouter><Menu /></MemoryRouter>);
+    })
+
+    it('Agrega elementos al carrito al presionar una imagen', () => {
+      render(<MemoryRouter><Menu /></MemoryRouter>);
+    })
+    
+    it('Muestra modal con alerta si falta algún campo al enviar una orden', () => {
+      render(<MemoryRouter><Menu /></MemoryRouter>);
+    })
+
+    it('Crea una orden con los productos seleccionados al presionar el botón de enviar a cocina', () => {
+      render(<MemoryRouter><Menu /></MemoryRouter>);
+    })
   })
