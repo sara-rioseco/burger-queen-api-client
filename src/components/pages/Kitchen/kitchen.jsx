@@ -43,6 +43,11 @@ export default function Kitchen() {
                 <h2 className='order-time'></h2>
               </div>
               <div className='order-body'>
+                <h2 className='order-content'>
+                  {order.products.map(product => {
+                  <h2>{product.name} x {product.qty}
+                  </h2>
+                })}</h2>
               </div>
               <div className='order-footer'>
               <Button label="ORDEN LISTA" onClick={handleClick} />
