@@ -14,7 +14,7 @@ export function OrdersLogic() {
   const userId = localStorage.getItem('userId');
 
   const [ordersData, setOrdersData] = useState([]);
-  const [selectedStatus, setSelectedStatus] = useState([]);
+  const [selectedStatus, setSelectedStatus] = useState(['Entregado', 'Listo en barra', 'En preparación']);
   const [modalOpenDelete, setModalOpenDelete] = useState(false);
   const [modalOpenEdit, setModalOpenEdit] = useState(false);
   const [modalOrderId, setModalOrderId] = useState(null);

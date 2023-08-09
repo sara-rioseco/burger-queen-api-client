@@ -40,7 +40,8 @@ export default function Orders() {
     productsData,
     editModalProducts,
     handleStatusChange,
-    filteredOrdersData
+    filteredOrdersData,
+    selectedStatus,
   } = OrdersLogic();
 
   // RENDERIZADO
@@ -60,6 +61,7 @@ export default function Orders() {
                   type='checkbox'
                   value='Entregado'
                   onChange={handleStatusChange}
+                  checked={selectedStatus.includes('Entregado')}
                 />
                 Entregado
               </label>
@@ -68,6 +70,7 @@ export default function Orders() {
                   type='checkbox'
                   value='Listo en barra'
                   onChange={handleStatusChange}
+                  checked={selectedStatus.includes('Listo en barra')}
                 />
                 Listo en barra
               </label>
@@ -76,6 +79,7 @@ export default function Orders() {
                   type='checkbox'
                   value='En preparación'
                   onChange={handleStatusChange}
+                  checked={selectedStatus.includes('En preparación')}
                 />
                 En preparación
               </label>
