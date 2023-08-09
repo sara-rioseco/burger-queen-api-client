@@ -1,15 +1,50 @@
+@import url('https://fonts.cdnfonts.com/css/bebas-neue');
+@import url('https://fonts.cdnfonts.com/css/asap-condensed');
 
-  .home{
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    
-    .logo {
-      width: 25em;
-      height: 25em;
-      margin: 20px;
-    }
-    .logo:hover {
-      filter: drop-shadow(0 0 1em #ffffffaa);
-    }
+.users-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  background-color: black;
+  height: 80%;
+  overflow-y: scroll;
+}
+
+.textHeader {
+  font-family: 'Bebas Neue', sans-serif;
+  color: white;
+  font-size: 2em;
+  margin-bottom: 15px;
+}
+
+.users-table {
+  color: white;
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Asap Condensed', sans-serif;
+}
+
+.users-table th,
+.users-table td {
+  padding: 15px;
+  text-align: left;
+}
+
+.users-table th {
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: bold;
+  font-size: 1.4em;
+  border-bottom: 2px solid white;
+}
+
+.users-table td {
+  font-size: 1.1em;
+}
+
+/* Estilos para el botón */
+.buttonMenu {
+  margin: 15px;
+  font-size: 2em;
+  /* Agrega más estilos si es necesario */
+}
