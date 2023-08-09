@@ -46,11 +46,9 @@ export function OrdersLogic() {
       .catch((error) => {
         console.error(error);
         if (error.response.data === 'jwt expired' && error.response.status === 401) {
-          console.error(error);
           navigate('/login');
         } else {
-          console.error(error);
-          error && navigate('/error-page');
+          navigate('/error-page');
         }
       });
 

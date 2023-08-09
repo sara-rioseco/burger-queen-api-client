@@ -16,7 +16,7 @@
 }
 
 .titleUsers {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Bebas Neue';
   font-weight: bolder;
   font-size: 3em;
 }
@@ -66,15 +66,37 @@
 .users-table th {
   font-family: 'Bebas Neue', sans-serif;
   font-weight: bold;
-  font-size: 1.4em;
+  font-size: 1.5em;
   border-bottom: 2px solid white;
 }
 
 .users-table td {
-  font-size: 1.1em;
+  font-size: 1.2em;
+}
+
+.buttTable {
+  text-align: center !important;
 }
 
 .buttonMenu {
   margin: 15px;
   font-size: 2em;
+}
+
+.userModalText {
+  font-family: 'Asap Condensed', sans-serif;
+  font-size: larger;
+  font-style: oblique;
+}
+
+.containerTextDeleteModal{
+  display: flex;
+  gap: 10px;
+  flex-direction: row;
+}
+
+.textLabelsModalDeleteUsers {
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: bold;
+  font-size: 1.4em;
 }
