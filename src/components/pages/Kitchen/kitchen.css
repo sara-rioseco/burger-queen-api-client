@@ -33,13 +33,25 @@
 
   div .order-container {
     border-style: solid;
-    border:#ffffff;
     border-radius: 8px;
     color: white;
     font-family: 'Asap condensed';
     font-size: 24 px;
     margin: 5px;
-    width: 300px;
+    padding: 10px;
+    width: 50% !important;
+  }
+
+  div .order-header .order-title{
+    font-size: 20px !important;
+  }
+
+  div .order-body {
+    width: 200px;
+  }
+
+  h2 .product-content {
+    font-size: 14px !important;
   }
 
   div .kitchen-body {
@@ -48,3 +60,4 @@
     width: 100%;
     overflow-x: scroll;
   }
+

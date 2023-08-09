@@ -40,14 +40,14 @@ export default function Kitchen() {
             <div key={order.id} className='order-container'>
               <div className='order-header'>
                 <h2 className='order-title'>Mesa #{order.table}</h2>
-                <h2 className='order-time'></h2>
+                <h2 className='order-time'><Stopwatch isActive={stopwatch} time={calculateTimePassed(order.dateEntry)} /></h2>
               </div>
               <div className='order-body'>
                 <h2 className='order-content'>
-                  {order.products.map(product => {
-                  <h2>{product.name} x {product.qty}
+                  {order.products.map(product => (
+                  <h2 className='product-content' key={`00${order.id}00${product.product.id}`}>{product.product.name} x {product.qty}
                   </h2>
-                })}</h2>
+                ))}</h2>
               </div>
               <div className='order-footer'>
               <Button label="ORDEN LISTA" onClick={handleClick} />
@@ -71,8 +71,6 @@ export default function Kitchen() {
             </div>
           ))}
         </div>
-        <Button label="KITCHEN" onClick={handleClick} />
-        <Stopwatch isActive={stopwatch} time={calculateTimePassed("2023-08-09 03:45:50")} />
         <div className='logout-section'>
           <div className='logout-button'><LogoutButton /></div>
         </div>
