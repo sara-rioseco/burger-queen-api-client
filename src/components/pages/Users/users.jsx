@@ -5,7 +5,6 @@ import { UsersLogic } from '../../../utils/users';
 export default function Users() {
   const {
     usersData,
-    // Otros datos y funciones que necesitas de UsersLogic
   } = UsersLogic();
 
   return (
