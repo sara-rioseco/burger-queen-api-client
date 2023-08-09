@@ -233,7 +233,6 @@ export function OrdersLogic() {
           error && navigate('/error-page');
         }
       });
-
   };
 
   // ABRE MODAL PARA CONFIRMAR BORRAR UNA ORDEN AL CLICKEAR BOTON DE LA TABLA

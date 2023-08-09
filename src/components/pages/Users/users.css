@@ -89,7 +89,7 @@
   font-style: oblique;
 }
 
-.containerTextDeleteModal{
+.containerTextDeleteModal {
   display: flex;
   gap: 10px;
   flex-direction: row;
@@ -99,4 +99,10 @@
   font-family: 'Bebas Neue', sans-serif;
   font-weight: bold;
   font-size: 1.4em;
+}
+
+.infoUserModal {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }

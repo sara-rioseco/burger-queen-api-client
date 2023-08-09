@@ -5,6 +5,7 @@ import Button from '../../button/button.jsx';
 import LogoutButton from '../../logoutButton/logoutButton.jsx';
 import { UsersLogic } from '../../../utils/users';
 import Modal from '../../modal/modal.jsx';
+import Input from '../../input/input.jsx'
 //ASSETS
 import Edit from '../../../assets/Images/editar.png'
 import Delete from '../../../assets/Images/borrar.png'
@@ -14,11 +15,17 @@ export default function Users() {
   const {
     usersData,
     getRoleLabel,
-    handleOpenModalDelete,
-    handleConfirmDeleteClick,
-    handleCloseModal,
+    handleOpenModalDeleteUsers,
+    handleConfirmDeleteClickUsers,
+    handleConfirmEditClickUsers,
+    handleOpenEditModalUsers,
+    handleCloseModalUsers,
     modalUserId,
-    modalOpenDelete
+    modalOpenDeleteUsers,
+    modalOpenEditUsers,
+    editingUserData,
+    handleInputChange,
+
   } = UsersLogic();
 
   return (
@@ -38,48 +45,99 @@ export default function Users() {
                 <tr>
                   <th className="tableHeader">ID</th>
                   <th className="tableHeader">CORREO</th>
-                  <th className="tableHeader">ROL</th>
-                  <th className="tableHeader buttTable">EDITAR</th>
-                  <th className="tableHeader buttTable">ELIMINAR</th>
+                  <th className="tableHeader">PUESTO</th>
+                  <th className="tableHeader buttId">EDITAR</th>
+                  <th className="tableHeader buttId">ELIMINAR</th>
                 </tr>
               </thead>
               <tbody>
                 {usersData.map((user) => (
                   <tr key={user.id}>
-                    <td>{user.id}</td>
+                    <td>#{user.id}</td>
                     <td>{user.email}</td>
                     <td>{getRoleLabel(user.role)}</td>
-                    <td className='buttonsTable'>
+                    <td className='buttonsId'>
                       <img
                         src={Edit}
                         className="edit"
-                        alt="buttonEdit" />
+                        alt="buttonEdit"
+                        onClick={() => handleOpenEditModalUsers(user.id)}
+                      />
                     </td>
-                    <td className='buttonsTable'>
+                    <td className='buttonsId'>
                       <img
                         src={Delete}
                         className="delete"
                         alt="buttonDelete"
-                        onClick={() => handleOpenModalDelete(user.id)}
+                        onClick={() => handleOpenModalDeleteUsers(user.id)}
                       />
                     </td>
                     <td className='modalDelete'>
-                      <Modal open={modalOpenDelete && modalUserId === user.id} onClose={handleCloseModal}>
+                      <Modal open={modalOpenDeleteUsers && modalUserId === user.id} onClose={handleCloseModalUsers}>
                         <h2 className='textModal'>Estas seguro que deseas eliminar al siguiente usuario?</h2>
                         <div className='containerTextDeleteModal'>
-                        <label className="textLabelsModalDeleteUsers">Puesto:</label><label className='userModalText'>{getRoleLabel(user.role)}</label></div>
+                          <label className="textLabelsModalDeleteUsers">Puesto:</label><label className='userModalText'>{getRoleLabel(user.role)}</label></div>
                         <div className='containerTextDeleteModal'>
-                        <label className="textLabelsModalDeleteUsers">Correo:</label><label className='userModalText'>{user.email}</label></div>
+                          <label className="textLabelsModalDeleteUsers">Correo:</label><label className='userModalText'>{user.email}</label></div>
                         <div>
                           <Button
                             label='CONFIRMAR'
-                            onClick={() => handleConfirmDeleteClick(user.id)}
+                            onClick={() => handleConfirmDeleteClickUsers(user.id)}
                             classButton='buttonsModal'>
                           </Button>
                           <Button
                             label='CANCELAR'
-                            onClick={handleCloseModal}
+                            onClick={handleCloseModalUsers}
                             classButton='buttonsModal'>
+                          </Button>
+                        </div>
+                      </Modal>
+                      <Modal open={modalOpenEditUsers && modalUserId === user.id} onClose={handleCloseModalUsers}>
+                        <h2 className='textModal'>Editando usuario  #{user.id} :</h2>
+                        <div className='infoUserModal'>
+                          <Input
+                            type='text'
+                            placeholder='Escribe aquí'
+                            label='CORREO :'
+                            classInputLabel='labelsModalEdit'
+                            classInput='inputModalEdit'
+                            value={editingUserData?.email || ''}
+                            onChange={(event) => handleInputChange('email', event.target.value)}
+                          />
+                          <Input
+                            type='text'
+                            placeholder='Escribe aquí'
+                            label='CONTRESEÑA :'
+                            classInputLabel='labelsModalEdit'
+                            classInput='inputModalEdit'
+                            onChange={(event) => handleInputChange('password', event.target.value)}
+                          />
+                          <div className='selectRolModal'>
+                            <label className='bebas'>PUESTO : </label>
+                            <select
+                              className='boxSelect'
+                              value={editingUserData?.role}
+                              onChange={(event) => handleInputChange('role', event.target.value)}
+                            >
+                              <option value='' disabled>Seleccione un puesto</option>
+                              <option value='chef'>Cocinero</option>
+                              <option value='admin'>Administrador</option>
+                              <option value='waiter'>Mesero</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div>
+                          <Button
+                            label='CONFIRMAR'
+                            classButton='buttonsModal'
+                            onClick={handleConfirmEditClickUsers}
+                          >
+                          </Button>
+                          <Button
+                            label='CANCELAR'
+                            onClick={handleCloseModalUsers}
+                            classButton='buttonsModal'
+                          >
                           </Button>
                         </div>
                       </Modal>

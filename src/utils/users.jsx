@@ -7,10 +7,12 @@ export function UsersLogic() {
   const navigate = useNavigate();
 
   const token = localStorage.getItem('accessToken');
-  
+
   const [usersData, setUsersData] = useState([]);
-  const [modalOpenDelete, setModalOpenDelete] = useState(false);
+  const [modalOpenDeleteUsers, setModalOpenDeleteUsers] = useState(false);
   const [modalUserId, setModalUserId] = useState(null);
+  const [modalOpenEditUsers, setModalOpenEditUsers] = useState(false);
+  const [editingUserData, setEditingUserData] = useState(null);
 
   useEffect(() => {
     if (!token) {
@@ -50,13 +52,13 @@ export function UsersLogic() {
   };
 
   // ABRE MODAL PARA CONFIRMAR BORRAR UN USUARIO AL CLICKEAR BOTON DE LA TABLA
-  const handleOpenModalDelete = (userId) => {
+  const handleOpenModalDeleteUsers = (userId) => {
     setModalUserId(userId);
-    setModalOpenDelete(true);
+    setModalOpenDeleteUsers(true);
   }
 
   // FUNCIÓN PARA CONFIRMAR BORRAR UNA ORDEN EN LA MODAL
-  const handleConfirmDeleteClick = (userId) => {
+  const handleConfirmDeleteClickUsers = (userId) => {
     const userDelete = usersData.find(user => user.id === userId);
 
     const body = userDelete;
@@ -69,7 +71,7 @@ export function UsersLogic() {
       .then(() => {
         // Actualiza la informacion de la tabla para borrar la orden en ella
         setUsersData(prevUsers => prevUsers.filter(user => user.id !== userId));
-        setModalOpenDelete(false);
+        setModalOpenDeleteUsers(false);
       })
       .catch((error) => {
         console.error(error);
@@ -83,19 +85,87 @@ export function UsersLogic() {
       });
   }
 
-  const handleCloseModal = () => {
-    setModalUserId(null); // Limpiar el orderId al cerrar la modal
-    setModalOpenDelete(false);
+  // ABRRIR MODAL EDITAR CON LOS DATOS DE LA ORDEN AL CLICKEAR BOTON DE LA TABLA
+  const handleOpenEditModalUsers = (usersId) => {
+    const userToEdit = usersData.find(user => user.id === usersId);
+    setEditingUserData(userToEdit);
+    setModalUserId(usersId);
+    setModalOpenEditUsers(true);
+  }
+
+  // MANEJO DE LOS CAMBIOS DE VALORES DE LOS CAMPOS DE LA MODAL EDITAR
+  const handleInputChange = (fieldName, value) => {
+    setEditingUserData(prevData => ({
+      ...prevData,
+      [fieldName]: value,
+    }));
+  };
+
+  // CONFIRMA LA EDICIÓN DEL USUARIO
+const handleConfirmEditClickUsers = () => {
+  const updateUsers = {
+    email: editingUserData.email,
+    password: editingUserData.password,
+    role: editingUserData.role,
+  };
+
+  ApiRequest({
+    url: `http://localhost:8080/users/${editingUserData.id}`,
+    method: 'patch',
+    body: updateUsers,
+  })
+    .then((response) => {
+      console.log(response.data, 'updated');
+
+      // ACTUALIZA LA DATA CON LA INFORMACIÓN OBTENIDA DE LA EDICIÓN
+      const updatedUsersData = usersData.map(user => {
+        if (user.id === editingUserData.id) {
+          return {
+            ...user,
+            email: editingUserData.email,
+            password: editingUserData.password,
+            role: editingUserData.role,
+          };
+        } else {
+          return user;
+        }
+      });
+
+      setUsersData(updatedUsersData);
+      handleCloseModalUsers();
+    })
+    .catch((error) => {
+      console.error(error);
+      if (error.response.data === 'jwt expired' && error.response.status === 401) {
+        console.error(error);
+        navigate('/login');
+      } else {
+        console.error(error);
+        error && navigate('/error-page');
+      }
+    });
+};
+
+  // CERRAR DIÁLOGOS MODALES
+  const handleCloseModalUsers = () => {
+    setModalUserId(null); // Limpiar el usersId al cerrar la modal
+    setModalOpenDeleteUsers(false);
+    setModalOpenEditUsers(false);
   };
 
   return {
     usersData,
     getRoleLabel,
-    handleOpenModalDelete,
-    handleConfirmDeleteClick,
-    setModalOpenDelete,
-    handleCloseModal,
+    handleOpenModalDeleteUsers,
+    handleConfirmDeleteClickUsers,
+    handleOpenEditModalUsers,
+    setModalOpenDeleteUsers,
+    handleCloseModalUsers,
     modalUserId,
-    modalOpenDelete
+    modalOpenDeleteUsers,
+    modalOpenEditUsers,
+    editingUserData,
+    handleInputChange,
+    handleConfirmEditClickUsers,
   };
 }
