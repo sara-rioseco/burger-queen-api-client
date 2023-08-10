@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'; // navegar entre 
 // CSS
 import './users.css';
 //COMPONENTES
@@ -12,6 +13,7 @@ import Delete from '../../../assets/Images/borrar.png'
 import Add from '../../../assets/Images/add.png'
 
 export default function Users() {
+  const navigate = useNavigate();
   const {
     usersData,
     getRoleLabel,
@@ -38,6 +40,10 @@ export default function Users() {
         <div className='users-container'>
           <div className='headerContainerUsers'>
             <h2 className='titleUsers'>Usuarios</h2>
+            <Button label='Productos' classButton='buttonUsers'
+            onClick={() => {
+              navigate('/products');
+            }}/>
             <img
               src={Add}
               className="add"

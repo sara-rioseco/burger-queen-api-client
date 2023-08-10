@@ -12,13 +12,21 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 60em;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .titleUsers {
   font-family: 'Bebas Neue';
   font-weight: bolder;
-  font-size: 3em;
+  font-size: 3.5em;
+  margin: 0px;
+}
+
+.buttonUsers {
+  font-size: 1.4em;
+  padding: 10px;
 }
 
 .add {
