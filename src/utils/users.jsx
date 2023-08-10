@@ -14,6 +14,7 @@ export function UsersLogic() {
   const [modalOpenEditUsers, setModalOpenEditUsers] = useState(false);
   const [editingUserData, setEditingUserData] = useState(null);
   const [addModalOpen, setAddModalOpen] = useState(false);
+  const [selectedRoles, setSelectedRoles] = useState(['admin', 'waiter', 'chef']);
   const [newUser, setNewUser] = useState({
     email: '',
     password: '',
@@ -42,6 +43,15 @@ export function UsersLogic() {
         }
       });
   }, [navigate, token]);
+
+  // FILTRO DE USUARIOS POR PUESTO
+  const handleRoleCheckboxChange = (role) => {
+    if (selectedRoles.includes(role)) {
+      setSelectedRoles(selectedRoles.filter(selectedRole => selectedRole !== role));
+    } else {
+      setSelectedRoles([...selectedRoles, role]);
+    }
+  };
 
   // TRADUCIR EL PUESTO A ESPAÑOL SEGUN EL ROL
   const getRoleLabel = (role) => {
@@ -205,11 +215,13 @@ export function UsersLogic() {
     handleInputChange,
     handleConfirmEditClickUsers,
     handleConfirmAddClick,
+    handleRoleCheckboxChange,
     modalUserId,
     modalOpenDeleteUsers,
     modalOpenEditUsers,
     editingUserData,
     addModalOpen,
     newUser,
+    selectedRoles,
   };
 }

@@ -29,6 +29,14 @@
   padding: 10px;
 }
 
+.textFilterUsers{
+  font-family: 'Bebas Neue', sans-serif;
+  color: #ffffff;
+  width: 10em;
+  font-weight: bold;
+  text-align: initial;
+}
+
 .add {
   width: 54px;
   height: 54px;
