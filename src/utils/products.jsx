@@ -19,6 +19,7 @@ export function ProductsLogic() {
     name: '',
     price: '',
     type: '',
+    image: '',
   });
 
   useEffect(() => {
@@ -109,6 +110,7 @@ export function ProductsLogic() {
       name: editingProductData.name,
       price: editingProductData.price,
       type: editingProductData.type,
+      image: editingProductData.image,
     };
 
     ApiRequest({
@@ -125,6 +127,7 @@ export function ProductsLogic() {
               name: editingProductData.name,
               price: editingProductData.price,
               type: editingProductData.type,
+              image: editingProductData.image,
             };
           } else {
             return product;
@@ -152,6 +155,7 @@ export function ProductsLogic() {
       name: '',
       price: '',
       type: '',
+      image: '',
     });
     setAddModalOpen(true);
   };

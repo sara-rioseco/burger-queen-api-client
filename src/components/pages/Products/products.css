@@ -82,6 +82,11 @@
   font-size: 1.2em;
 }
 
+.imgProducts {
+  max-width: 30px;
+  max-height: 35px;
+}
+
 .buttTable {
   text-align: center !important;
 }
@@ -114,4 +119,17 @@
   flex-direction: column;
   gap: 10px;
   align-items: center;
+}
+
+.inputImgProducts {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 16em;
+}
+
+.imgProductsModal {
+  max-width: 75px;
+  max-height: 60px;
 }

@@ -80,6 +80,7 @@ export default function Products() {
               <thead>
                 <tr>
                   <th className="tableHeader">PRODUCTO</th>
+                  <th className="tableHeader">IMAGEN</th>
                   <th className="tableHeader">PRECIO</th>
                   <th className="tableHeader">TIPO</th>
                   <th className="tableHeader buttTable">EDITAR</th>
@@ -92,6 +93,7 @@ export default function Products() {
                   .map((product) => (
                     <tr key={product.id}>
                       <td>{product.name}</td>
+                      <td><img src={product.image} className='imgProducts' /></td>
                       <td>{product.price}</td>
                       <td>{product.type}</td>
                       <td className='buttonsTable'>
@@ -151,6 +153,18 @@ export default function Products() {
                               value={editingProductData?.price || ''}
                               onChange={(event) => handleInputChange('price', event.target.value)}
                             />
+                            <div className='inputImgProducts'>
+                              <Input
+                                type='text'
+                                placeholder='Escribe aquí'
+                                label='Imagen (URL) :'
+                                classInputLabel='labelsModalEdit'
+                                classInput='inputModalEdit'
+                                value={editingProductData?.image || ''}
+                                onChange={(event) => handleInputChange('image', event.target.value)}
+                              />
+                              <img src={editingProductData?.image || ''} className='imgProductsModal' />
+                            </div>
                             <div className='selectRolModal'>
                               <label className='bebas'>TIPO : </label>
                               <select
@@ -200,6 +214,18 @@ export default function Products() {
                                 value={newProduct.price || ''}
                                 onChange={(event) => setNewProduct({ ...newProduct, price: event.target.value })}
                               />
+                              <div className='inputImgProducts'>
+                                <Input
+                                  type='text'
+                                  placeholder='Escribe aquí'
+                                  label='Imagen (URL) :'
+                                  classInputLabel='labelsModalEdit'
+                                  classInput='inputModalEdit'
+                                  value={newProduct.image || ''}
+                                  onChange={(event) => setNewProduct({ ...newProduct, image: event.target.value })}
+                                />
+                                <img src={newProduct.image || ''} className='imgProductsModal' />
+                              </div>
                               <div className='selectRolModal'>
                                 <label className='bebas'>TIPO :</label>
                                 <select
