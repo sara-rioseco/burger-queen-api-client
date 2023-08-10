@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ApiRequest from '../services/apiRequest.jsx';6
+import ApiRequest from '../services/apiRequest.jsx';
 
 // LÓGICA DE LA SECCIÓN COCINA
 
@@ -12,6 +12,7 @@ export function useKitchenLogic() {
 
   const [ordersData, setOrdersData] = useState([]);
   const [stopwatch, setStopwatch] = useState(true);
+  const [time, setTime] = useState(null);
     
   useEffect(() => {
     if (!token) {
@@ -39,10 +40,11 @@ export function useKitchenLogic() {
         error && navigate('/error-page');
       }
     });
-  }, [navigate, token, userId]);
+  }, [navigate, token, userId, stopwatch]);
 
   const pendingOrders = ordersData.filter(order => order.status === 'En preparación');
   const preparedOrders = ordersData.filter(order => order.status === 'Listo en barra');
+
 
 
 // Calcular el tiempo desde creación de la orden
@@ -65,6 +67,22 @@ export function useKitchenLogic() {
     return hours + ":" + minutes + ":" + seconds;
   }
 
+// Obtener tiempo de creación de la orden
+  const getOrderTime = (order) => order.dateEntry  
+
+// Actualizar setTime para que se renderice
+  const handleUpdateTimer = (order) => {
+    if (stopwatch) {
+      setTime(getOrderTime(order));
+    } 
+    return time
+  }
+
+// Ejecutar función cada segundo
+const updateTimerEachSecond = (order) => window.setInterval(() => {
+  handleUpdateTimer(order)
+}, 1000);
+
   return {
     navigate,
     token,
@@ -75,6 +93,7 @@ export function useKitchenLogic() {
     stopwatch,
     setOrdersData,
     setStopwatch,
-    calculateTimePassed
+    calculateTimePassed,
+    updateTimerEachSecond
   }
 }

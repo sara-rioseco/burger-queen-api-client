@@ -21,14 +21,25 @@
     flex-direction: column;
     align-items: flex-start;
     height: 95%;
-    width: 75%;
+    width: 80%;
+    margin: 0 5%;
   }
 
-  .kitchen-header {
+  div .kitchen-header {
     color: white;
-    font-family: 'Bebas Neue', cursive;
-    font-size: 50px;
+    font-family: 'Bebas Neue';
+    font-size: 46px;
+    font-weight: bold;
     margin: 0;
+  }
+
+  div .kitchen-body {
+    display: flex;
+    flex-flow: row nowrap;
+    overflow-x: scroll;
+    height: 270px;
+    width: 100%;
+    gap: 1em;
   }
 
   div .order-container {
@@ -36,28 +47,32 @@
     border-radius: 8px;
     color: white;
     font-family: 'Asap condensed';
-    font-size: 24 px;
-    margin: 5px;
-    padding: 10px;
-    width: 50% !important;
+    font-size: 24px;
+    height: 240px;
+    width: 260px;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-around;
+    align-items: center;
+    gap: 0.5;
   }
 
-  div .order-header .order-title{
-    font-size: 20px !important;
+  div .order-header {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 0.8em;
+  }
+
+  div .order-header .order-title, .order-time{
+    font-size: 26px !important;
+    width: fit-content;
   }
 
   div .order-body {
     width: 200px;
+    align-self: center;
   }
 
-  h2 .product-content {
-    font-size: 14px !important;
+  div .product-content {
+    font-size: 16px !important;
   }
-
-  div .kitchen-body {
-    display: flex;
-    flex-flow: row nowrap;
-    width: 100%;
-    overflow-x: scroll;
-  }
-

@@ -23,7 +23,8 @@ export default function Kitchen() {
     stopwatch,
     setOrdersData,
     setStopwatch,
-    calculateTimePassed
+    calculateTimePassed,
+    updateTimerEachSecond
   } = useKitchenLogic();
 
   const handleClick = () => {
@@ -37,17 +38,18 @@ export default function Kitchen() {
         <div className='kitchen-header'>PENDIENTES</div>
         <div className='kitchen-body'>
           {pendingOrders.map(order => (
+            updateTimerEachSecond(order),
             <div key={order.id} className='order-container'>
               <div className='order-header'>
                 <h2 className='order-title'>Mesa #{order.table}</h2>
                 <h2 className='order-time'><Stopwatch isActive={stopwatch} time={calculateTimePassed(order.dateEntry)} /></h2>
               </div>
               <div className='order-body'>
-                <h2 className='order-content'>
+                <div className='order-content'>
                   {order.products.map(product => (
-                  <h2 className='product-content' key={`00${order.id}00${product.product.id}`}>{product.product.name} x {product.qty}
-                  </h2>
-                ))}</h2>
+                  <h2 className='product-content' key={`00${order.id}00${product.product.id}`}>{product.product.name} x {product.qty}</h2>
+                  ))}
+                </div>
               </div>
               <div className='order-footer'>
               <Button label="ORDEN LISTA" onClick={handleClick} />
@@ -61,12 +63,16 @@ export default function Kitchen() {
             <div key={order.id} className='order-container'>
               <div className='order-header'>
                 <h2 className='order-title'>Mesa #{order.table}</h2>
-                <h2 className='order-time'></h2>
+                <h2 className='order-time'>Terminado</h2>
               </div>
               <div className='order-body'>
+                <div className='order-content'>
+                  {order.products.map(product => (
+                  <h2 className='product-content' key={`00${order.id}00${product.product.id}`}>{product.product.name} x {product.qty}</h2>
+                  ))}
+                </div>
               </div>
               <div className='order-footer'>
-              <Button label="ORDEN LISTA" onClick={handleClick} />
               </div>
             </div>
           ))}
