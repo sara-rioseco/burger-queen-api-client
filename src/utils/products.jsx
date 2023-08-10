@@ -14,6 +14,7 @@ export function ProductsLogic() {
   const [modalOpenEditProducts, setModalOpenEditProducts] = useState(false);
   const [editingProductData, setEditingProductData] = useState(null);
   const [addModalOpen, setAddModalOpen] = useState(false);
+  const [selectedTypes, setSelectedTypes] = useState(['Desayuno', 'Almuerzo']);
   const [newProduct, setNewProduct] = useState({
     name: '',
     price: '',
@@ -42,6 +43,15 @@ export function ProductsLogic() {
         }
       });
   }, [navigate, token]);
+
+   // FILTRO DE PRODUCTOS POR TIPO
+  const handleTypeCheckboxChange = (type) => {
+    if (selectedTypes.includes(type)) {
+      setSelectedTypes(selectedTypes.filter(selectedType => selectedType !== type));
+    } else {
+      setSelectedTypes([...selectedTypes, type]);
+    }
+  };
 
   // ABRE MODAL PARA CONFIRMAR BORRAR UN USUARIO AL CLICKEAR BOTON DE LA TABLA
   const handleOpenModalDeleteProducts = (productId) => {
@@ -147,14 +157,14 @@ export function ProductsLogic() {
   };
 
   // CONFIRMA QUE SE AGREGUE UN USUARIO Y ACTUALIZA LA INFORMACIÓN EN LA TABLA
-  const handleConfirmAddClick = () => {  
+  const handleConfirmAddClick = () => {
     ApiRequest({
       url: `http://localhost:8080/products`,
       method: 'post',
       body: newProduct,
     })
       .then((response) => {
-        const dataNewProduct = response.data.product;  
+        const dataNewProduct = response.data.product;
         setProductsData(prevProducts => [...prevProducts, dataNewProduct]);
         setAddModalOpen(false);
       })
@@ -190,11 +200,13 @@ export function ProductsLogic() {
     handleInputChange,
     handleConfirmEditClickProducts,
     handleConfirmAddClick,
+    handleTypeCheckboxChange,
     modalProductId,
     modalOpenDeleteProducts,
     modalOpenEditProducts,
     editingProductData,
     addModalOpen,
     newProduct,
+    selectedTypes,
   };
 }

@@ -25,12 +25,14 @@ export default function Products() {
     setNewProduct,
     handleInputChange,
     handleConfirmAddClick,
+    handleTypeCheckboxChange,
     modalProductId,
     modalOpenDeleteProducts,
     modalOpenEditProducts,
     editingProductData,
     addModalOpen,
     newProduct,
+    selectedTypes,
   } = ProductsLogic();
 
   return (
@@ -43,6 +45,29 @@ export default function Products() {
               onClick={() => {
                 navigate('/users');
               }} />
+            <div className='filterOrders'>
+              <h3 className='textFilterUsers'>Filtrar productos por tipo :</h3>
+              <div className='checkboxesContainer'>
+                <label className='optionsFilterOrders'>
+                  <input
+                    type='checkbox'
+                    value='Desayuno'
+                    checked={selectedTypes.includes('Desayuno')}
+                    onChange={() => handleTypeCheckboxChange('Desayuno')}
+                  />
+                  Desayuno
+                </label>
+                <label className='optionsFilterOrders'>
+                  <input
+                    type='checkbox'
+                    value='Almuerzo'
+                    checked={selectedTypes.includes('Almuerzo')}
+                    onChange={() => handleTypeCheckboxChange('Almuerzo')}
+                  />
+                  Almuerzo
+                </label>
+              </div>
+            </div>
             <img
               src={Add}
               className="add"
@@ -62,98 +87,51 @@ export default function Products() {
                 </tr>
               </thead>
               <tbody>
-                {productsData.map((product) => (
-                  <tr key={product.id}>
-                    <td>{product.name}</td>
-                    <td>{product.price}</td>
-                    <td>{product.type}</td>
-                    <td className='buttonsTable'>
-                      <img
-                        src={Edit}
-                        className="edit"
-                        alt="buttonEdit"
-                        onClick={() => handleOpenEditModalProducts(product.id)}
-                      />
-                    </td>
-                    <td className='buttonsTable'>
-                      <img
-                        src={Delete}
-                        className="delete"
-                        alt="buttonDelete"
-                        onClick={() => handleOpenModalDeleteProducts(product.id)}
-                      />
-                    </td>
-                    <td className='modalDelete'>
-                      <Modal open={modalOpenDeleteProducts && modalProductId === product.id} onClose={handleCloseModalProducts}>
-                        <h2 className='textModal'>Estas seguro que deseas eliminar el siguiente producto?</h2>
-                        <div className='containerTextDeleteModal'>
-                          <label className="textLabelsModalDeleteProducts">Producto:</label><label className='productModalText'>{product.name}</label></div>
-                        <div className='containerTextDeleteModal'>
-                          <label className="textLabelsModalDeleteProducts">Tipo:</label><label className='productModalText'>{product.type}</label></div>
-                        <div>
-                          <Button
-                            label='CONFIRMAR'
-                            onClick={() => handleConfirmDeleteClickProducts(product.id)}
-                            classButton='buttonsModal'>
-                          </Button>
-                          <Button
-                            label='CANCELAR'
-                            onClick={handleCloseModalProducts}
-                            classButton='buttonsModal'>
-                          </Button>
-                        </div>
-                      </Modal>
-                      <Modal open={modalOpenEditProducts && modalProductId === product.id} onClose={handleCloseModalProducts}>
-                        <h2 className='textModal'>Editando producto  {product.name} :</h2>
-                        <div className='infoProductModal'>
-                          <Input
-                            type='text'
-                            placeholder='Escribe aquí'
-                            label='PRODUCTO :'
-                            classInputLabel='labelsModalEdit'
-                            classInput='inputModalEdit'
-                            value={editingProductData?.name || ''}
-                            onChange={(event) => handleInputChange('name', event.target.value)}
-                          />
-                          <Input
-                            type='number'
-                            placeholder='Escribe aquí'
-                            label='Precio :'
-                            classInputLabel='labelsModalEdit'
-                            classInput='inputModalEdit'
-                            value={editingProductData?.price || ''}
-                            onChange={(event) => handleInputChange('price', event.target.value)}
-                          />
-                          <div className='selectRolModal'>
-                            <label className='bebas'>TIPO : </label>
-                            <select
-                              className='boxSelect'
-                              value={editingProductData?.type}
-                              onChange={(event) => handleInputChange('type', event.target.value)}
-                            >
-                              <option value='Desayuno'>Desayuno</option>
-                              <option value='Almuerzo'>Almuerzo</option>
-                            </select>
+                {productsData
+                  .filter(product => selectedTypes.includes(product.type))
+                  .map((product) => (
+                    <tr key={product.id}>
+                      <td>{product.name}</td>
+                      <td>{product.price}</td>
+                      <td>{product.type}</td>
+                      <td className='buttonsTable'>
+                        <img
+                          src={Edit}
+                          className="edit"
+                          alt="buttonEdit"
+                          onClick={() => handleOpenEditModalProducts(product.id)}
+                        />
+                      </td>
+                      <td className='buttonsTable'>
+                        <img
+                          src={Delete}
+                          className="delete"
+                          alt="buttonDelete"
+                          onClick={() => handleOpenModalDeleteProducts(product.id)}
+                        />
+                      </td>
+                      <td className='modalDelete'>
+                        <Modal open={modalOpenDeleteProducts && modalProductId === product.id} onClose={handleCloseModalProducts}>
+                          <h2 className='textModal'>Estas seguro que deseas eliminar el siguiente producto?</h2>
+                          <div className='containerTextDeleteModal'>
+                            <label className="textLabelsModalDeleteProducts">Producto:</label><label className='productModalText'>{product.name}</label></div>
+                          <div className='containerTextDeleteModal'>
+                            <label className="textLabelsModalDeleteProducts">Tipo:</label><label className='productModalText'>{product.type}</label></div>
+                          <div>
+                            <Button
+                              label='CONFIRMAR'
+                              onClick={() => handleConfirmDeleteClickProducts(product.id)}
+                              classButton='buttonsModal'>
+                            </Button>
+                            <Button
+                              label='CANCELAR'
+                              onClick={handleCloseModalProducts}
+                              classButton='buttonsModal'>
+                            </Button>
                           </div>
-                        </div>
-                        <div>
-                          <Button
-                            label='CONFIRMAR'
-                            classButton='buttonsModal'
-                            onClick={handleConfirmEditClickProducts}
-                          >
-                          </Button>
-                          <Button
-                            label='CANCELAR'
-                            onClick={handleCloseModalProducts}
-                            classButton='buttonsModal'
-                          >
-                          </Button>
-                        </div>
-                      </Modal>
-                      {addModalOpen && (
-                        <Modal open={addModalOpen} onClose={handleCloseModalProducts}>
-                          <h2 className='textModal'>Agregar Producto :</h2>
+                        </Modal>
+                        <Modal open={modalOpenEditProducts && modalProductId === product.id} onClose={handleCloseModalProducts}>
+                          <h2 className='textModal'>Editando producto  {product.name} :</h2>
                           <div className='infoProductModal'>
                             <Input
                               type='text'
@@ -161,26 +139,25 @@ export default function Products() {
                               label='PRODUCTO :'
                               classInputLabel='labelsModalEdit'
                               classInput='inputModalEdit'
-                              value={newProduct.name}
-                              onChange={(event) => setNewProduct({ ...newProduct, name: event.target.value })}
+                              value={editingProductData?.name || ''}
+                              onChange={(event) => handleInputChange('name', event.target.value)}
                             />
                             <Input
                               type='number'
                               placeholder='Escribe aquí'
-                              label='PRECIO :'
+                              label='Precio :'
                               classInputLabel='labelsModalEdit'
                               classInput='inputModalEdit'
-                              value={newProduct.price}
-                              onChange={(event) => setNewProduct({ ...newProduct, price: event.target.value })}
+                              value={editingProductData?.price || ''}
+                              onChange={(event) => handleInputChange('price', event.target.value)}
                             />
                             <div className='selectRolModal'>
-                              <label className='bebas'>TIPO :</label>
+                              <label className='bebas'>TIPO : </label>
                               <select
                                 className='boxSelect'
-                                value={newProduct.type}
-                                onChange={(event) => setNewProduct({ ...newProduct, type: event.target.value })}
+                                value={editingProductData?.type}
+                                onChange={(event) => handleInputChange('type', event.target.value)}
                               >
-                                <option value='' disabled>Seleccione un tipo</option>
                                 <option value='Desayuno'>Desayuno</option>
                                 <option value='Almuerzo'>Almuerzo</option>
                               </select>
@@ -190,19 +167,69 @@ export default function Products() {
                             <Button
                               label='CONFIRMAR'
                               classButton='buttonsModal'
-                              onClick={handleConfirmAddClick}
-                            />
+                              onClick={handleConfirmEditClickProducts}
+                            >
+                            </Button>
                             <Button
                               label='CANCELAR'
                               onClick={handleCloseModalProducts}
                               classButton='buttonsModal'
-                            />
+                            >
+                            </Button>
                           </div>
                         </Modal>
-                      )}
-                    </td>
-                  </tr>
-                ))}
+                        {addModalOpen && (
+                          <Modal open={addModalOpen} onClose={handleCloseModalProducts}>
+                            <h2 className='textModal'>Agregar Producto :</h2>
+                            <div className='infoProductModal'>
+                              <Input
+                                type='text'
+                                placeholder='Escribe aquí'
+                                label='PRODUCTO :'
+                                classInputLabel='labelsModalEdit'
+                                classInput='inputModalEdit'
+                                value={newProduct.name}
+                                onChange={(event) => setNewProduct({ ...newProduct, name: event.target.value })}
+                              />
+                              <Input
+                                type='number'
+                                placeholder='Escribe aquí'
+                                label='PRECIO :'
+                                classInputLabel='labelsModalEdit'
+                                classInput='inputModalEdit'
+                                value={newProduct.price}
+                                onChange={(event) => setNewProduct({ ...newProduct, price: event.target.value })}
+                              />
+                              <div className='selectRolModal'>
+                                <label className='bebas'>TIPO :</label>
+                                <select
+                                  className='boxSelect'
+                                  value={newProduct.type}
+                                  onChange={(event) => setNewProduct({ ...newProduct, type: event.target.value })}
+                                >
+                                  <option value='' disabled>Seleccione un tipo</option>
+                                  <option value='Desayuno'>Desayuno</option>
+                                  <option value='Almuerzo'>Almuerzo</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div>
+                              <Button
+                                label='CONFIRMAR'
+                                classButton='buttonsModal'
+                                onClick={handleConfirmAddClick}
+                              />
+                              <Button
+                                label='CANCELAR'
+                                onClick={handleCloseModalProducts}
+                                classButton='buttonsModal'
+                              />
+                            </div>
+                          </Modal>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
