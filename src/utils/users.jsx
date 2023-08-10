@@ -14,6 +14,7 @@ export function UsersLogic() {
   const [modalOpenEditUsers, setModalOpenEditUsers] = useState(false);
   const [editingUserData, setEditingUserData] = useState(null);
   const [addModalOpen, setAddModalOpen] = useState(false);
+  const [errorLabel, setErrorLabel] = useState('');
   const [selectedRoles, setSelectedRoles] = useState(['admin', 'waiter', 'chef']);
   const [newUser, setNewUser] = useState({
     email: '',
@@ -171,14 +172,20 @@ export function UsersLogic() {
   };
 
   // CONFIRMA QUE SE AGREGUE UN USUARIO Y ACTUALIZA LA INFORMACIÓN EN LA TABLA
-  const handleConfirmAddClick = () => {  
+  const handleConfirmAddClick = () => {
+    const hasEmptyFields = Object.values(newUser).some(value => value === '');
+    if (hasEmptyFields) {
+      setErrorLabel('Completa todos los campos');
+      return;
+    }
+
     ApiRequest({
       url: `http://localhost:8080/users`,
       method: 'post',
       body: newUser,
     })
       .then((response) => {
-        const dataNewUser = response.data.user;  
+        const dataNewUser = response.data.user;
         setUsersData(prevUsers => [...prevUsers, dataNewUser]);
         setAddModalOpen(false);
       })
@@ -187,6 +194,12 @@ export function UsersLogic() {
         if (error.response.data === 'jwt expired' && error.response.status === 401) {
           console.error(error);
           navigate('/login');
+        } if (error.response.data === 'Email format is invalid' && error.response.status === 400) {
+          setErrorLabel('Formato del correo inválido');
+          return;
+        } if (error.response.data === 'Email already exists' && error.response.status === 400) {
+          setErrorLabel('El usuario ya existe');
+          return;
         } else {
           console.error(error);
           error && navigate('/error-page');
@@ -223,5 +236,6 @@ export function UsersLogic() {
     addModalOpen,
     newUser,
     selectedRoles,
+    errorLabel,
   };
 }

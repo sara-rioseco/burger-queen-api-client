@@ -33,6 +33,7 @@ export default function Products() {
     addModalOpen,
     newProduct,
     selectedTypes,
+    errorLabel,
   } = ProductsLogic();
 
   return (
@@ -238,6 +239,7 @@ export default function Products() {
                                   <option value='Almuerzo'>Almuerzo</option>
                                 </select>
                               </div>
+                              <label className="labelErrorAdmin">{errorLabel}</label>
                             </div>
                             <div>
                               <Button

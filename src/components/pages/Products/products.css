@@ -133,3 +133,9 @@
   max-width: 75px;
   max-height: 60px;
 }
+
+.labelErrorAdmin {
+  color: red;
+  font-family: 'Asap Condensed', sans-serif;
+  font-size: 1.3em;
+}

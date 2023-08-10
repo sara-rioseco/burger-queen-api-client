@@ -34,6 +34,7 @@ export default function Users() {
     editingUserData,
     addModalOpen,
     newUser,
+    errorLabel,
   } = UsersLogic();
 
   return (
@@ -223,6 +224,7 @@ export default function Users() {
                                   <option value='waiter'>Mesero</option>
                                 </select>
                               </div>
+                              <label className="labelErrorAdmin">{errorLabel}</label>
                             </div>
                             <div>
                               <Button

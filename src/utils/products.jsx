@@ -15,6 +15,7 @@ export function ProductsLogic() {
   const [editingProductData, setEditingProductData] = useState(null);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [selectedTypes, setSelectedTypes] = useState(['Desayuno', 'Almuerzo']);
+  const [errorLabel, setErrorLabel] = useState('');
   const [newProduct, setNewProduct] = useState({
     name: '',
     price: '',
@@ -45,7 +46,7 @@ export function ProductsLogic() {
       });
   }, [navigate, token]);
 
-   // FILTRO DE PRODUCTOS POR TIPO
+  // FILTRO DE PRODUCTOS POR TIPO
   const handleTypeCheckboxChange = (type) => {
     if (selectedTypes.includes(type)) {
       setSelectedTypes(selectedTypes.filter(selectedType => selectedType !== type));
@@ -160,8 +161,14 @@ export function ProductsLogic() {
     setAddModalOpen(true);
   };
 
-  // CONFIRMA QUE SE AGREGUE UN USUARIO Y ACTUALIZA LA INFORMACIÓN EN LA TABLA
+  // CONFIRMA QUE SE AGREGUE UN PRODUCTO Y ACTUALIZA LA INFORMACIÓN EN LA TABLA
   const handleConfirmAddClick = () => {
+    const hasEmptyFields = Object.values(newProduct).some(value => value === '');
+    if (hasEmptyFields) {
+      setErrorLabel('Completa todos los campos');
+      return;
+    }
+
     ApiRequest({
       url: `http://localhost:8080/products`,
       method: 'post',
@@ -212,5 +219,6 @@ export function ProductsLogic() {
     addModalOpen,
     newProduct,
     selectedTypes,
+    errorLabel,
   };
 }
