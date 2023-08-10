@@ -148,7 +148,7 @@ export default function Menu() {
         </table>
         </div>
         <div>
-                  <Modal open={modalOrderConfirmation} onClose={handleCloseModalOrderConfirmation}>
+          <Modal open={modalOrderConfirmation} onClose={handleCloseModalOrderConfirmation}>
             <h2 className='textModal'>¿Deseas enviar la orden a la cocina?</h2>
             <div>
               <Button

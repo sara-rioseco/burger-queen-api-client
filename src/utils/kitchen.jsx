@@ -13,6 +13,8 @@ export function useKitchenLogic() {
   const [ordersData, setOrdersData] = useState([]);
   const [stopwatch, setStopwatch] = useState(true);
   const [time, setTime] = useState(null);
+  const [modalUpdateOrder, setModalUpdateOrder] = useState(false);
+  const [modalUpdateOrderId, setModalUpdateOrderId] = useState(null);
     
   useEffect(() => {
     if (!token) {
@@ -45,6 +47,54 @@ export function useKitchenLogic() {
   const pendingOrders = ordersData.filter(order => order.status === 'En preparación');
   const preparedOrders = ordersData.filter(order => order.status === 'Listo en barra');
 
+// Abrir modal para confirmar cambio de estado de la orden 
+
+
+// Cambiar el estado de la orden a Listo en barra
+const updateOrderStatus = (orderId) => {
+  const body = {
+    "status": "Listo en barra"
+  };
+
+  ApiRequest({
+    url: `http://localhost:8080/orders/${orderId}`,
+    method: 'patch',
+    body: body,
+  })
+    .then(
+      ApiRequest({
+      url: 'http://localhost:8080/orders',
+      method: 'get',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    }).then(response => {
+      const Orders = response.data
+      setOrdersData(Orders);
+      setModalUpdateOrder(false);
+    }))
+    .catch((error) => {
+      console.error(error);
+      if (error.response.data === 'jwt expired' && error.response.status === 401) {
+        console.error(error);
+        navigate('/login');
+      } else {
+        console.error(error);
+        error && navigate('/error-page');
+      }
+    });
+};
+
+const handleOpenModalUpdateOrder = (id) => {
+  setModalUpdateOrder(true);
+  setModalUpdateOrderId(id);
+};
+
+const handleCloseModalUpdateOrder = () => {
+  setModalUpdateOrder(false);
+  setModalUpdateOrderId(null)
+};
 
 
 // Calcular el tiempo desde creación de la orden
@@ -78,6 +128,7 @@ export function useKitchenLogic() {
     return time
   }
 
+
 // Ejecutar función cada segundo
 const updateTimerEachSecond = (order) => window.setInterval(() => {
   handleUpdateTimer(order)
@@ -94,6 +145,12 @@ const updateTimerEachSecond = (order) => window.setInterval(() => {
     setOrdersData,
     setStopwatch,
     calculateTimePassed,
-    updateTimerEachSecond
+    updateTimerEachSecond,
+    handleOpenModalUpdateOrder,
+    handleCloseModalUpdateOrder,
+    modalUpdateOrder,
+    modalUpdateOrderId,
+    setModalUpdateOrderId,
+    updateOrderStatus
   }
 }

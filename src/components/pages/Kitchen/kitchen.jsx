@@ -14,28 +14,22 @@ import Stopwatch from '../../stopwatch/stopwatch';
 
 export default function Kitchen() {
   const {
-    navigate,
-    token,
-    userId,
-    ordersData,
     pendingOrders,
     preparedOrders,
     stopwatch,
-    setOrdersData,
-    setStopwatch,
     calculateTimePassed,
-    updateTimerEachSecond
+    updateTimerEachSecond,
+    handleOpenModalUpdateOrder,
+    handleCloseModalUpdateOrder,
+    modalUpdateOrder,
+    updateOrderStatus,
+    modalUpdateOrderId
   } = useKitchenLogic();
-
-  const handleClick = () => {
-
-    console.log(calculateTimePassed("2023-08-09 03:45:50"));
-  };
 
   return (
     <>
       <div className='kitchen-container'>
-        <div className='kitchen-header'>PENDIENTES</div>
+        <div className='kitchen-header'>EN PREPARACIÓN</div>
         <div className='kitchen-body'>
           {pendingOrders.map(order => (
             updateTimerEachSecond(order),
@@ -52,12 +46,30 @@ export default function Kitchen() {
                 </div>
               </div>
               <div className='order-footer'>
-              <Button label="ORDEN LISTA" onClick={handleClick} />
+                <Modal open={modalUpdateOrder && modalUpdateOrderId === order.id} onClose={handleCloseModalUpdateOrder}>
+                  <h2 className='textModal'>¿Deseas marcar la orden como lista en barra?</h2>
+                  <h2 className='textModal'>Mesa #{order.table}</h2>            
+                  {order.products.map(product => (
+                    <h2 className='product-content' key={`00${order.id}00${product.product.id}`}>{product.product.name} x {product.qty}</h2>))}
+                  <div>
+                    <Button
+                      label='CONFIRMAR'
+                      onClick={() => updateOrderStatus(order.id)}
+                      classButton='buttonsModal'>
+                    </Button>
+                    <Button
+                      label='CANCELAR'
+                      onClick={handleCloseModalUpdateOrder}
+                      classButton='buttonsModal'>
+                    </Button>
+                  </div>
+                </Modal>
+                <Button label="ORDEN LISTA" onClick={() => handleOpenModalUpdateOrder(order.id)} />
               </div>
             </div>
           ))}
         </div>
-        <div className='kitchen-header'>LISTOS</div>
+        <div className='kitchen-header'>LISTO EN BARRA</div>
         <div className='kitchen-body'>
           {preparedOrders.map(order => (
             <div key={order.id} className='order-container'>
