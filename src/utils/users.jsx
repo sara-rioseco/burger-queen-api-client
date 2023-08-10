@@ -13,6 +13,12 @@ export function UsersLogic() {
   const [modalUserId, setModalUserId] = useState(null);
   const [modalOpenEditUsers, setModalOpenEditUsers] = useState(false);
   const [editingUserData, setEditingUserData] = useState(null);
+  const [addModalOpen, setAddModalOpen] = useState(false);
+  const [newUser, setNewUser] = useState({
+    email: '',
+    password: '',
+    role: '',
+  });
 
   useEffect(() => {
     if (!token) {
@@ -57,7 +63,7 @@ export function UsersLogic() {
     setModalOpenDeleteUsers(true);
   }
 
-  // FUNCIÓN PARA CONFIRMAR BORRAR UNA ORDEN EN LA MODAL
+  // FUNCIÓN PARA CONFIRMAR BORRAR UN USUARIO EN LA MODAL
   const handleConfirmDeleteClickUsers = (userId) => {
     const userDelete = usersData.find(user => user.id === userId);
 
@@ -69,7 +75,7 @@ export function UsersLogic() {
       body: body,
     })
       .then(() => {
-        // Actualiza la informacion de la tabla para borrar la orden en ella
+        // Actualiza la informacion de la tabla para borrar el usuario en ella
         setUsersData(prevUsers => prevUsers.filter(user => user.id !== userId));
         setModalOpenDeleteUsers(false);
       })
@@ -85,7 +91,7 @@ export function UsersLogic() {
       });
   }
 
-  // ABRRIR MODAL EDITAR CON LOS DATOS DE LA ORDEN AL CLICKEAR BOTON DE LA TABLA
+  // ABRRIR MODAL EDITAR CON LOS DATOS DEL USUARIO AL CLICKEAR BOTON DE LA TABLA
   const handleOpenEditModalUsers = (usersId) => {
     const userToEdit = usersData.find(user => user.id === usersId);
     setEditingUserData(userToEdit);
@@ -102,55 +108,90 @@ export function UsersLogic() {
   };
 
   // CONFIRMA LA EDICIÓN DEL USUARIO
-const handleConfirmEditClickUsers = () => {
-  const updateUsers = {
-    email: editingUserData.email,
-    password: editingUserData.password,
-    role: editingUserData.role,
-  };
+  const handleConfirmEditClickUsers = () => {
+    const updateUsers = {
+      email: editingUserData.email,
+      password: editingUserData.password,
+      role: editingUserData.role,
+    };
 
-  ApiRequest({
-    url: `http://localhost:8080/users/${editingUserData.id}`,
-    method: 'patch',
-    body: updateUsers,
-  })
-    .then((response) => {
-      console.log(response.data, 'updated');
+    ApiRequest({
+      url: `http://localhost:8080/users/${editingUserData.id}`,
+      method: 'patch',
+      body: updateUsers,
+    })
+      .then((response) => {
+        console.log(response.data, 'updated');
 
-      // ACTUALIZA LA DATA CON LA INFORMACIÓN OBTENIDA DE LA EDICIÓN
-      const updatedUsersData = usersData.map(user => {
-        if (user.id === editingUserData.id) {
-          return {
-            ...user,
-            email: editingUserData.email,
-            password: editingUserData.password,
-            role: editingUserData.role,
-          };
+        // ACTUALIZA LA DATA CON LA INFORMACIÓN OBTENIDA DE LA EDICIÓN
+        const updatedUsersData = usersData.map(user => {
+          if (user.id === editingUserData.id) {
+            return {
+              ...user,
+              email: editingUserData.email,
+              password: editingUserData.password,
+              role: editingUserData.role,
+            };
+          } else {
+            return user;
+          }
+        });
+
+        setUsersData(updatedUsersData);
+        handleCloseModalUsers();
+      })
+      .catch((error) => {
+        console.error(error);
+        if (error.response.data === 'jwt expired' && error.response.status === 401) {
+          console.error(error);
+          navigate('/login');
         } else {
-          return user;
+          console.error(error);
+          error && navigate('/error-page');
         }
       });
+  };
 
-      setUsersData(updatedUsersData);
-      handleCloseModalUsers();
-    })
-    .catch((error) => {
-      console.error(error);
-      if (error.response.data === 'jwt expired' && error.response.status === 401) {
-        console.error(error);
-        navigate('/login');
-      } else {
-        console.error(error);
-        error && navigate('/error-page');
-      }
+  // ABRE LA MODAL PARA AGREGAR UN USUARIO CON LOS CAMPOS VACÍOS
+  const handleAddClick = () => {
+    setNewUser({
+      email: '',
+      password: '',
+      role: '',
     });
-};
+    setAddModalOpen(true);
+  };
+
+  // CONFIRMA QUE SE AGREGUE UN USUARIO 
+  const handleConfirmAddClick = () => {
+    ApiRequest({
+      url: `http://localhost:8080/users`,
+      method: 'post',
+      body: newUser,
+    })
+      .then((response) => {
+        console.log(response.data);
+        console.log('Nuevo usuario:', newUser);
+        setAddModalOpen(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        if (error.response.data === 'jwt expired' && error.response.status === 401) {
+          console.error(error);
+          navigate('/login');
+        } else {
+          console.error(error);
+          error && navigate('/error-page');
+        }
+      });
+  };
 
   // CERRAR DIÁLOGOS MODALES
   const handleCloseModalUsers = () => {
     setModalUserId(null); // Limpiar el usersId al cerrar la modal
     setModalOpenDeleteUsers(false);
     setModalOpenEditUsers(false);
+    setAddModalOpen(false);
   };
 
   return {
@@ -161,11 +202,16 @@ const handleConfirmEditClickUsers = () => {
     handleOpenEditModalUsers,
     setModalOpenDeleteUsers,
     handleCloseModalUsers,
+    handleAddClick,
+    setNewUser,
+    handleInputChange,
+    handleConfirmEditClickUsers,
+    handleConfirmAddClick,
     modalUserId,
     modalOpenDeleteUsers,
     modalOpenEditUsers,
     editingUserData,
-    handleInputChange,
-    handleConfirmEditClickUsers,
+    addModalOpen,
+    newUser,
   };
 }
