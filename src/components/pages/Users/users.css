@@ -40,6 +40,12 @@
 .add {
   width: 54px;
   height: 54px;
+  cursor: pointer;
+}
+
+.add:hover {
+  filter: drop-shadow(0 0 .5em #ffffff);
+  transform: scale(1.3);
 }
 
 .users-container {

@@ -155,7 +155,7 @@ export default function Products() {
                               <label className='bebas'>TIPO : </label>
                               <select
                                 className='boxSelect'
-                                value={editingProductData?.type}
+                                value={editingProductData?.type || ''}
                                 onChange={(event) => handleInputChange('type', event.target.value)}
                               >
                                 <option value='Desayuno'>Desayuno</option>
@@ -188,7 +188,7 @@ export default function Products() {
                                 label='PRODUCTO :'
                                 classInputLabel='labelsModalEdit'
                                 classInput='inputModalEdit'
-                                value={newProduct.name}
+                                value={newProduct.name || ''}
                                 onChange={(event) => setNewProduct({ ...newProduct, name: event.target.value })}
                               />
                               <Input
@@ -197,14 +197,14 @@ export default function Products() {
                                 label='PRECIO :'
                                 classInputLabel='labelsModalEdit'
                                 classInput='inputModalEdit'
-                                value={newProduct.price}
+                                value={newProduct.price || ''}
                                 onChange={(event) => setNewProduct({ ...newProduct, price: event.target.value })}
                               />
                               <div className='selectRolModal'>
                                 <label className='bebas'>TIPO :</label>
                                 <select
                                   className='boxSelect'
-                                  value={newProduct.type}
+                                  value={newProduct.type || ''}
                                   onChange={(event) => setNewProduct({ ...newProduct, type: event.target.value })}
                                 >
                                   <option value='' disabled>Seleccione un tipo</option>

@@ -164,7 +164,7 @@ export function ProductsLogic() {
       body: newProduct,
     })
       .then((response) => {
-        const dataNewProduct = response.data.product;
+        const dataNewProduct = response.data;
         setProductsData(prevProducts => [...prevProducts, dataNewProduct]);
         setAddModalOpen(false);
       })
