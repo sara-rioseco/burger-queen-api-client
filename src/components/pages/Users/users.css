@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  height: 110%;
+  height: 100%;
 }
 
 .headerContainerUsers {
@@ -31,7 +31,7 @@
   flex-direction: column;
   align-items: flex-start;
   padding: 20px;
-  height: 80%;
+  height: 90%;
   overflow-y: scroll;
 }
 
@@ -44,7 +44,7 @@
 
 .users {
   width: 65em;
-  height: 35em;
+  height: 36em;
   background-color: black;
   padding: 20px;
 }

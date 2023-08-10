@@ -52,8 +52,8 @@ export default function Users() {
                   <th className="tableHeader">ID</th>
                   <th className="tableHeader">CORREO</th>
                   <th className="tableHeader">PUESTO</th>
-                  <th className="tableHeader buttId">EDITAR</th>
-                  <th className="tableHeader buttId">ELIMINAR</th>
+                  <th className="tableHeader buttTable">EDITAR</th>
+                  <th className="tableHeader buttTable">ELIMINAR</th>
                 </tr>
               </thead>
               <tbody>
@@ -62,7 +62,7 @@ export default function Users() {
                     <td>#{user.id}</td>
                     <td>{user.email}</td>
                     <td>{getRoleLabel(user.role)}</td>
-                    <td className='buttonsId'>
+                    <td className='buttonsTable'>
                       <img
                         src={Edit}
                         className="edit"
@@ -70,7 +70,7 @@ export default function Users() {
                         onClick={() => handleOpenEditModalUsers(user.id)}
                       />
                     </td>
-                    <td className='buttonsId'>
+                    <td className='buttonsTable'>
                       <img
                         src={Delete}
                         className="delete"

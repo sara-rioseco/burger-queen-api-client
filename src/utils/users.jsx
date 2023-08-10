@@ -120,9 +120,7 @@ export function UsersLogic() {
       method: 'patch',
       body: updateUsers,
     })
-      .then((response) => {
-        console.log(response.data, 'updated');
-
+      .then(() => {
         // ACTUALIZA LA DATA CON LA INFORMACIÓN OBTENIDA DE LA EDICIÓN
         const updatedUsersData = usersData.map(user => {
           if (user.id === editingUserData.id) {
@@ -162,16 +160,16 @@ export function UsersLogic() {
     setAddModalOpen(true);
   };
 
-  // CONFIRMA QUE SE AGREGUE UN USUARIO 
-  const handleConfirmAddClick = () => {
+  // CONFIRMA QUE SE AGREGUE UN USUARIO Y ACTUALIZA LA INFORMACIÓN EN LA TABLA
+  const handleConfirmAddClick = () => {  
     ApiRequest({
       url: `http://localhost:8080/users`,
       method: 'post',
       body: newUser,
     })
       .then((response) => {
-        console.log(response.data);
-        console.log('Nuevo usuario:', newUser);
+        const dataNewUser = response.data.user;  
+        setUsersData(prevUsers => [...prevUsers, dataNewUser]);
         setAddModalOpen(false);
       })
       .catch((error) => {
