@@ -48,7 +48,6 @@
   align-items: flex-start;
   padding: 20px;
   height: 90%;
-  overflow-y: scroll;
 }
 
 .textHeader {
@@ -63,6 +62,7 @@
   height: 46em;
   background-color: black;
   padding: 20px;
+  overflow: scroll;
 }
 
 .users-table {
