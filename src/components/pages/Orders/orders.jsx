@@ -5,7 +5,7 @@ import Button from '../../button/button.jsx';
 import LogoutButton from '../../logoutButton/logoutButton.jsx';
 import Modal from '../../modal/modal.jsx';
 import Input from '../../input/input.jsx'
-import { useOrdersLogic } from '../../../utils/orders';
+import { OrdersLogic } from '../../../utils/orders';
 //ASSETS
 import Edit from '../../../assets/Images/editar.png'
 import Delete from '../../../assets/Images/borrar.png'
@@ -40,8 +40,9 @@ export default function Orders() {
     productsData,
     editModalProducts,
     handleStatusChange,
-    filteredOrdersData
-  } = useOrdersLogic();
+    filteredOrdersData,
+    selectedStatus,
+  } = OrdersLogic();
 
   // RENDERIZADO
   return (
@@ -60,6 +61,7 @@ export default function Orders() {
                   type='checkbox'
                   value='Entregado'
                   onChange={handleStatusChange}
+                  checked={selectedStatus.includes('Entregado')}
                 />
                 Entregado
               </label>
@@ -68,6 +70,7 @@ export default function Orders() {
                   type='checkbox'
                   value='Listo en barra'
                   onChange={handleStatusChange}
+                  checked={selectedStatus.includes('Listo en barra')}
                 />
                 Listo en barra
               </label>
@@ -76,6 +79,7 @@ export default function Orders() {
                   type='checkbox'
                   value='En preparación'
                   onChange={handleStatusChange}
+                  checked={selectedStatus.includes('En preparación')}
                 />
                 En preparación
               </label>

@@ -7,14 +7,14 @@ import { useNavigate } from 'react-router-dom'; // navegar entre router
 import ApiRequest from '../services/apiRequest.jsx';
 
 // LÓGICA DE LA SECCIÓN DE PEDIDOS
-export function useOrdersLogic() {
+export function OrdersLogic() {
   const navigate = useNavigate();
 
   const token = localStorage.getItem('accessToken');
   const userId = localStorage.getItem('userId');
 
   const [ordersData, setOrdersData] = useState([]);
-  const [selectedStatus, setSelectedStatus] = useState([]);
+  const [selectedStatus, setSelectedStatus] = useState(['Entregado', 'Listo en barra', 'En preparación']);
   const [modalOpenDelete, setModalOpenDelete] = useState(false);
   const [modalOpenEdit, setModalOpenEdit] = useState(false);
   const [modalOrderId, setModalOrderId] = useState(null);
@@ -46,11 +46,9 @@ export function useOrdersLogic() {
       .catch((error) => {
         console.error(error);
         if (error.response.data === 'jwt expired' && error.response.status === 401) {
-          console.error(error);
           navigate('/login');
         } else {
-          console.error(error);
-          error && navigate('/error-page');
+          navigate('/error-page');
         }
       });
 
@@ -235,7 +233,6 @@ export function useOrdersLogic() {
           error && navigate('/error-page');
         }
       });
-
   };
 
   // ABRE MODAL PARA CONFIRMAR BORRAR UNA ORDEN AL CLICKEAR BOTON DE LA TABLA
