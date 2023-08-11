@@ -113,7 +113,7 @@ export default function Menu() {
               <tr key={product.id}>
                 <td className='table-body'>{product.name}</td>
                 <td className='table-count'><img src={Remove} alt='remove-button' className='action-button' onClick={()=> handleClickRemove(product)}/>{'\u00A0'}{'\u00A0'}{product.qty}{'\u00A0'}{'\u00A0'}<img src={Add} alt='add-button' className='action-button' onClick={()=> handleClickAdd(product)}/></td>
-                <td className='table-number'>${product.qty*product.price}</td>
+                <td className='table-number'>${product.qty*product.price},00</td>
                 <td className='modalDelete'>
                   <Modal open={modalDelete && modalProductId === product.id} onClose={handleCloseModal}>
                     <h2 className='textModal'>¿Deseas eliminar este producto?</h2>
@@ -139,7 +139,7 @@ export default function Menu() {
             <tr key='foot' className="table-footer">
               <td className='table-end'> Total : </td>
               <td className='table-body'> </td>
-              <td className='table-number'>${getTotalPrice()}</td>
+              <td className='table-number'>${getTotalPrice()},00</td>
               <td className='table-body'> </td>
             </tr>
           </tfoot>
