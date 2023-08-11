@@ -143,9 +143,6 @@ export function ProductsLogic() {
       image: editingProductData.image,
     };
 
-    console.log(updateProducts.price);
-    console.log(typeof (updateProducts.price));
-
     // Si algún campo está vacío imprime etiqueta de error
     const hasEmptyFields = Object.values(updateProducts).some(value => value === '' || value === undefined);
     if (hasEmptyFields || isNaN(updateProducts.price)) {
