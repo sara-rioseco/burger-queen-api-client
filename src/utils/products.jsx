@@ -19,7 +19,7 @@ export function ProductsLogic() {
   const [errorLabel, setErrorLabel] = useState('');
   const [newProduct, setNewProduct] = useState({
     name: '',
-    price: '',
+    price: undefined,
     type: '',
     image: '',
   });
@@ -115,7 +115,7 @@ export function ProductsLogic() {
   const handleConfirmEditClickProducts = () => {
     const updateProducts = {
       name: editingProductData.name,
-      price: editingProductData.price,
+      price: parseInt(editingProductData.price),
       type: editingProductData.type,
       image: editingProductData.image,
     };
@@ -160,7 +160,7 @@ export function ProductsLogic() {
   const handleAddClick = () => {
     setNewProduct({
       name: '',
-      price: '',
+      price: undefined,
       type: '',
       image: '',
     });

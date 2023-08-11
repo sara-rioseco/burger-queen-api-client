@@ -213,7 +213,7 @@ export default function Products() {
                                 classInputLabel='labelsModalEdit'
                                 classInput='inputModalEditProducts'
                                 value={newProduct.price || ''}
-                                onChange={(event) => setNewProduct({ ...newProduct, price: event.target.value })}
+                                onChange={(event) => setNewProduct({ ...newProduct, price: parseInt(event.target.value) })}
                               />
                               <div className='inputImgProducts'>
                                 <Input
