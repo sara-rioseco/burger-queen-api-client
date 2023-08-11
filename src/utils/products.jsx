@@ -50,7 +50,7 @@ export function ProductsLogic() {
           navigate('/error-page');
         }
       });
-  }, [navigate, token]);
+  }, [navigate, token, role]);
 
   // FILTRO DE PRODUCTOS POR TIPO
   const handleTypeCheckboxChange = (type) => {
