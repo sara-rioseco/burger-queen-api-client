@@ -90,6 +90,7 @@ export function ProductsLogic() {
       image: '',
     });
     setAddModalOpen(true);
+    setErrorLabel('');
   };
 
   // CONFIRMA QUE SE AGREGUE UN PRODUCTO Y ACTUALIZA LA INFORMACIÓN EN LA TABLA
@@ -130,6 +131,7 @@ export function ProductsLogic() {
     setEditingProductData(productToEdit);
     setModalProductId(productsId);
     setModalOpenEditProducts(true);
+    setErrorLabel('');
   }
 
   // CONFIRMA LA EDICIÓN DEL PRODUCTO

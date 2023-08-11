@@ -103,6 +103,7 @@ export function UsersLogic() {
       role: '',
     });
     setAddModalOpen(true);
+    setErrorLabel('');
   };
 
   // CONFIRMA QUE SE AGREGUE UN USUARIO Y ACTUALIZA LA INFORMACIÓN EN LA TABLA
@@ -154,6 +155,7 @@ export function UsersLogic() {
     });
     setModalUserId(usersId);
     setModalOpenEditUsers(true);
+    setErrorLabel('');
   }
 
   // CONFIRMA LA EDICIÓN DEL USUARIO
