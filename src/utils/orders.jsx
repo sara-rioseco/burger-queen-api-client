@@ -32,7 +32,8 @@ export function OrdersLogic() {
       return;
     }
 
-    if (role != 'waiter') {
+    // Redirigir al usuario al inicio de sesión si no tiene el role autorizado
+    if (role != 'waiter' || role != 'admin') {
       navigate('/login');
       return;
     }
@@ -232,10 +233,8 @@ export function OrdersLogic() {
       .catch((error) => {
         console.error(error);
         if (error.response.data === 'jwt expired' && error.response.status === 401) {
-          console.error(error);
           navigate('/login');
         } else {
-          console.error(error);
           error && navigate('/error-page');
         }
       });

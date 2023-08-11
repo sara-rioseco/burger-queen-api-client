@@ -1,8 +1,9 @@
-// UsersLogic.js
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react'; // manejo de APIrequest en primer renderizado o cuando las dependecias cambien
+import { useNavigate } from 'react-router-dom'; // navegar entre router
+// COMPONENTES
 import ApiRequest from '../services/apiRequest.jsx';
 
+// LÓGICA DE LA SECCIÓN DE USUARIOS
 export function UsersLogic() {
   const navigate = useNavigate();
 
@@ -25,16 +26,19 @@ export function UsersLogic() {
   });
 
   useEffect(() => {
+    // Redirigir al usuario al inicio de sesión si no hay un accessToken
     if (!token) {
       navigate('/login');
       return;
     }
 
+    // Redirigir al usuario al inicio de sesión si no tiene el role autorizado
     if (role != 'admin') {
       navigate('/login');
       return;
     }
 
+    // OBTENER DATOS DE USARIOS
     ApiRequest({
       url: 'http://localhost:8080/users',
       method: 'get',
@@ -75,6 +79,127 @@ export function UsersLogic() {
     }
   };
 
+  // CERRAR DIÁLOGOS MODALES
+  const handleCloseModalUsers = () => {
+    setModalUserId(null); // Limpiar el usersId al cerrar la modal
+    setModalOpenDeleteUsers(false);
+    setModalOpenEditUsers(false);
+    setAddModalOpen(false);
+  };
+
+  // MANEJO DE CAMBIOS DE VALORES EN LOS CAMPOS DE LAS MODALES
+  const handleInputChange = (fieldName, value) => {
+    setEditingUserData(prevData => ({
+      ...prevData,
+      [fieldName]: value,
+    }));
+  };
+
+  // ABRE LA MODAL PARA AGREGAR UN USUARIO CON LOS CAMPOS VACÍOS
+  const handleAddClick = () => {
+    setNewUser({
+      email: '',
+      password: '',
+      role: '',
+    });
+    setAddModalOpen(true);
+  };
+
+  // CONFIRMA QUE SE AGREGUE UN USUARIO Y ACTUALIZA LA INFORMACIÓN EN LA TABLA
+  const handleConfirmAddClick = () => {
+    // Si algún campo está vacío imprime etiqueta de error
+    const hasEmptyFields = Object.values(newUser).some(value => value === '');
+    if (hasEmptyFields) {
+      setErrorLabel('Completa todos los campos');
+      return;
+    }
+
+    ApiRequest({
+      url: `http://localhost:8080/users`,
+      method: 'post',
+      body: newUser,
+    })
+      .then((response) => {
+        // Actualizar la tabla con el nuevo usuario
+        const dataNewUser = response.data.user;
+        setUsersData(prevUsers => [...prevUsers, dataNewUser]);
+        setAddModalOpen(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        if (error.response.data === 'jwt expired' && error.response.status === 401) {
+          console.error(error);
+          navigate('/login');
+        } if (error.response.data === 'Email format is invalid' && error.response.status === 400) {
+          setErrorLabel('Formato del correo inválido');
+          return;
+        } if (error.response.data === 'Email already exists' && error.response.status === 400) {
+          setErrorLabel('El usuario ya existe');
+          return;
+        } else {
+          console.error(error);
+          error && navigate('/error-page');
+        }
+      });
+  };
+
+  // ABRRIR MODAL EDITAR CON LOS DATOS DEL USUARIO AL CLICKEAR BOTON DE LA TABLA
+  const handleOpenEditModalUsers = (usersId) => {
+    const userToEdit = usersData.find(user => user.id === usersId);
+    setEditingUserData({
+      ...userToEdit,
+      password: '', // Deja el campo de contraseña inicialmente vacío
+    });
+    setModalUserId(usersId);
+    setModalOpenEditUsers(true);
+  }
+
+  // CONFIRMA LA EDICIÓN DEL USUARIO
+  const handleConfirmEditClickUsers = () => {
+    const updateUsers = {
+      email: editingUserData.email,
+      password: editingUserData.password,
+      role: editingUserData.role,
+    }
+
+    // Si algún campo está vacío imprime mensaje de error
+    if (updateUsers.password === '') {
+      setErrorLabelEdit('Completa todos los campos');
+      return;
+    }
+
+    ApiRequest({
+      url: `http://localhost:8080/users/${editingUserData.id}`,
+      method: 'patch',
+      body: updateUsers,
+    })
+      .then(() => {
+        // ACTUALIZA LA DATA CON LA INFORMACIÓN OBTENIDA DE LA EDICIÓN
+        const updatedUsersData = usersData.map(user => {
+          if (user.id === editingUserData.id) {
+            return {
+              ...user,
+              email: editingUserData.email,
+              password: editingUserData.password,
+              role: editingUserData.role,
+            };
+          } else {
+            return user;
+          }
+        });
+        setUsersData(updatedUsersData);
+        handleCloseModalUsers();
+      })
+      .catch((error) => {
+        console.error(error);
+        if (error.response.data === 'jwt expired' && error.response.status === 401) {
+          navigate('/login');
+        } else {
+          error && navigate('/error-page');
+        }
+      });
+  };
+
   // ABRE MODAL PARA CONFIRMAR BORRAR UN USUARIO AL CLICKEAR BOTON DE LA TABLA
   const handleOpenModalDeleteUsers = (userId) => {
     setModalUserId(userId);
@@ -108,127 +233,6 @@ export function UsersLogic() {
         }
       });
   }
-
-  // ABRRIR MODAL EDITAR CON LOS DATOS DEL USUARIO AL CLICKEAR BOTON DE LA TABLA
-  const handleOpenEditModalUsers = (usersId) => {
-    const userToEdit = usersData.find(user => user.id === usersId);
-    setEditingUserData({
-      ...userToEdit,
-      password: '', // Deja el campo de contraseña inicialmente vacío
-    });
-    setModalUserId(usersId);
-    setModalOpenEditUsers(true);
-  }
-
-  // MANEJO DE LOS CAMBIOS DE VALORES DE LOS CAMPOS DE LA MODAL EDITAR
-  const handleInputChange = (fieldName, value) => {
-    setEditingUserData(prevData => ({
-      ...prevData,
-      [fieldName]: value,
-    }));
-  };
-
-  // CONFIRMA LA EDICIÓN DEL USUARIO
-  const handleConfirmEditClickUsers = () => {
-    const updateUsers = {
-      email: editingUserData.email,
-      password: editingUserData.password,
-      role: editingUserData.role,
-    }
-
-    if (updateUsers.password === '') {
-      setErrorLabelEdit('Completa todos los campos');
-      return;
-    }
-
-    ApiRequest({
-      url: `http://localhost:8080/users/${editingUserData.id}`,
-      method: 'patch',
-      body: updateUsers,
-    })
-      .then(() => {
-        // ACTUALIZA LA DATA CON LA INFORMACIÓN OBTENIDA DE LA EDICIÓN
-        const updatedUsersData = usersData.map(user => {
-          if (user.id === editingUserData.id) {
-            return {
-              ...user,
-              email: editingUserData.email,
-              password: editingUserData.password,
-              role: editingUserData.role,
-            };
-          } else {
-            return user;
-          }
-        });
-
-        setUsersData(updatedUsersData);
-        handleCloseModalUsers();
-      })
-      .catch((error) => {
-        console.error(error);
-        if (error.response.data === 'jwt expired' && error.response.status === 401) {
-          console.error(error);
-          navigate('/login');
-        } else {
-          console.error(error);
-          error && navigate('/error-page');
-        }
-      });
-  };
-
-  // ABRE LA MODAL PARA AGREGAR UN USUARIO CON LOS CAMPOS VACÍOS
-  const handleAddClick = () => {
-    setNewUser({
-      email: '',
-      password: '',
-      role: '',
-    });
-    setAddModalOpen(true);
-  };
-
-  // CONFIRMA QUE SE AGREGUE UN USUARIO Y ACTUALIZA LA INFORMACIÓN EN LA TABLA
-  const handleConfirmAddClick = () => {
-    const hasEmptyFields = Object.values(newUser).some(value => value === '');
-    if (hasEmptyFields) {
-      setErrorLabel('Completa todos los campos');
-      return;
-    }
-
-    ApiRequest({
-      url: `http://localhost:8080/users`,
-      method: 'post',
-      body: newUser,
-    })
-      .then((response) => {
-        const dataNewUser = response.data.user;
-        setUsersData(prevUsers => [...prevUsers, dataNewUser]);
-        setAddModalOpen(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        if (error.response.data === 'jwt expired' && error.response.status === 401) {
-          console.error(error);
-          navigate('/login');
-        } if (error.response.data === 'Email format is invalid' && error.response.status === 400) {
-          setErrorLabel('Formato del correo inválido');
-          return;
-        } if (error.response.data === 'Email already exists' && error.response.status === 400) {
-          setErrorLabel('El usuario ya existe');
-          return;
-        } else {
-          console.error(error);
-          error && navigate('/error-page');
-        }
-      });
-  };
-
-  // CERRAR DIÁLOGOS MODALES
-  const handleCloseModalUsers = () => {
-    setModalUserId(null); // Limpiar el usersId al cerrar la modal
-    setModalOpenDeleteUsers(false);
-    setModalOpenEditUsers(false);
-    setAddModalOpen(false);
-  };
 
   return {
     usersData,

@@ -1,8 +1,9 @@
-// ProductsLogic.js
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react'; // manejo de APIrequest en primer renderizado o cuando las dependecias cambien
+import { useNavigate } from 'react-router-dom';// navegar entre router
+// COMPONENTES
 import ApiRequest from '../services/apiRequest.jsx';
 
+// LÓGICA DE LA SECCIÓN DE PRODUCTOS
 export function ProductsLogic() {
   const navigate = useNavigate();
 
@@ -25,16 +26,19 @@ export function ProductsLogic() {
   });
 
   useEffect(() => {
+    // Redirigir al usuario al inicio de sesión si no hay un accessToken
     if (!token) {
       navigate('/login');
       return;
     }
 
+    // Redirigir al usuario al inicio de sesión si no tiene el role autorizado
     if (role != 'admin') {
       navigate('/login');
       return;
     }
 
+    // OBTENER DATOS DE PRODUCTOS
     ApiRequest({
       url: 'http://localhost:8080/products',
       method: 'get',
@@ -61,49 +65,15 @@ export function ProductsLogic() {
     }
   };
 
-  // ABRE MODAL PARA CONFIRMAR BORRAR UN USUARIO AL CLICKEAR BOTON DE LA TABLA
-  const handleOpenModalDeleteProducts = (productId) => {
-    setModalProductId(productId);
-    setModalOpenDeleteProducts(true);
-  }
+  // CERRAR DIÁLOGOS MODALES
+  const handleCloseModalProducts = () => {
+    setModalProductId(null); // Limpiar el productsId al cerrar la modal
+    setModalOpenDeleteProducts(false);
+    setModalOpenEditProducts(false);
+    setAddModalOpen(false);
+  };
 
-  // FUNCIÓN PARA CONFIRMAR BORRAR UN USUARIO EN LA MODAL
-  const handleConfirmDeleteClickProducts = (productId) => {
-    const productDelete = productsData.find(product => product.id === productId);
-
-    const body = productDelete;
-
-    ApiRequest({
-      url: `http://localhost:8080/products/${productId}`,
-      method: 'delete',
-      body: body,
-    })
-      .then(() => {
-        // Actualiza la informacion de la tabla para borrar el usuario en ella
-        setProductsData(prevProducts => prevProducts.filter(product => product.id !== productId));
-        setModalOpenDeleteProducts(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        if (error.response.data === 'jwt expired' && error.response.status === 401) {
-          console.error(error);
-          navigate('/login');
-        } else {
-          console.error(error);
-          error && navigate('/error-page');
-        }
-      });
-  }
-
-  // ABRRIR MODAL EDITAR CON LOS DATOS DEL USUARIO AL CLICKEAR BOTON DE LA TABLA
-  const handleOpenEditModalProducts = (productsId) => {
-    const productToEdit = productsData.find(product => product.id === productsId);
-    setEditingProductData(productToEdit);
-    setModalProductId(productsId);
-    setModalOpenEditProducts(true);
-  }
-
-  // MANEJO DE LOS CAMBIOS DE VALORES DE LOS CAMPOS DE LA MODAL EDITAR
+  // MANEJO DE CAMBIOS DE VALORES EN LOS CAMPOS DE LAS MODALES
   const handleInputChange = (fieldName, value) => {
     setEditingProductData(prevData => ({
       ...prevData,
@@ -111,7 +81,56 @@ export function ProductsLogic() {
     }));
   };
 
-  // CONFIRMA LA EDICIÓN DEL USUARIO
+  // ABRE LA MODAL PARA AGREGAR UN PRODUCTO CON LOS CAMPOS VACÍOS
+  const handleAddClick = () => {
+    setNewProduct({
+      name: '',
+      price: undefined,
+      type: '',
+      image: '',
+    });
+    setAddModalOpen(true);
+  };
+
+  // CONFIRMA QUE SE AGREGUE UN PRODUCTO Y ACTUALIZA LA INFORMACIÓN EN LA TABLA
+  const handleConfirmAddClick = () => {
+    // Si algún campo está vacío imprime etiqueta de error
+    const hasEmptyFields = Object.values(newProduct).some(value => value === '');
+    if (hasEmptyFields) {
+      setErrorLabel('Completa todos los campos');
+      return;
+    }
+
+    ApiRequest({
+      url: `http://localhost:8080/products`,
+      method: 'post',
+      body: newProduct,
+    })
+      .then((response) => {
+        // Actualizar la tabla con el nuevo producto
+        const dataNewProduct = response.data;
+        setProductsData(prevProducts => [...prevProducts, dataNewProduct]);
+        setAddModalOpen(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        if (error.response.data === 'jwt expired' && error.response.status === 401) {
+          navigate('/login');
+        } else {
+          error && navigate('/error-page');
+        }
+      });
+  };
+
+  // ABRRIR MODAL EDITAR CON LOS DATOS DEL PRODUCTO AL CLICKEAR BOTON DE LA TABLA
+  const handleOpenEditModalProducts = (productsId) => {
+    const productToEdit = productsData.find(product => product.id === productsId);
+    setEditingProductData(productToEdit);
+    setModalProductId(productsId);
+    setModalOpenEditProducts(true);
+  }
+
+  // CONFIRMA LA EDICIÓN DEL PRODUCTO
   const handleConfirmEditClickProducts = () => {
     const updateProducts = {
       name: editingProductData.name,
@@ -156,34 +175,27 @@ export function ProductsLogic() {
       });
   };
 
-  // ABRE LA MODAL PARA AGREGAR UN USUARIO CON LOS CAMPOS VACÍOS
-  const handleAddClick = () => {
-    setNewProduct({
-      name: '',
-      price: undefined,
-      type: '',
-      image: '',
-    });
-    setAddModalOpen(true);
-  };
+  // ABRE MODAL PARA CONFIRMAR BORRAR UN PRDUCTO AL CLICKEAR BOTON DE LA TABLA
+  const handleOpenModalDeleteProducts = (productId) => {
+    setModalProductId(productId);
+    setModalOpenDeleteProducts(true);
+  }
 
-  // CONFIRMA QUE SE AGREGUE UN PRODUCTO Y ACTUALIZA LA INFORMACIÓN EN LA TABLA
-  const handleConfirmAddClick = () => {
-    const hasEmptyFields = Object.values(newProduct).some(value => value === '');
-    if (hasEmptyFields) {
-      setErrorLabel('Completa todos los campos');
-      return;
-    }
+  // FUNCIÓN PARA CONFIRMAR BORRAR UN USUARIO EN LA MODAL
+  const handleConfirmDeleteClickProducts = (productId) => {
+    const productDelete = productsData.find(product => product.id === productId);
+
+    const body = productDelete;
 
     ApiRequest({
-      url: `http://localhost:8080/products`,
-      method: 'post',
-      body: newProduct,
+      url: `http://localhost:8080/products/${productId}`,
+      method: 'delete',
+      body: body,
     })
-      .then((response) => {
-        const dataNewProduct = response.data;
-        setProductsData(prevProducts => [...prevProducts, dataNewProduct]);
-        setAddModalOpen(false);
+      .then(() => {
+        // Actualiza la informacion de la tabla para borrar el producto en ella
+        setProductsData(prevProducts => prevProducts.filter(product => product.id !== productId));
+        setModalOpenDeleteProducts(false);
       })
       .catch((error) => {
         console.error(error);
@@ -195,15 +207,7 @@ export function ProductsLogic() {
           error && navigate('/error-page');
         }
       });
-  };
-
-  // CERRAR DIÁLOGOS MODALES
-  const handleCloseModalProducts = () => {
-    setModalProductId(null); // Limpiar el productsId al cerrar la modal
-    setModalOpenDeleteProducts(false);
-    setModalOpenEditProducts(false);
-    setAddModalOpen(false);
-  };
+  }
 
   return {
     productsData,
