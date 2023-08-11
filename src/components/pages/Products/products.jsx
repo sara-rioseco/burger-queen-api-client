@@ -97,7 +97,7 @@ export default function Products() {
                     <tr key={product.id}>
                       <td>{product.name}</td>
                       <td><img src={product.image} className='imgProducts' /></td>
-                      <td>{product.price}</td>
+                      <td>${product.price},00</td>
                       <td>{product.type}</td>
                       <td className='buttonsTable'>
                         <img
