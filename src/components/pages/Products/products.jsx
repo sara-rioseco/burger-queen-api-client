@@ -142,7 +142,7 @@ export default function Products() {
                               label='PRODUCTO :'
                               classInputLabel='labelsModalEdit'
                               classInput='inputModalEditProducts'
-                              value={editingProductData?.name || ''}
+                              value={editingProductData?.name}
                               onChange={(event) => handleInputChange('name', event.target.value)}
                             />
                             <Input
@@ -151,7 +151,7 @@ export default function Products() {
                               label='Precio :'
                               classInputLabel='labelsModalEdit'
                               classInput='inputModalEditProducts'
-                              value={editingProductData?.price || ''}
+                              value={editingProductData?.price}
                               onChange={(event) => handleInputChange('price', event.target.value)}
                             />
                             <div className='inputImgProducts'>
@@ -161,16 +161,16 @@ export default function Products() {
                                 label='Imagen (URL) :'
                                 classInputLabel='labelsModalEdit'
                                 classInput='inputModalEditProductsImg'
-                                value={editingProductData?.image || ''}
+                                value={editingProductData?.image}
                                 onChange={(event) => handleInputChange('image', event.target.value)}
                               />
-                              <img src={editingProductData?.image || ''} className='imgProductsModal' />
+                              <img src={editingProductData?.image} className='imgProductsModal' />
                             </div>
                             <div className='selectRolModal'>
                               <label className='bebas'>TIPO : </label>
                               <select
                                 className='boxSelectProduct'
-                                value={editingProductData?.type || ''}
+                                value={editingProductData?.type}
                                 onChange={(event) => handleInputChange('type', event.target.value)}
                               >
                                 <option value='Desayuno'>Desayuno</option>

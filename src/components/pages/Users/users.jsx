@@ -151,7 +151,7 @@ export default function Users() {
                               label='CORREO :'
                               classInputLabel='labelsModalEdit'
                               classInput='inputModalEditProducts'
-                              value={editingUserData?.email || ''}
+                              value={editingUserData?.email}
                               onChange={(event) => handleInputChange('email', event.target.value)}
                             />
                             <Input
