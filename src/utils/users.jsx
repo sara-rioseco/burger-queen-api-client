@@ -7,6 +7,7 @@ export function UsersLogic() {
   const navigate = useNavigate();
 
   const token = localStorage.getItem('accessToken');
+  const role = localStorage.getItem('role');
 
   const [usersData, setUsersData] = useState([]);
   const [modalOpenDeleteUsers, setModalOpenDeleteUsers] = useState(false);
@@ -25,6 +26,11 @@ export function UsersLogic() {
 
   useEffect(() => {
     if (!token) {
+      navigate('/login');
+      return;
+    }
+
+    if (role != 'admin') {
       navigate('/login');
       return;
     }
@@ -128,7 +134,7 @@ export function UsersLogic() {
       email: editingUserData.email,
       password: editingUserData.password,
       role: editingUserData.role,
-    }    
+    }
 
     if (updateUsers.password === '') {
       setErrorLabelEdit('Completa todos los campos');

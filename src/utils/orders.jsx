@@ -12,6 +12,7 @@ export function OrdersLogic() {
 
   const token = localStorage.getItem('accessToken');
   const userId = localStorage.getItem('userId');
+  const role = localStorage.getItem('role');
 
   const [ordersData, setOrdersData] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState(['Entregado', 'Listo en barra', 'En preparación']);
@@ -27,6 +28,11 @@ export function OrdersLogic() {
   useEffect(() => {
     // Redirigir al usuario al inicio de sesión si no hay un accessToken
     if (!token) {
+      navigate('/login');
+      return;
+    }
+
+    if (role != 'waiter') {
       navigate('/login');
       return;
     }

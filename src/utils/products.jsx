@@ -7,6 +7,7 @@ export function ProductsLogic() {
   const navigate = useNavigate();
 
   const token = localStorage.getItem('accessToken');
+  const role = localStorage.getItem('role');
 
   const [productsData, setProductsData] = useState([]);
   const [modalOpenDeleteProducts, setModalOpenDeleteProducts] = useState(false);
@@ -25,6 +26,11 @@ export function ProductsLogic() {
 
   useEffect(() => {
     if (!token) {
+      navigate('/login');
+      return;
+    }
+
+    if (role != 'admin') {
       navigate('/login');
       return;
     }
