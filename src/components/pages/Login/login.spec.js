@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import MockAdapter from 'axios-mock-adapter';
@@ -5,13 +6,12 @@ import { MemoryRouter } from 'react-router-dom';
 import axios from 'axios';
 // import { LoginLogic } from '../../../utils/login';
 import Login from './login.jsx';
-import { useNavigate } from 'react-router-dom'; 
-
-jest.mock('axios'); // Mockea axios
+import { useNavigate } from 'react-router-dom';
 
 describe('Componente Login', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    localStorage.clear();
   });
 
   it('Renderiza el componente correctamente', () => {
@@ -39,7 +39,6 @@ describe('Componente Login', () => {
       <Login />
     </MemoryRouter>);
 
-    // Verificar si los campos de entrada se renderizan
     const nameInput = screen.getByPlaceholderText('Escribe aquí');
     const passwordInput = screen.getByPlaceholderText('*************');
 
@@ -67,11 +66,15 @@ describe('Componente Login', () => {
   });
 
   it('ejecuta la lógica de inicio de sesión y navega según el rol', async () => {
+    jest.mock('axios'); // Mockea axios
     // Crea una función simulada para useNavigate
-  const mockNavigate = jest.fn();
+    const mockNavigate = jest.fn();
 
-  // Reemplaza la importación original de useNavigate con la función simulada
-  jest.spyOn(useNavigate, 'useNavigate').mockReturnValue(mockNavigate);
+    // Reemplaza la importación original de useNavigate con la función simulada
+    jest.mock('react-router-dom', () => ({
+      ...jest.requireActual('react-router-dom'), // Mantener las importaciones reales
+      useNavigate: jest.fn('/orders'), // Mockear useNavigate
+    }));
 
     // Crea un mock de axios
     const mockAdapter = new MockAdapter(axios);
@@ -79,7 +82,7 @@ describe('Componente Login', () => {
       accessToken: 'fakeAccessToken',
       user: {
         id: 3,
-        role: 'waiter', // Cambia según el caso que quieras probar
+        role: 'waiter',
       },
     });
 
@@ -99,12 +102,17 @@ describe('Componente Login', () => {
     fireEvent.change(nameInput, { target: { value: 'iamawaiter@mail.com' } });
     fireEvent.change(passwordInput, { target: { value: '123456' } });
 
+    console.log('Valores antes del click', {
+      nameValue: nameInput.value,
+      passwordValue: passwordInput.value,
+    });
+
     // Ejecuta la acción de inicio de sesión (click en el botón)
     fireEvent.click(enterButton);
 
     // Espera a que se complete la acción asíncrona
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith('/orders'); // Cambia según el caso que quieras probar
+      expect(mockNavigate).toHaveBeenCalledWith('/orders');
     });
   });
 });

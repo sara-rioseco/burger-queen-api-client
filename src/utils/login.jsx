@@ -37,24 +37,35 @@ export function LoginLogic() {
         password: formData.password,
       });
 
-      // Guardar el accessToken en el localStorage
-      localStorage.setItem('accessToken', response.data.accessToken);
-      localStorage.setItem('userId', response.data.user.id);
-      localStorage.setItem('role', response.data.user.role);
+      console.log('Respuesta de la API:', response.data);
 
+      // Guardar el accessToken en el localStorage
+      if (response.data) {
+        localStorage.setItem('accessToken', response.data.accessToken);
+        localStorage.setItem('userId', response.data.user.id);
+        localStorage.setItem('role', response.data.user.role);
+      }
+
+      console.log('antes de navegar');
       response.data.user.role === 'admin' && navigate('/users');
       response.data.user.role === 'waiter' && navigate('/orders');
+      console.log('Navegando a /orders');
       response.data.user.role === 'chef' && navigate('/kitchen');
+      console.log('despues de navegar');
     } catch (error) {
-      if (error.response.data === 'Email and password are required') {
-        setErrorLabel('Completa los campos requeridos');
-      } else if (error.response.data === 'Cannot find user') {
-        setErrorLabel('Usuario no registrado');
-      } else if (error.response.data === 'Incorrect password') {
-        setErrorLabel('Credenciales  incorrectas');
-      } else {
-        console.error(error);
-        error && navigate('/error-page');
+      if (error.response) {
+        if (error.response.data === 'Email and password are required') {
+          setErrorLabel('Completa los campos requeridos');
+        } else if (error.response.data === 'Cannot find user') {
+          setErrorLabel('Usuario no registrado');
+        } else if (error.response.data === 'Incorrect password') {
+          setErrorLabel('Credenciales  incorrectas');
+        } else {
+          console.error(error);
+          error && navigate('/error-page');
+        }
+      } else if (error){
+        navigate('/error-page');
       }
     }
   };
