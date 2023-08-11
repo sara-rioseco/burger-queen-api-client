@@ -42,6 +42,7 @@ export default function Orders() {
     handleStatusChange,
     filteredOrdersData,
     selectedStatus,
+    errorLabel,
   } = OrdersLogic();
 
   // RENDERIZADO
@@ -249,6 +250,7 @@ export default function Orders() {
                           <label className='bebas'> TOTAL :</label>
                           <label>${getUpdatedTotalOrder()}</label>
                         </div>
+                        <label className="labelErrorAdmin">{errorLabel}</label>
                       </div>
                       <div>
                         <Button

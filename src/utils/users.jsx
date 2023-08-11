@@ -112,6 +112,8 @@ export function UsersLogic() {
     if (hasEmptyFields) {
       setErrorLabel('Completa todos los campos');
       return;
+    } else {
+      setErrorLabel('')
     }
 
     ApiRequest({
@@ -163,9 +165,12 @@ export function UsersLogic() {
     }
 
     // Si algún campo está vacío imprime mensaje de error
-    if (updateUsers.password === '') {
+    const hasEmptyFields = Object.values(updateUsers).some(value => value === '');
+    if (hasEmptyFields) {
       setErrorLabelEdit('Completa todos los campos');
       return;
+    } else {
+      setErrorLabel('')
     }
 
     ApiRequest({

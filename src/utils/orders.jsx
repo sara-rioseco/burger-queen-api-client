@@ -22,6 +22,7 @@ export function OrdersLogic() {
   const [editModalTable, setEditModalTable] = useState('');
   const [editModalClient, setEditModalClient] = useState('');
   const [editModalStatus, setEditModalStatus] = useState(null);
+  const [errorLabel, setErrorLabel] = useState('');
   const [editModalProducts, setEditModalProducts] = useState([]);
   const [productsData, setProductsData] = useState([]);
 
@@ -33,7 +34,7 @@ export function OrdersLogic() {
     }
 
     // Redirigir al usuario al inicio de sesión si no tiene el role autorizado
-    if (role != 'waiter' || role != 'admin') {
+    if (role === 'chef') {
       navigate('/login');
       return;
     }
@@ -212,6 +213,15 @@ export function OrdersLogic() {
     const orderId = modalOrderId;
     const body = getUpdatedOrder();
 
+    // Si algún campo está vacío imprime etiqueta de error
+    const hasEmptyFields = Object.values(body).some(value => value === '');
+    if (hasEmptyFields) {
+      setErrorLabel('Completa todos los campos');
+      return;
+    } else {
+      setErrorLabel('')
+    }
+
     ApiRequest({
       url: `http://localhost:8080/orders/${orderId}`,
       method: 'patch',
@@ -330,6 +340,7 @@ export function OrdersLogic() {
     modalOrderId,
     modalOpenEdit,
     editModalTable,
+    errorLabel,
     setEditModalTable,
     editModalClient,
     setEditModalClient,
