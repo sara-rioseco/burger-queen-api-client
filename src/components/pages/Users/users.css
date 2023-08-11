@@ -65,7 +65,7 @@
 
 .users {
   width: 65em;
-  height: 46em;
+  height: 34em;
   background-color: black;
   padding: 20px;
   overflow: scroll;
@@ -139,4 +139,9 @@
   font-family: 'Asap Condensed', sans-serif;
   width: 13em;
   margin-left: 10px;
+  height: 2em;
+}
+
+.selectRolModal {
+  margin-top: 10px;
 }

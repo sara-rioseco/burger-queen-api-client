@@ -139,6 +139,13 @@ export function ProductsLogic() {
       image: editingProductData.image,
     };
 
+    // Si algún campo está vacío imprime etiqueta de error
+    const hasEmptyFields = Object.values(updateProducts).some(value => value === '');
+    if (hasEmptyFields) {
+      setErrorLabel('Completa todos los campos');
+      return;
+    }
+
     ApiRequest({
       url: `http://localhost:8080/products/${editingProductData.id}`,
       method: 'patch',
