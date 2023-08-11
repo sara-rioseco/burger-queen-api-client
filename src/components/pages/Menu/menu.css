@@ -34,7 +34,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 95%;
+  height: 45em;
 }
 
 .products-grid {
@@ -99,7 +99,7 @@ body {
 
 .cart-section {
   background: #000000;
-  height: 95%;
+  height: 35em;
   width: 400px;
   border: 4px solid #ffffff;
   border-radius: 6px;
