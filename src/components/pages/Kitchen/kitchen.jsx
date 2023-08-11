@@ -1,10 +1,6 @@
-/* eslint-disable no-unused-vars */
-// Import our custom CSS
-import '../../../scss/styles.scss'
 // CSS
 import './kitchen.css'
 // COMPONENTS
-import logo from '../../../assets/Images/logo.png'
 import Button from '../../button/button.jsx';
 import LogoutButton from '../../logoutButton/logoutButton';
 import Modal from '../../modal/modal.jsx';
@@ -16,7 +12,6 @@ export default function Kitchen() {
   const {
     pendingOrders,
     preparedOrders,
-    stopwatch,
     calculateTimePassed,
     updateTimerEachSecond,
     handleOpenModalUpdateOrder,
@@ -36,7 +31,7 @@ export default function Kitchen() {
             <div key={order.id} className='order-container'>
               <div className='order-header'>
                 <h2 className='order-title'>Mesa #{order.table}</h2>
-                <h2 className='order-time'><Stopwatch isActive={stopwatch} time={calculateTimePassed(order.dateEntry)} /></h2>
+                <h2 className='order-time'><Stopwatch isActive={true} time={calculateTimePassed(order.dateEntry)} /></h2>
               </div>
               <div className='order-body'>
                 <div className='order-content'>
@@ -64,7 +59,7 @@ export default function Kitchen() {
                     </Button>
                   </div>
                 </Modal>
-                <Button label="ORDEN LISTA" onClick={() => handleOpenModalUpdateOrder(order.id)} />
+                <Button classButton='buttonOrder' label="ORDEN LISTA" onClick={() => handleOpenModalUpdateOrder(order.id)} />
               </div>
             </div>
           ))}

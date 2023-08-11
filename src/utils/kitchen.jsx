@@ -9,15 +9,20 @@ export function useKitchenLogic() {
   
   const token = localStorage.getItem('accessToken');
   const userId = localStorage.getItem('userId');
+  const role = localStorage.getItem('role');
 
   const [ordersData, setOrdersData] = useState([]);
-  const [stopwatch, setStopwatch] = useState(true);
   const [time, setTime] = useState(null);
   const [modalUpdateOrder, setModalUpdateOrder] = useState(false);
   const [modalUpdateOrderId, setModalUpdateOrderId] = useState(null);
     
   useEffect(() => {
     if (!token) {
+      navigate('/login');
+      return;
+    }
+    
+    if (role == 'waiter') {
       navigate('/login');
       return;
     }
@@ -42,7 +47,7 @@ export function useKitchenLogic() {
         error && navigate('/error-page');
       }
     });
-  }, [navigate, token, userId, stopwatch]);
+  }, [navigate, token, userId, role]);
 
   const pendingOrders = ordersData.filter(order => order.status === 'En preparación');
   const preparedOrders = ordersData.filter(order => order.status === 'Listo en barra');
@@ -122,12 +127,9 @@ const handleCloseModalUpdateOrder = () => {
 
 // Actualizar setTime para que se renderice
   const handleUpdateTimer = (order) => {
-    if (stopwatch) {
       setTime(getOrderTime(order));
-    } 
     return time
   }
-
 
 // Ejecutar función cada segundo
 const updateTimerEachSecond = (order) => window.setInterval(() => {
@@ -135,22 +137,14 @@ const updateTimerEachSecond = (order) => window.setInterval(() => {
 }, 1000);
 
   return {
-    navigate,
-    token,
-    userId,
-    ordersData,
     pendingOrders,
     preparedOrders,
-    stopwatch,
-    setOrdersData,
-    setStopwatch,
     calculateTimePassed,
     updateTimerEachSecond,
     handleOpenModalUpdateOrder,
     handleCloseModalUpdateOrder,
     modalUpdateOrder,
-    modalUpdateOrderId,
-    setModalUpdateOrderId,
-    updateOrderStatus
+    updateOrderStatus,
+    modalUpdateOrderId
   }
 }

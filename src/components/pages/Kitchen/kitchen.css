@@ -21,8 +21,7 @@
     flex-direction: column;
     align-items: flex-start;
     height: inherit;
-    width: inherit;
-    max-width: 56em;
+    width: 56em;
     margin: 0 auto 0 -32px;
   }
 
@@ -53,7 +52,7 @@
     width: 260px;
     display: flex;
     flex-flow: column wrap;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
     gap: 0.5;
     background: rgb(0,0,0)
@@ -68,6 +67,7 @@
   div .order-header .order-title, .order-time{
     font-size: 26px !important;
     width: fit-content;
+    margin: 0.2em;
   }
 
   div .order-body {
@@ -75,10 +75,13 @@
     height: 40%;
     align-self: center;
     overflow-y: scroll;
-
   }
   
   div .product-content {
     font-size: 16px !important;
+    font-weight: normal;
+  }
 
+  button.buttonOrder {
+    font-size: 20px !important;
   }

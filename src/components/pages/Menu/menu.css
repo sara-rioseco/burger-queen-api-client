@@ -214,20 +214,21 @@ td.table-count {
   align-self: left;
 }
 
-.btn {
-  margin: 15px 0 15px 15px;
-  height: 68px;
-  --bs-btn-font-family: 'Bebas Neue', sans-serif;
-  --bs-btn-font-size: 2em;
-  --bs-btn-font-weight: bold;
-  --bs-btn-color: var(--bs-black);
-  --bs-btn-bg: rgba(209, 166, 80, 1);
-  --bs-btn-border-color: rgba(209, 166, 80, 1);
-  --bs-btn-hover-color: var(--bs-black);
-  --bs-btn-hover-bg: rgba(113, 93, 54, 1);
-  --bs-btn-hover-border-color: rgba(113, 93, 54, 1);
-  --bs-btn-focus-shadow-rgb: var(rgba(209, 166, 80, 1));
-  --bs-btn-active-color: var(--bs-black);
-  --bs-btn-active-bg: rgba(113, 93, 54, 1);
-  --bs-btn-active-border-color: #{shade-color(rgba(209, 166, 80, 1), 100%)};
+.btn-group {
+  width: fit-content;
+  height: fit-content;
+  display: inline-block
 }
+
+.buttonBreakfast {
+  margin: 15px 0 15px 15px;
+  font-size: 2em;
+  border-radius: 5px 0 0 5px;
+}
+
+.buttonLunch {
+  margin: 15px 15px 15px 0;
+  font-size: 2em;
+  border-radius: 0 5px 5px 0;
+}
+
