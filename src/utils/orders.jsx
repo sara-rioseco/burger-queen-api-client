@@ -76,7 +76,7 @@ export function OrdersLogic() {
           error && navigate('/error-page');
         }
       });
-  }, [navigate, token, userId]);
+  }, [navigate, token, userId, role]);
 
   // LLEVA AL MENU
   const handleMenuClick = () => {

@@ -50,7 +50,7 @@ export function UsersLogic() {
           navigate('/error-page');
         }
       });
-  }, [navigate, token]);
+  }, [navigate, token, role]);
 
   // FILTRO DE USUARIOS POR PUESTO
   const handleRoleCheckboxChange = (role) => {
