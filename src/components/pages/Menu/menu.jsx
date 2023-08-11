@@ -1,5 +1,3 @@
-// Import our custom CSS
-import '../../../scss/styles.scss'
 // CSS
 import './menu.css'
 // COMPONENTS
@@ -52,8 +50,8 @@ export default function Menu() {
         <nav className='nav-bar'>
           <Button label='PEDIDOS' onClick={handleOrdersClick} classButton='buttonMenu'/> 
           <div className="btn-group" role="group" aria-label="Basic example">
-            <button type="button" className="btn btn-primary" onClick={handleBreakfastClick}>DESAYUNO</button>
-            <button type="button" className="btn btn-primary" onClick={handleLunchClick}>ALMUERZO Y CENA</button>
+            <button type="button" className="buttonDefault buttonBreakfast" onClick={handleBreakfastClick}>DESAYUNO</button>
+            <button type="button" className="buttonDefault buttonLunch" onClick={handleLunchClick}>ALMUERZO Y CENA</button>
           </div>
         </nav>
         {showMenu && (

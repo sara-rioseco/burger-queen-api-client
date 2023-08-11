@@ -1,5 +1,3 @@
-// Import our custom CSS
-import '../../../scss/styles.scss'
 // CSS
 import './kitchen.css'
 // COMPONENTS
@@ -61,7 +59,7 @@ export default function Kitchen() {
                     </Button>
                   </div>
                 </Modal>
-                <Button label="ORDEN LISTA" onClick={() => handleOpenModalUpdateOrder(order.id)} />
+                <Button classButton='buttonOrder' label="ORDEN LISTA" onClick={() => handleOpenModalUpdateOrder(order.id)} />
               </div>
             </div>
           ))}
