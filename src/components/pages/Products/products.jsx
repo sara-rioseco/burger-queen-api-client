@@ -141,7 +141,7 @@ export default function Products() {
                               placeholder='Escribe aquí'
                               label='PRODUCTO :'
                               classInputLabel='labelsModalEdit'
-                              classInput='inputModalEdit'
+                              classInput='inputModalEditProducts'
                               value={editingProductData?.name || ''}
                               onChange={(event) => handleInputChange('name', event.target.value)}
                             />
@@ -150,7 +150,7 @@ export default function Products() {
                               placeholder='Escribe aquí'
                               label='Precio :'
                               classInputLabel='labelsModalEdit'
-                              classInput='inputModalEdit'
+                              classInput='inputModalEditProducts'
                               value={editingProductData?.price || ''}
                               onChange={(event) => handleInputChange('price', event.target.value)}
                             />
@@ -160,7 +160,7 @@ export default function Products() {
                                 placeholder='Escribe aquí'
                                 label='Imagen (URL) :'
                                 classInputLabel='labelsModalEdit'
-                                classInput='inputModalEdit'
+                                classInput='inputModalEditProductsImg'
                                 value={editingProductData?.image || ''}
                                 onChange={(event) => handleInputChange('image', event.target.value)}
                               />
@@ -169,7 +169,7 @@ export default function Products() {
                             <div className='selectRolModal'>
                               <label className='bebas'>TIPO : </label>
                               <select
-                                className='boxSelect'
+                                className='boxSelectProduct'
                                 value={editingProductData?.type || ''}
                                 onChange={(event) => handleInputChange('type', event.target.value)}
                               >
@@ -202,7 +202,7 @@ export default function Products() {
                                 placeholder='Escribe aquí'
                                 label='PRODUCTO :'
                                 classInputLabel='labelsModalEdit'
-                                classInput='inputModalEdit'
+                                classInput='inputModalEditProducts'
                                 value={newProduct.name || ''}
                                 onChange={(event) => setNewProduct({ ...newProduct, name: event.target.value })}
                               />
@@ -211,7 +211,7 @@ export default function Products() {
                                 placeholder='Escribe aquí'
                                 label='PRECIO :'
                                 classInputLabel='labelsModalEdit'
-                                classInput='inputModalEdit'
+                                classInput='inputModalEditProducts'
                                 value={newProduct.price || ''}
                                 onChange={(event) => setNewProduct({ ...newProduct, price: event.target.value })}
                               />
@@ -221,7 +221,7 @@ export default function Products() {
                                   placeholder='Escribe aquí'
                                   label='Imagen (URL) :'
                                   classInputLabel='labelsModalEdit'
-                                  classInput='inputModalEdit'
+                                  classInput='inputModalEditProductsImg'
                                   value={newProduct.image || ''}
                                   onChange={(event) => setNewProduct({ ...newProduct, image: event.target.value })}
                                 />
@@ -230,7 +230,7 @@ export default function Products() {
                               <div className='selectRolModal'>
                                 <label className='bebas'>TIPO :</label>
                                 <select
-                                  className='boxSelect'
+                                  className='boxSelectProduct'
                                   value={newProduct.type || ''}
                                   onChange={(event) => setNewProduct({ ...newProduct, type: event.target.value })}
                                 >

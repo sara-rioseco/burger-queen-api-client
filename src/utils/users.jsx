@@ -15,6 +15,7 @@ export function UsersLogic() {
   const [editingUserData, setEditingUserData] = useState(null);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [errorLabel, setErrorLabel] = useState('');
+  const [errorLabelEdit, setErrorLabelEdit] = useState('');
   const [selectedRoles, setSelectedRoles] = useState(['admin', 'waiter', 'chef']);
   const [newUser, setNewUser] = useState({
     email: '',
@@ -105,7 +106,10 @@ export function UsersLogic() {
   // ABRRIR MODAL EDITAR CON LOS DATOS DEL USUARIO AL CLICKEAR BOTON DE LA TABLA
   const handleOpenEditModalUsers = (usersId) => {
     const userToEdit = usersData.find(user => user.id === usersId);
-    setEditingUserData(userToEdit);
+    setEditingUserData({
+      ...userToEdit,
+      password: '', // Deja el campo de contraseña inicialmente vacío
+    });
     setModalUserId(usersId);
     setModalOpenEditUsers(true);
   }
@@ -124,7 +128,12 @@ export function UsersLogic() {
       email: editingUserData.email,
       password: editingUserData.password,
       role: editingUserData.role,
-    };
+    }    
+
+    if (updateUsers.password === '') {
+      setErrorLabelEdit('Completa todos los campos');
+      return;
+    }
 
     ApiRequest({
       url: `http://localhost:8080/users/${editingUserData.id}`,
@@ -229,6 +238,7 @@ export function UsersLogic() {
     handleConfirmEditClickUsers,
     handleConfirmAddClick,
     handleRoleCheckboxChange,
+    setErrorLabelEdit,
     modalUserId,
     modalOpenDeleteUsers,
     modalOpenEditUsers,
@@ -237,5 +247,6 @@ export function UsersLogic() {
     newUser,
     selectedRoles,
     errorLabel,
+    errorLabelEdit,
   };
 }

@@ -35,6 +35,7 @@ export default function Users() {
     addModalOpen,
     newUser,
     errorLabel,
+    errorLabelEdit,
   } = UsersLogic();
 
   return (
@@ -149,7 +150,7 @@ export default function Users() {
                               placeholder='Escribe aquí'
                               label='CORREO :'
                               classInputLabel='labelsModalEdit'
-                              classInput='inputModalEdit'
+                              classInput='inputModalEditProducts'
                               value={editingUserData?.email || ''}
                               onChange={(event) => handleInputChange('email', event.target.value)}
                             />
@@ -158,13 +159,13 @@ export default function Users() {
                               placeholder='Escribe aquí'
                               label='CONTRESEÑA :'
                               classInputLabel='labelsModalEdit'
-                              classInput='inputModalEdit'
+                              classInput='inputModalEditProducts'
                               onChange={(event) => handleInputChange('password', event.target.value)}
                             />
                             <div className='selectRolModal'>
                               <label className='bebas'>PUESTO : </label>
                               <select
-                                className='boxSelect'
+                                className='boxSelectUsers'
                                 value={editingUserData?.role}
                                 onChange={(event) => handleInputChange('role', event.target.value)}
                               >
@@ -173,6 +174,7 @@ export default function Users() {
                                 <option value='waiter'>Mesero</option>
                               </select>
                             </div>
+                            <label className="labelErrorAdmin">{errorLabelEdit}</label>
                           </div>
                           <div>
                             <Button
@@ -198,7 +200,7 @@ export default function Users() {
                                 placeholder='Escribe aquí'
                                 label='CORREO :'
                                 classInputLabel='labelsModalEdit'
-                                classInput='inputModalEdit'
+                                classInput='inputModalEditProducts'
                                 value={newUser.email}
                                 onChange={(event) => setNewUser({ ...newUser, email: event.target.value })}
                               />
@@ -207,14 +209,14 @@ export default function Users() {
                                 placeholder='Escribe aquí'
                                 label='CONTRASEÑA :'
                                 classInputLabel='labelsModalEdit'
-                                classInput='inputModalEdit'
+                                classInput='inputModalEditProducts'
                                 value={newUser.password}
                                 onChange={(event) => setNewUser({ ...newUser, password: event.target.value })}
                               />
                               <div className='selectRolModal'>
                                 <label className='bebas'>PUESTO :</label>
                                 <select
-                                  className='boxSelect'
+                                  className='boxSelectUsers'
                                   value={newUser.role}
                                   onChange={(event) => setNewUser({ ...newUser, role: event.target.value })}
                                 >
