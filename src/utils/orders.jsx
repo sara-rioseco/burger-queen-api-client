@@ -98,7 +98,7 @@ export function OrdersLogic() {
   };
 
   // FILTRAR ORDENES POR ESTATUS
-  const filteredOrdersData = selectedStatus.length === 0 ? ordersData : ordersData.filter((order) =>selectedStatus.includes(order.status)
+  const filteredOrdersData = selectedStatus.length === 0 ? ordersData : ordersData.filter((order) => selectedStatus.includes(order.status)
   );
 
 
