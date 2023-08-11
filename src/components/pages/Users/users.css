@@ -140,3 +140,10 @@
   width: 13em;
   margin-left: 10px;
 }
+
+div .footer-buttons {
+  display: flex;
+  width: 90%;
+  align-self: center;
+  justify-content:space-between;
+}

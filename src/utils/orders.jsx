@@ -32,7 +32,7 @@ export function OrdersLogic() {
       return;
     }
 
-    if (role != 'waiter') {
+    if (role == 'chef') {
       navigate('/login');
       return;
     }

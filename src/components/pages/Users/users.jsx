@@ -4,6 +4,8 @@ import './users.css';
 //COMPONENTES
 import Button from '../../button/button.jsx';
 import LogoutButton from '../../logoutButton/logoutButton.jsx';
+import ChefButton from '../../chefButton/chefButton.jsx';
+import WaiterButton from '../../waiterButton/waiterButton.jsx';
 import { UsersLogic } from '../../../utils/users';
 import Modal from '../../modal/modal.jsx';
 import Input from '../../input/input.jsx'
@@ -249,7 +251,13 @@ export default function Users() {
             </table>
           </div>
         </div>
-        <LogoutButton />
+        <div className='footer-buttons'>
+          <LogoutButton />
+          <div>
+            <ChefButton />
+            <WaiterButton />
+          </div>
+        </div>
       </div>
     </>
   );
