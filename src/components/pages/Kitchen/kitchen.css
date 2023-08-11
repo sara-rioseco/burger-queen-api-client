@@ -20,9 +20,10 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    height: 95%;
-    width: 80%;
-    margin: 0 5%;
+    height: inherit;
+    width: inherit;
+    max-width: 56em;
+    margin: 0 auto 0 -32px;
   }
 
   div .kitchen-header {
@@ -37,7 +38,7 @@
     display: flex;
     flex-flow: row nowrap;
     overflow-x: scroll;
-    height: 270px;
+    height: 300px;
     width: 100%;
     gap: 1em;
   }
@@ -55,12 +56,13 @@
     justify-content: space-around;
     align-items: center;
     gap: 0.5;
+    background: rgb(0,0,0)
   }
 
   div .order-header {
     display: flex;
     flex-flow: row nowrap;
-    gap: 0.8em;
+    gap: 1.2em;
   }
 
   div .order-header .order-title, .order-time{
@@ -69,10 +71,14 @@
   }
 
   div .order-body {
-    width: 200px;
+    width: 250px;
+    height: 40%;
     align-self: center;
-  }
+    overflow-y: scroll;
 
+  }
+  
   div .product-content {
     font-size: 16px !important;
+
   }
