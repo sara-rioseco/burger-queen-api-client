@@ -40,6 +40,7 @@ export function LoginLogic() {
       // Guardar el accessToken en el localStorage
       localStorage.setItem('accessToken', response.data.accessToken);
       localStorage.setItem('userId', response.data.user.id);
+      localStorage.setItem('role', response.data.user.role);
 
       response.data.user.role === 'admin' && navigate('/users');
       response.data.user.role === 'waiter' && navigate('/orders');

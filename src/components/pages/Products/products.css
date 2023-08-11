@@ -40,7 +40,6 @@
   align-items: flex-start;
   padding: 20px;
   height: 90%;
-  overflow-y: scroll;
 }
 
 .textHeader {
@@ -55,6 +54,7 @@
   height: 46em;
   background-color: black;
   padding: 20px;
+  overflow: scroll;
 }
 
 .products-table {
@@ -80,6 +80,11 @@
 
 .products-table td {
   font-size: 1.2em;
+}
+
+.imgProducts {
+  max-width: 30px;
+  max-height: 35px;
 }
 
 .buttTable {
@@ -112,6 +117,49 @@
 .infoProductModal {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
   align-items: center;
+}
+
+.inputImgProducts {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 16em;
+  justify-content: space-between;
+}
+
+.imgProductsModal {
+  max-width: 60px;
+  max-height: 60px;
+}
+
+.labelErrorAdmin {
+  color: red;
+  font-family: 'Asap Condensed', sans-serif;
+  font-size: 1.3em;
+}
+
+.inputModalEditProducts {
+  font-size: 1em;
+  padding-left: 3%;
+  width: 16em;
+}
+
+.inputModalEditProductsImg {
+  font-size: 1em;
+  padding-left: 3%;
+  width: 12.5em;
+  margin-right: 5px;
+}
+
+.boxSelectProduct {
+  background-color: #D9D9D9;
+  color: black;
+  padding: 1%;
+  font-size: large;
+  border-radius: 5px;
+  font-family: 'Asap Condensed', sans-serif;
+  width: 14em;
+  margin-left: 10px;
 }

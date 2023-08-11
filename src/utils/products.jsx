@@ -7,6 +7,7 @@ export function ProductsLogic() {
   const navigate = useNavigate();
 
   const token = localStorage.getItem('accessToken');
+  const role = localStorage.getItem('role');
 
   const [productsData, setProductsData] = useState([]);
   const [modalOpenDeleteProducts, setModalOpenDeleteProducts] = useState(false);
@@ -14,14 +15,22 @@ export function ProductsLogic() {
   const [modalOpenEditProducts, setModalOpenEditProducts] = useState(false);
   const [editingProductData, setEditingProductData] = useState(null);
   const [addModalOpen, setAddModalOpen] = useState(false);
+  const [selectedTypes, setSelectedTypes] = useState(['Desayuno', 'Almuerzo']);
+  const [errorLabel, setErrorLabel] = useState('');
   const [newProduct, setNewProduct] = useState({
     name: '',
-    price: '',
+    price: undefined,
     type: '',
+    image: '',
   });
 
   useEffect(() => {
     if (!token) {
+      navigate('/login');
+      return;
+    }
+
+    if (role != 'admin') {
       navigate('/login');
       return;
     }
@@ -42,6 +51,15 @@ export function ProductsLogic() {
         }
       });
   }, [navigate, token]);
+
+  // FILTRO DE PRODUCTOS POR TIPO
+  const handleTypeCheckboxChange = (type) => {
+    if (selectedTypes.includes(type)) {
+      setSelectedTypes(selectedTypes.filter(selectedType => selectedType !== type));
+    } else {
+      setSelectedTypes([...selectedTypes, type]);
+    }
+  };
 
   // ABRE MODAL PARA CONFIRMAR BORRAR UN USUARIO AL CLICKEAR BOTON DE LA TABLA
   const handleOpenModalDeleteProducts = (productId) => {
@@ -97,8 +115,9 @@ export function ProductsLogic() {
   const handleConfirmEditClickProducts = () => {
     const updateProducts = {
       name: editingProductData.name,
-      price: editingProductData.price,
+      price: parseInt(editingProductData.price),
       type: editingProductData.type,
+      image: editingProductData.image,
     };
 
     ApiRequest({
@@ -115,6 +134,7 @@ export function ProductsLogic() {
               name: editingProductData.name,
               price: editingProductData.price,
               type: editingProductData.type,
+              image: editingProductData.image,
             };
           } else {
             return product;
@@ -140,21 +160,28 @@ export function ProductsLogic() {
   const handleAddClick = () => {
     setNewProduct({
       name: '',
-      price: '',
+      price: undefined,
       type: '',
+      image: '',
     });
     setAddModalOpen(true);
   };
 
-  // CONFIRMA QUE SE AGREGUE UN USUARIO Y ACTUALIZA LA INFORMACIÓN EN LA TABLA
-  const handleConfirmAddClick = () => {  
+  // CONFIRMA QUE SE AGREGUE UN PRODUCTO Y ACTUALIZA LA INFORMACIÓN EN LA TABLA
+  const handleConfirmAddClick = () => {
+    const hasEmptyFields = Object.values(newProduct).some(value => value === '');
+    if (hasEmptyFields) {
+      setErrorLabel('Completa todos los campos');
+      return;
+    }
+
     ApiRequest({
       url: `http://localhost:8080/products`,
       method: 'post',
       body: newProduct,
     })
       .then((response) => {
-        const dataNewProduct = response.data.product;  
+        const dataNewProduct = response.data;
         setProductsData(prevProducts => [...prevProducts, dataNewProduct]);
         setAddModalOpen(false);
       })
@@ -190,11 +217,14 @@ export function ProductsLogic() {
     handleInputChange,
     handleConfirmEditClickProducts,
     handleConfirmAddClick,
+    handleTypeCheckboxChange,
     modalProductId,
     modalOpenDeleteProducts,
     modalOpenEditProducts,
     editingProductData,
     addModalOpen,
     newProduct,
+    selectedTypes,
+    errorLabel,
   };
 }

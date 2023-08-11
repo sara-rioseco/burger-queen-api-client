@@ -18,7 +18,7 @@ export default function ErrorPage() {
       <div className='containerError'id="error-page">
         <h1 className='titleError'>¡Ay no!</h1>
         <h2 className='subtitleError'>Ha ocurrido un error inesperado</h2>
-        <p className='textError'>Error {error.status} : {error.error.message}</p>
+        <p className='textError'>Error {error.status} : {error.error.message || ''}</p>
         <img src={logo} className="logo" alt="img logo" />
         <Button label="VOLVER A HOME" onClick={handleClick} classButton='buttonError'/>
       </div>
