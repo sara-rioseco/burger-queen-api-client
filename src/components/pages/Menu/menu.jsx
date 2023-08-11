@@ -61,7 +61,7 @@ export default function Menu() {
                 <div className='image-content'><img src={product.image} alt={product.name} className='image' /></div>
                 <div className='text-content'>
                   <div className='product-name'>{product.name}</div>
-                  <div className='product-price'>${product.price}</div>
+                  <div className='product-price'>${product.price},00</div>
                 </div>
               </div>
             ))}
@@ -74,7 +74,7 @@ export default function Menu() {
                 <div className='image-content'><img src={product.image} alt={product.name} className='image' /></div>
                 <div className='text-content' >
                   <div className='product-name'>{product.name}</div>
-                  <div className='product-price'>${product.price}</div>
+                  <div className='product-price'>${product.price},00</div>
                 </div>
               </div>
             ))}

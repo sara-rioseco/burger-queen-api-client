@@ -117,7 +117,7 @@ export default function Orders() {
                     {order.status}
                   </td>
                   <td>
-                    ${getTotalOrder(order.products)}
+                    ${getTotalOrder(order.products)},00
                   </td>
                   <td className='buttonsTable'>
                     <img
@@ -240,7 +240,7 @@ export default function Orders() {
                               />
                               <p className='productPriceModal'>
                                 <label>{product.name}</label>
-                                <label>${product.price}</label>
+                                <label>${product.price},00</label>
                               </p>
                             </div>
                           ))}
@@ -248,7 +248,7 @@ export default function Orders() {
                         <div className='lineModal'></div>
                         <div className='totalOrderModal'>
                           <label className='bebas'> TOTAL :</label>
-                          <label>${getUpdatedTotalOrder()}</label>
+                          <label>${getUpdatedTotalOrder()},00</label>
                         </div>
                         <label className="labelErrorAdmin">{errorLabel}</label>
                       </div>
