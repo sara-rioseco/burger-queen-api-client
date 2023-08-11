@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'; // navegar entre
 import './products.css';
 //COMPONENTES
 import Button from '../../button/button.jsx';
+import WaiterButton from '../../waiterButton/waiterButton.jsx';
+import ChefButton from '../../chefButton/chefButton.jsx';
 import LogoutButton from '../../logoutButton/logoutButton.jsx';
 import { ProductsLogic } from '../../../utils/products';
 import Modal from '../../modal/modal.jsx';
@@ -263,7 +265,13 @@ export default function Products() {
             </table>
           </div>
         </div>
-        <LogoutButton />
+        <div className='footer-buttons'>
+          <LogoutButton />
+          <div>
+            <ChefButton />
+            <WaiterButton />
+          </div>
+        </div>
       </div>
     </>
   );

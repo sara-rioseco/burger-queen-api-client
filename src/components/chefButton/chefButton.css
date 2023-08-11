@@ -1,0 +1,10 @@
+.out {
+  width: 35px;
+  margin: 10px;
+  align-self: baseline;
+  cursor: pointer;
+}
+
+.out:hover {
+  filter: drop-shadow(0 0 .5em #ffffff);
+}

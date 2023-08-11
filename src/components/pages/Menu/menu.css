@@ -45,6 +45,7 @@ body {
   justify-content: center;
   overflow-y: scroll;
   margin-right: 45px;
+  min-height: 573px;
 }
 
 .logout-section {
