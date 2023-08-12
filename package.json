@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "test": "jest --coverage --verbose",
+    "test:watch": "jest --coverage --verbose --watch",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },

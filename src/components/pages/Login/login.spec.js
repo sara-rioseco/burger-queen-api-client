@@ -6,7 +6,13 @@ import { MemoryRouter } from 'react-router-dom';
 import axios from 'axios';
 // import { LoginLogic } from '../../../utils/login';
 import Login from './login.jsx';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate as useNavigateMock } from 'react-router-dom'; // navegar entre router
+
+// Reemplaza la importación original de useNavigate con la función simulada
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'), // Mantener las importaciones reales
+  useNavigate: jest.fn(), // Mockear useNavigate
+}));
 
 describe('Componente Login', () => {
   beforeEach(() => {
@@ -68,13 +74,8 @@ describe('Componente Login', () => {
   it('ejecuta la lógica de inicio de sesión y navega según el rol', async () => {
     jest.mock('axios'); // Mockea axios
     // Crea una función simulada para useNavigate
-    const mockNavigate = jest.fn();
-
-    // Reemplaza la importación original de useNavigate con la función simulada
-    jest.mock('react-router-dom', () => ({
-      ...jest.requireActual('react-router-dom'), // Mantener las importaciones reales
-      useNavigate: jest.fn('/orders'), // Mockear useNavigate
-    }));
+    const navigateMock = jest.fn();
+    useNavigateMock.mockImplementation(() => navigateMock);
 
     // Crea un mock de axios
     const mockAdapter = new MockAdapter(axios);
@@ -110,9 +111,14 @@ describe('Componente Login', () => {
     // Ejecuta la acción de inicio de sesión (click en el botón)
     fireEvent.click(enterButton);
 
+    console.log('Valores despues del click', {
+      nameValue: nameInput.value,
+      passwordValue: passwordInput.value,
+    });
+
     // Espera a que se complete la acción asíncrona
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith('/orders');
+      expect(navigateMock).toHaveBeenCalledWith('/orders');
     });
   });
 });
