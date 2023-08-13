@@ -10,7 +10,7 @@ import { UsersLogic } from '../../../utils/users.jsx';
 import { useNavigate as useNavigateMock } from 'react-router-dom'; // navegar entre router
 
 
-describe.only('Componente Users', () => {
+describe('Componente Users', () => {
     it('Se renderiza sin errores', () => {
         render(
             <MemoryRouter>
