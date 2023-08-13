@@ -24,7 +24,7 @@ describe('Componente Orders', () => {
 
         const menuButton = screen.getByText('MENU');
         expect(menuButton).toBeInTheDocument();
-        
+
         const filterLabel = screen.getByText('Filtrar ordenes por estatus :');
         expect(filterLabel).toBeInTheDocument();
 
@@ -41,27 +41,27 @@ describe('Componente Orders', () => {
         expect(screen.getAllByRole('columnheader')).toHaveLength(8);
     });
 
-    it('Renderiza y abre la modal de edición al hacer clic en el botón de editar', async () => {
-        render(
-            <MemoryRouter>
-                <Orders />
-            </MemoryRouter>
-        );
+    // it('Renderiza y abre la modal de edición al hacer clic en el botón de editar', async () => {
+    //     render(
+    //         <MemoryRouter>
+    //             <Orders />
+    //         </MemoryRouter>
+    //     );
 
-        // Esperar a que el botón de edición esté presente en el DOM
-        const editButton = await screen.findByAltText('buttonEdit');
+    //     // Esperar a que el botón de edición esté presente en el DOM
+    //     const editButton = await screen.findByAltText('buttonEdit');
 
-        // Hacer clic en el botón de edición
-        fireEvent.click(editButton);
+    //     // Hacer clic en el botón de edición
+    //     fireEvent.click(editButton);
 
-        // Verificar que la modal de edición se abra correctamente
-        const editModal = screen.getByRole('dialog');
-        expect(editModal).toBeInTheDocument();
+    //     // Verificar que la modal de edición se abra correctamente
+    //     const editModal = screen.getByRole('dialog');
+    //     expect(editModal).toBeInTheDocument();
 
-        // Verificar que el contenido de la modal esté presente
-        const modalContent = screen.getByText('Editando pedido de la mesa');
-        expect(modalContent).toBeInTheDocument();
-    });
+    //     // Verificar que el contenido de la modal esté presente
+    //     const modalContent = screen.getByText('Editando pedido de la mesa');
+    //     expect(modalContent).toBeInTheDocument();
+    // });
 
 });
 

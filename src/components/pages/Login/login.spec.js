@@ -103,18 +103,8 @@ describe('Componente Login', () => {
     fireEvent.change(nameInput, { target: { value: 'iamawaiter@mail.com' } });
     fireEvent.change(passwordInput, { target: { value: '123456' } });
 
-    console.log('Valores antes del click', {
-      nameValue: nameInput.value,
-      passwordValue: passwordInput.value,
-    });
-
     // Ejecuta la acción de inicio de sesión (click en el botón)
     fireEvent.click(enterButton);
-
-    console.log('Valores despues del click', {
-      nameValue: nameInput.value,
-      passwordValue: passwordInput.value,
-    });
 
     // Espera a que se complete la acción asíncrona
     await waitFor(() => {

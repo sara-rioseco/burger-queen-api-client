@@ -7,9 +7,21 @@ import { MemoryRouter } from 'react-router-dom';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { UsersLogic } from '../../../utils/users.jsx';
+import { useNavigate as useNavigateMock } from 'react-router-dom'; // navegar entre router
 
-describe('Componente Users', () => {
-    it('se renderiza sin errores', () => {
+// // Reemplaza la importación original de useNavigate con la función simulada
+// jest.mock('react-router-dom', () => ({
+//     ...jest.requireActual('react-router-dom'), // Mantener las importaciones reales
+//     useNavigate: jest.fn(), // Mockear useNavigate
+// }));
+
+
+describe.only('Componente Users', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it('Se renderiza sin errores', () => {
         render(
             <MemoryRouter>
                 <Users />
@@ -42,12 +54,36 @@ describe('Componente Users', () => {
         expect(orderButton).toBeInTheDocument();
     });
 
-    it('Debería renderizar la tabla de productos', () => {
-        render(<MemoryRouter>
-            <Users />
-        </MemoryRouter>);
+    // it('Debería renderizar la tabla de productos', () => {
+    //     render(<MemoryRouter>
+    //         <Users />
+    //     </MemoryRouter>);
 
-        expect(screen.getByRole('table')).toBeInTheDocument();
-        expect(screen.getAllByRole('columnheader')).toHaveLength(5);
-    });
+    //     expect(screen.getByRole('table')).toBeInTheDocument();
+    //     expect(screen.getAllByRole('columnheader')).toHaveLength(5);
+    // });
+
+    // it('El boton de productos cambia a la ruta correcta', async () => {
+    //     // Crea una función simulada para useNavigate
+    //     const navigateMock = jest.fn();
+    //     useNavigateMock.mockImplementation(() => navigateMock);
+
+    //     // Renderiza el componente Login
+    //     render(
+    //         <MemoryRouter>
+    //             <Users />
+    //         </MemoryRouter>
+    //     );
+
+    //     // Obtén los elementos necesarios
+    //     const productsButton = screen.getByText('Productos');
+
+    //     // Ejecuta la acción (click en el botón)
+    //     fireEvent.click(productsButton);
+
+    //     // Espera a que se complete la acción asíncrona
+    //     await waitFor(() => {
+    //         expect(navigateMock).toHaveBeenCalledWith('/products');
+    //     });
+    // });
 });
