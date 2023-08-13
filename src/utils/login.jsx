@@ -56,10 +56,9 @@ export function LoginLogic() {
         } else if (error.response.data === 'Incorrect password') {
           setErrorLabel('Credenciales  incorrectas');
         } else {
-          console.error(error);
-          error && navigate('/error-page');
+          navigate('/error-page');
         }
-      } else if (error){
+      } else {
         navigate('/error-page');
       }
     }
