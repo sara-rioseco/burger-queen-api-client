@@ -4,7 +4,6 @@ import '@testing-library/jest-dom/extend-expect';
 import MockAdapter from 'axios-mock-adapter';
 import { MemoryRouter } from 'react-router-dom';
 import axios from 'axios';
-// import { LoginLogic } from '../../../utils/login';
 import Login from './login.jsx';
 import { useNavigate as useNavigateMock } from 'react-router-dom'; // navegar entre router
 
