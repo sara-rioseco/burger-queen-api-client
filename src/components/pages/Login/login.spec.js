@@ -4,7 +4,6 @@ import '@testing-library/jest-dom/extend-expect';
 import MockAdapter from 'axios-mock-adapter';
 import { MemoryRouter } from 'react-router-dom';
 import axios from 'axios';
-// import { LoginLogic } from '../../../utils/login';
 import Login from './login.jsx';
 import { useNavigate as useNavigateMock } from 'react-router-dom'; // navegar entre router
 
@@ -103,22 +102,118 @@ describe('Componente Login', () => {
     fireEvent.change(nameInput, { target: { value: 'iamawaiter@mail.com' } });
     fireEvent.change(passwordInput, { target: { value: '123456' } });
 
-    console.log('Valores antes del click', {
-      nameValue: nameInput.value,
-      passwordValue: passwordInput.value,
-    });
-
     // Ejecuta la acción de inicio de sesión (click en el botón)
     fireEvent.click(enterButton);
-
-    console.log('Valores despues del click', {
-      nameValue: nameInput.value,
-      passwordValue: passwordInput.value,
-    });
 
     // Espera a que se complete la acción asíncrona
     await waitFor(() => {
       expect(navigateMock).toHaveBeenCalledWith('/orders');
+    });
+  });
+
+  it('muestra el mensaje de error "Completa los campos requeridos" cuando los campos están vacíos', async () => {
+    // Mockea axios para que simule una respuesta con status 400
+    const mockAdapter = new MockAdapter(axios);
+    mockAdapter.onPost('http://localhost:8080/login').reply(400, 'Email and password are required');
+
+    render(
+      <MemoryRouter>
+        <Login />
+      </MemoryRouter>
+    );
+
+    // Obtén los elementos necesarios
+    const nameInput = screen.getByPlaceholderText('Escribe aquí');
+    const passwordInput = screen.getByPlaceholderText('*************');
+    const enterButton = screen.getByText('ENTRAR');
+
+    // Ejecuta la acción de inicio de sesión (click en el botón)
+    fireEvent.click(enterButton);
+
+    // Espera a que se complete la acción asíncrona
+    await waitFor(() => {
+      const errorLabel = screen.getByText('Completa los campos requeridos');
+      expect(errorLabel).toBeInTheDocument();
+    });
+  });
+
+  it('muestra el mensaje de error "Usuario no registrado" cuando el usuario no existe', async () => {
+    // Mockea axios para que simule una respuesta con status 400
+    const mockAdapter = new MockAdapter(axios);
+    mockAdapter.onPost('http://localhost:8080/login').reply(400, 'Cannot find user');
+
+    render(
+      <MemoryRouter>
+        <Login />
+      </MemoryRouter>
+    );
+
+    // Obtén los elementos necesarios
+    const nameInput = screen.getByPlaceholderText('Escribe aquí');
+    const passwordInput = screen.getByPlaceholderText('*************');
+    const enterButton = screen.getByText('ENTRAR');
+
+    // Ejecuta la acción de inicio de sesión (click en el botón)
+    fireEvent.click(enterButton);
+
+    // Espera a que se complete la acción asíncrona
+    await waitFor(() => {
+      const errorLabel = screen.getByText('Usuario no registrado');
+      expect(errorLabel).toBeInTheDocument();
+    });
+  });
+
+  it('muestra el mensaje de error "Credenciales incorrectas" cuando la contraseña es incorrecta', async () => {
+    // Mockea axios para que simule una respuesta con status 400
+    const mockAdapter = new MockAdapter(axios);
+    mockAdapter.onPost('http://localhost:8080/login').reply(400, 'Incorrect password');
+
+    render(
+      <MemoryRouter>
+        <Login />
+      </MemoryRouter>
+    );
+
+    // Obtén los elementos necesarios
+    const nameInput = screen.getByPlaceholderText('Escribe aquí');
+    const passwordInput = screen.getByPlaceholderText('*************');
+    const enterButton = screen.getByText('ENTRAR');
+
+    // Ejecuta la acción de inicio de sesión (click en el botón)
+    fireEvent.click(enterButton);
+
+    // Espera a que se complete la acción asíncrona
+    await waitFor(() => {
+      const errorLabel = screen.getByText('Credenciales incorrectas');
+      expect(errorLabel).toBeInTheDocument();
+    });
+  });
+
+  it('navega a la página de error cuando ocurre un error desconocido', async () => {
+    // Mockea axios para que simule un error
+    const mockAdapter = new MockAdapter(axios);
+    mockAdapter.onPost('http://localhost:8080/login').reply(500);
+
+    const navigateMock = jest.fn();
+    useNavigateMock.mockImplementation(() => navigateMock);
+
+    render(
+      <MemoryRouter>
+        <Login />
+      </MemoryRouter>
+    );
+
+    // Obtén los elementos necesarios
+    const nameInput = screen.getByPlaceholderText('Escribe aquí');
+    const passwordInput = screen.getByPlaceholderText('*************');
+    const enterButton = screen.getByText('ENTRAR');
+
+    // Ejecuta la acción de inicio de sesión (click en el botón)
+    fireEvent.click(enterButton);
+
+    // Espera a que se complete la acción asíncrona
+    await waitFor(() => {
+      expect(navigateMock).toHaveBeenCalledWith('/error-page');
     });
   });
 });

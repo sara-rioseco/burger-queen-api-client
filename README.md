@@ -2,8 +2,8 @@
 
 ## Índice
 
-* [1. Preámbulo](#1-preámbulo)
-* [2. Resumen del proyecto](#2-resumen-del-proyecto)
+* [1. Resumen del proyecto](#1-resumen-del-proyecto)
+* [2. Requerimientos del cliente](#2-requerimientos-del-cliente)
 * [3. Objetivos de aprendizaje](#3-objetivos-de-aprendizaje)
 * [4. Consideraciones](#4-consideraciones)
 * [5. Criterios de aceptación del proyecto](#5-criterios-de-aceptación-del-proyecto)
@@ -12,29 +12,11 @@
 
 ***
 
-## 1. Preámbulo
+## 1. Resumen del proyecto
 
-[React](https://es.react.dev/) y [Angular](https://angular.io/)
-son algunos de los _frameworks_ y _librerías_ de JavaScript más utilizados por
-lxs desarrolladorxs alrededor del mundo, y hay una razón para eso.
-En el contexto del navegador, [_mantener la interfaz sincronizada con el estado
-es difícil_](https://medium.com/dailyjs/the-deepest-reason-why-modern-javascript-frameworks-exist-933b86ebc445).
-Al elegir un _framework_ o _librería_ para nuestra interfaz, nos apoyamos en una
-serie de convenciones e implementaciones _probadas_ y _documentadas_ para
-resolver un problema común a toda interfaz web. Esto nos permite concentrarnos
-mejor (dedicar más tiempo) en las características _específicas_ de
-nuestra aplicación.
+Burger Queen API Client es una aplicación desarrollada con React, que cuenta con una interfaz para un restaurante de hamburgesas, a través de la cual los usuarios pueden tomar pedidos (mesero), enviarlos al área de preparación (chef) y hacer el manejo de usuarios y productos (administrador), todo esto conectado a una API.
 
-Cuando elegimos una de estas tecnologías no solo importamos un pedacito de
-código para reusarlo (lo cuál es un gran valor per se), si no que adoptamos una
-**arquitectura**, una serie de **principios de diseño**, un **paradigma**, unas
-**abstracciones**, un **vocabulario**, una **comunidad**, etc.
-
-Como desarrolladora Front-end, estos kits de desarrollo pueden resultarte
-de gran ayuda para implementar rápidamente características de los proyectos en
-los que trabajes.
-
-## 2. Resumen del proyecto
+## 2. Requerimientos del cliente
 
 Un pequeño restaurante de hamburguesas, que está creciendo, necesita un
 sistema a través del cual puedan tomar pedidos usando una _tablet_, y enviarlos
@@ -45,19 +27,17 @@ a la cocina para que se preparen ordenada y eficientemente.
 Este proyecto tiene dos áreas: interfaz (cliente) y API (servidor). Nuestra
 clienta nos ha solicitado desarrollar la interfaz que se integre con una API.
 
-Esta vez tenemos un proyecto 100% por encargo. Si bien siempre puedes (y debes)
-hacer sugerencias de mejoras y/o cambios, muchas veces trabajarás en proyectos
-en los que primero hay que asegurarse de cumplir con lo requerido.
-
-Esta es la información que tenemos de la clienta:
+Esta es la información proporcionada por la clienta:
 
 > Somos **Burguer Queen**, una cadena de comida 24hrs.
 >
 > Nuestra propuesta de servicio 24hrs ha tenido muy buena acogida y, para
 > seguir creciendo, necesitamos un sistema que nos ayude a tomar los pedidos de
-> nuestrxs clientxs.
+> nuestros clientes.
 >
-> Tenemos 2 menús: uno muy sencillo para el desayuno:
+> Tenemos 2 menús: 
+>
+>   - Uno muy sencillo para el desayuno:
 >
 > | Ítem                      |Precio $|
 > |---------------------------|------|
@@ -66,7 +46,7 @@ Esta es la información que tenemos de la clienta:
 > | Sandwich de jamón y queso |   10 |
 > | Jugo de frutas natural    |    7 |
 >
-> Y otro menú para el resto del día:
+>  - Y otro menú para el resto del día:
 >
 > | Ítem                      |Precio|
 > |---------------------------|------|
@@ -82,36 +62,34 @@ Esta es la información que tenemos de la clienta:
 > |Bebida/gaseosa 500ml       |     7|
 > |Bebida/gaseosa 750ml       |     10|
 >
-> Nuestrxs clientxs son bastante indecisos, por lo que es muy común que cambien
+> Nuestros clientes son bastante indecisos, por lo que es muy común que cambien
 > el pedido varias veces antes de finalizarlo.
 
 La interfaz debe mostrar los dos menús (desayuno y resto del día), cada uno
-con todos sus _productos_. La usuaria debe poder ir eligiendo qué _productos_
+con todos sus _productos_. El usuario debe poder ir eligiendo qué _productos_
 agregar y la interfaz debe ir mostrando el _resumen del pedido_ con el
 costo total.
 
 ![out](https://user-images.githubusercontent.com/110297/45984241-b8b51c00-c025-11e8-8fa4-a390016bee9d.gif)
 
 Además la clienta nos ha dado un [link a la documentación](https://app.swaggerhub.com/apis-docs/ssinuco/BurgerQueenAPI/2.0.0)
-que especifica el comportamiento esperado de la API HTTP que deberás consumir.
-Ahí puedes encontrar todos los detalles de los _endpoints_, como por ejemplo
+que especifica el comportamiento esperado de la API HTTP a consumir.
+Ahí se encuentran todos los detalles de los _endpoints_, como por ejemplo
 qué parámetros esperan, qué deben responder, etc.
-
-El objetivo principal de es aprender a construir una _interfaz web_ usando
-el _framework_ elegido (React o Angular). Todos estos frameworks de
-Front-end tratan de solucionar el mismo problema: **cómo mantener la interfaz
-y el estado sincronizados**. Así que esta experiencia espera familiarizarte con
-el concepto de _estado de pantalla_, y como cada cambio sobre el estado se va
-a ir reflejando en la interfaz (por ejemplo, cada vez que agregamos un _producto_
-a un _pedido_, la interfaz debe actualizar la lista del pedido y el total).
 
 ## 3. Objetivos de aprendizaje
 
-Reflexiona y luego marca los objetivos que has llegado a entender y aplicar en tu proyecto. Piensa en eso al decidir tu estrategia de trabajo.
+ ### 3.1 Objetivo general de apredizaje
 
-### HTML
+ El objetivo principal es aprender a construir una _interfaz web_ usando React. Tratando de solucionar el problema: **cómo mantener la interfaz
+ y el estado sincronizados**. Así que en este proyecto nos familiarizamos con  el concepto de _estado de pantalla_, y cómo cada cambio sobre el estado se va reflejando en la interfaz (por ejemplo, cada vez que agregamos un _producto_
+ a un _pedido_, la interfaz actualiza la lista del pedido y el total).
 
-- [ ] **Uso de HTML semántico**
+### 3.1 Objetivo particulares de apredizaje
+
+#### HTML
+
+- [✓] **Uso de HTML semántico**
 
   <details><summary>Links</summary><p>
 
@@ -119,9 +97,9 @@ Reflexiona y luego marca los objetivos que has llegado a entender y aplicar en t
   * [Semantics - MDN Web Docs Glossary](https://developer.mozilla.org/en-US/docs/Glossary/Semantics#Semantics_in_HTML)
 </p></details>
 
-### CSS
+#### CSS
 
-- [ ] **Uso de selectores de CSS**
+- [✓] **Uso de selectores de CSS**
 
   <details><summary>Links</summary><p>
 
@@ -129,7 +107,7 @@ Reflexiona y luego marca los objetivos que has llegado a entender y aplicar en t
   * [CSS Selectors - MDN](https://developer.mozilla.org/es/docs/Web/CSS/CSS_Selectors)
 </p></details>
 
-- [ ] **Modelo de caja (box model): borde, margen, padding**
+- [✓] **Modelo de caja (box model): borde, margen, padding**
 
   <details><summary>Links</summary><p>
 
@@ -140,7 +118,7 @@ Reflexiona y luego marca los objetivos que has llegado a entender y aplicar en t
   * [display - CSS Tricks](https://css-tricks.com/almanac/properties/d/display/)
 </p></details>
 
-- [ ] **Uso de flexbox en CSS**
+- [✓] **Uso de flexbox en CSS**
 
   <details><summary>Links</summary><p>
 
@@ -149,7 +127,7 @@ Reflexiona y luego marca los objetivos que has llegado a entender y aplicar en t
   * [Flexbox - MDN](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox)
 </p></details>
 
-- [ ] **Uso de CSS Grid Layout**
+- [✓] **Uso de CSS Grid Layout**
 
   <details><summary>Links</summary><p>
 
@@ -164,30 +142,30 @@ Reflexiona y luego marca los objetivos que has llegado a entender y aplicar en t
   * [CSS media queries - MDN](https://developer.mozilla.org/es/docs/CSS/Media_queries)
 </p></details>
 
-### JavaScript
+#### JavaScript
 
-- [ ] **Pruebas unitarias (unit tests)**
+- [✓] **Pruebas unitarias (unit tests)**
 
   <details><summary>Links</summary><p>
 
   * [Empezando con Jest - Documentación oficial](https://jestjs.io/docs/es-ES/getting-started)
 </p></details>
 
-- [ ] **Pruebas asíncronas**
+- [✓] **Pruebas asíncronas**
 
   <details><summary>Links</summary><p>
 
   * [Tests de código asincrónico con Jest - Documentación oficial](https://jestjs.io/docs/es-ES/asynchronous)
 </p></details>
 
-- [ ] **Uso de mocks y espías**
+- [✓] **Uso de mocks y espías**
 
   <details><summary>Links</summary><p>
 
   * [Manual Mocks con Jest - Documentación oficial](https://jestjs.io/docs/es-ES/manual-mocks)
 </p></details>
 
-- [ ] **Módulos de ECMAScript (ES Modules)**
+- [✓] **Módulos de ECMAScript (ES Modules)**
 
   <details><summary>Links</summary><p>
 
@@ -195,19 +173,19 @@ Reflexiona y luego marca los objetivos que has llegado a entender y aplicar en t
   * [export - MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/export)
 </p></details>
 
-- [ ] **Uso de linter (ESLINT)**
+- [✓] **Uso de linter (ESLINT)**
 
-- [ ] **Uso de identificadores descriptivos (Nomenclatura y Semántica)**
+- [✓] **Uso de identificadores descriptivos (Nomenclatura y Semántica)**
 
-### Control de Versiones (Git y GitHub)
+#### Control de Versiones (Git y GitHub)
 
-- [ ] **Git: Instalación y configuración**
+- [✓] **Git: Instalación y configuración**
 
-- [ ] **Git: Control de versiones con git (init, clone, add, commit, status, push, pull, remote)**
+- [✓] **Git: Control de versiones con git (init, clone, add, commit, status, push, pull, remote)**
 
-- [ ] **Git: Integración de cambios entre ramas (branch, checkout, fetch, merge, reset, rebase, tag)**
+- [✓] **Git: Integración de cambios entre ramas (branch, checkout, fetch, merge, reset, rebase, tag)**
 
-- [ ] **GitHub: Creación de cuenta y repos, configuración de llaves SSH**
+- [✓] **GitHub: Creación de cuenta y repos, configuración de llaves SSH**
 
 - [ ] **GitHub: Despliegue con GitHub Pages**
 
@@ -216,13 +194,13 @@ Reflexiona y luego marca los objetivos que has llegado a entender y aplicar en t
   * [Sitio oficial de GitHub Pages](https://pages.github.com/)
 </p></details>
 
-- [ ] **GitHub: Colaboración en Github (branches | forks | pull requests | code review | tags)**
+- [✓] **GitHub: Colaboración en Github (branches | forks | pull requests | code review | tags)**
 
-- [ ] **GitHub: Organización en Github (projects | issues | labels | milestones | releases)**
+- [✓] **GitHub: Organización en Github (projects | issues | labels | milestones | releases)**
 
-### HTTP
+#### HTTP
 
-- [ ] **Consulta o petición (request) y respuesta (response).**
+- [✓] **Consulta o petición (request) y respuesta (response).**
 
   <details><summary>Links</summary><p>
 
@@ -230,28 +208,28 @@ Reflexiona y luego marca los objetivos que has llegado a entender y aplicar en t
   * [Mensajes HTTP - MDN](https://developer.mozilla.org/es/docs/Web/HTTP/Messages)
 </p></details>
 
-- [ ] **Cabeceras (headers)**
+- [✓] **Cabeceras (headers)**
 
   <details><summary>Links</summary><p>
 
   * [HTTP headers - MDN](https://developer.mozilla.org/es/docs/Web/HTTP/Headers)
 </p></details>
 
-- [ ] **Cuerpo (body)**
+- [✓] **Cuerpo (body)**
 
   <details><summary>Links</summary><p>
 
   * [Cuerpo de Mensajes HTTP - MDN](https://developer.mozilla.org/es/docs/Web/HTTP/Messages#cuerpo)
 </p></details>
 
-- [ ] **Verbos HTTP**
+- [✓] **Verbos HTTP**
 
   <details><summary>Links</summary><p>
 
   * [Métodos de petición HTTP - MDN](https://developer.mozilla.org/es/docs/Web/HTTP/Methods)
 </p></details>
 
-- [ ] **Códigos de status de HTTP**
+- [✓] **Códigos de status de HTTP**
 
   <details><summary>Links</summary><p>
 
@@ -259,7 +237,7 @@ Reflexiona y luego marca los objetivos que has llegado a entender y aplicar en t
   * [The Complete Guide to Status Codes for Meaningful ReST APIs - dev.to](https://dev.to/khaosdoctor/the-complete-guide-to-status-codes-for-meaningful-rest-apis-1-5c5)
 </p></details>
 
-- [ ] **Encodings y JSON**
+- [✓] **Encodings y JSON**
 
   <details><summary>Links</summary><p>
 
@@ -273,147 +251,88 @@ Reflexiona y luego marca los objetivos que has llegado a entender y aplicar en t
   * [Control de acceso HTTP (CORS) - MDN](https://developer.mozilla.org/es/docs/Web/HTTP/CORS)
 </p></details>
 
-### Angular
+#### React
 
-- [ ] **Components & templates**
-
-  <details><summary>Links</summary><p>
-
-  * [Angular Components Overview - Documentación oficial (en inglés)](https://angular.io/guide/component-overview)
-  * [Introduction to components and templates - Documentación oficial (en inglés)](https://angular.io/guide/architecture-components#introduction-to-components)
-</p></details>
-
-- [ ] **Directivas estructurales (ngIf / ngFor)**
-
-  <details><summary>Links</summary><p>
-
-  * [Writing structural directives - Documentación oficial (en inglés)](https://angular.io/guide/structural-directives)
-</p></details>
-
-- [ ] **@Input | @Output**
-
-  <details><summary>Links</summary><p>
-
-  * [Component interaction - Documentación oficial (en inglés)](https://angular.io/guide/component-interaction#component-interaction)
-</p></details>
-
-- [ ] **Creación y uso de servicios**
-
-  <details><summary>Links</summary><p>
-
-  * [Providing services - Documentación oficial (en inglés)](https://angular.io/guide/architecture-services#providing-services)
-</p></details>
-
-- [ ] **Manejo de rutas**
-
-  <details><summary>Links</summary><p>
-
-  * [In-app navigation: routing to views - Documentación oficial (en inglés)](https://angular.io/guide/router)
-</p></details>
-
-- [ ] **Creación y uso de Observables.**
-
-  <details><summary>Links</summary><p>
-
-  * [Observables in Angular - Documentación oficial (en inglés)](https://angular.io/guide/observables-in-angular)
-</p></details>
-
-- [ ] **Uso de HttpClient**
-
-  <details><summary>Links</summary><p>
-
-  * [Communicating with backend services using HTTP - Documentación oficial (en inglés)](https://angular.io/guide/http)
-</p></details>
-
-- [ ] **Estilos de componentes (ngStyle / ngClass)**
-
-  <details><summary>Links</summary><p>
-
-  * [Template syntax - Documentación oficial (en inglés)](https://angular.io/guide/template-syntax#built-in-directives)
-</p></details>
-
-### React
-
-- [ ] **JSX**
+- [✓] **JSX**
 
   <details><summary>Links</summary><p>
 
   * [Presentando JSX - Documentación oficial](https://es.react.dev/learn/writing-markup-with-jsx)
 </p></details>
 
-- [ ] **Componentes y propiedades (props)**
+- [✓] **Componentes y propiedades (props)**
 
   <details><summary>Links</summary><p>
 
   * [Componentes y propiedades - Documentación oficial](https://es.react.dev/learn/passing-props-to-a-component)
 </p></details>
 
-- [ ] **Manejo de eventos**
+- [✓] **Manejo de eventos**
 
   <details><summary>Links</summary><p>
 
   * [Manejando eventos - Documentación oficial](https://es.react.dev/learn/responding-to-events)
 </p></details>
 
-- [ ] **Listas y keys**
+- [✓] **Listas y keys**
 
   <details><summary>Links</summary><p>
 
   * [Listas y keys - Documentación oficial](https://es.react.dev/learn/rendering-lists)
 </p></details>
 
-- [ ] **Renderizado condicional**
+- [✓] **Renderizado condicional**
 
   <details><summary>Links</summary><p>
 
   * [Renderizado condicional - Documentación oficial](https://es.react.dev/learn/conditional-rendering)
 </p></details>
 
-- [ ] **Elevación de estado**
+- [✓] **Elevación de estado**
 
   <details><summary>Links</summary><p>
 
   * [Levantando el estado - Documentación oficial](https://es.react.dev/learn/sharing-state-between-components)
 </p></details>
 
-- [ ] **Hooks**
+- [✓] **Hooks**
 
   <details><summary>Links</summary><p>
 
   * [Presentando Hooks - Documentación oficial](https://es.react.dev/reference/react)
 </p></details>
 
-- [ ] **CSS modules**
+- [✓] **CSS modules**
 
   <details><summary>Links</summary><p>
 
   * [Adding a CSS Modules Stylesheet - Documentación de Create React App (en inglés)](https://vitejs.dev/guide/features.html#css-modules)
 </p></details>
 
-- [ ] **React Router**
+- [✓] **React Router**
 
   <details><summary>Links</summary><p>
 
   * [Quick Start - Documentación oficial (en inglés)](https://reactrouter.com/en/main/start/tutorial)
 </p></details>
 
-### Bases de datos
+#### Bases de datos
 
 - [ ] **Modelado de datos**
 
-### Centrado en el usuario
+#### Centrado en el usuario
 
-- [ ] **Diseñar y desarrollar un producto o servicio poniendo a las usuarias en el centro**
+- [✓] **Diseñar y desarrollar un producto o servicio poniendo a las usuarias en el centro**
 
-### Diseño de producto
+#### Diseño de producto
 
-- [ ] **Crear prototipos de alta fidelidad que incluyan interacciones**
+- [✓] **Crear prototipos de alta fidelidad que incluyan interacciones**
 
-- [ ] **Seguir los principios básicos de diseño visual**
+- [✓] **Seguir los principios básicos de diseño visual**
 
 ### Investigación
 
-- [ ] **Planear y ejecutar testeos de usabilidad de prototipos en distintos niveles de fidelidad**
+- [✓] **Planear y ejecutar testeos de usabilidad de prototipos en distintos niveles de fidelidad**
 
   <details><summary>Links</summary><p>
 
@@ -423,39 +342,26 @@ Reflexiona y luego marca los objetivos que has llegado a entender y aplicar en t
 
 ## 4. Consideraciones
 
-Este proyecto se debe "resolver" en duplas y esta es una propuesta para que trabajes
-con el backend consumiendo esta
-[API](https://github.com/Laboratoria/burger-queen-api-mock)
-que desarrollamos para ti.
+Este proyecto se hizo en dupla y fue una propuesta para que trabajar con el backend consumiendo esta
+[API](https://github.com/Laboratoria/burger-queen-api-mock).
 
-El rango de tiempo estimado para completar el proyecto es de 3 a 5 Sprints.
+El tiempo estimado para completar el proyecto fue de 3 a 5 Sprints y se realizó en 4 Sprints.
 
-Trabaja en una historia hasta terminarla antes de pasar a la siguiente. Trabaja
-hasta la historia que puedas en el tiempo especificado.
-
-La lógica del proyecto debe estar implementada completamente en JavaScript
+La lógica del proyecto debía estar implementada completamente en JavaScript
 (ES6+), HTML y CSS y empaquetada de manera automatizada.
 
-En este proyecto Sí está permitido usar librerías o frameworks
-(debes elegir entre [React](https://es.react.dev/) o
-[Angular](https://angular.io/)).
-
-La aplicación debe ser un _Single Page App_. Los pedidos los tomaremos desde una
-_tablet_, pero **no queremos una app nativa**, sino una web app que sea
+La aplicación debía ser un _Single Page App_. Los pedidos debían tomarse desde una
+_tablet_, pero **no se requirió una app nativa**, sino una web app que sea
 **mobile-first**.
 
-Necesitamos pensar bien en el aspecto UX de de quienes van a tomar los pedidos,
- el tamaño y aspecto de los botones, la visibilidad del estado actual del
- pedido, etc.
-
-La aplicación desplegada debe tener 80% o más el las puntuaciones de
+La aplicación desplegada tiene 80% o más el las puntuaciones de
 Performance, Progressive Web App, Accessibility y Best Practices de Lighthouse.
 
-La aplicación debe hacer uso de `npm-scripts` y contar con scripts `start`,
+La aplicación debe hace uso de `npm-scripts` y cuenta con scripts `start`,
 `test`, `build` y `deploy`, que se encarguen de arrancar, correr las pruebas,
 empaquetar y desplegar la aplicación respectivamente.
 
-Los tests unitarios deben cubrir un mínimo del 90% de _statements_, _functions_,
+Los tests unitarios cubren 90% de _statements_, _functions_,
 _lines_ y _branches_.
 
 Por otro lado, deberás definir la estructura de carpetas y archivos que consideres

@@ -131,7 +131,6 @@ export function UsersLogic() {
       .catch((error) => {
         console.error(error);
         if (error.response.data === 'jwt expired' && error.response.status === 401) {
-          console.error(error);
           navigate('/login');
         } if (error.response.data === 'Email format is invalid' && error.response.status === 400) {
           setErrorLabel('Formato del correo inválido');
@@ -140,7 +139,6 @@ export function UsersLogic() {
           setErrorLabel('El usuario ya existe');
           return;
         } else {
-          console.error(error);
           error && navigate('/error-page');
         }
       });
@@ -232,10 +230,8 @@ export function UsersLogic() {
       .catch((error) => {
         console.error(error);
         if (error.response.data === 'jwt expired' && error.response.status === 401) {
-          console.error(error);
           navigate('/login');
         } else {
-          console.error(error);
           error && navigate('/error-page');
         }
       });

@@ -37,8 +37,6 @@ export function LoginLogic() {
         password: formData.password,
       });
 
-      console.log('Respuesta de la API:', response.data);
-
       // Guardar el accessToken en el localStorage
       if (response.data) {
         localStorage.setItem('accessToken', response.data.accessToken);
@@ -46,12 +44,9 @@ export function LoginLogic() {
         localStorage.setItem('role', response.data.user.role);
       }
 
-      console.log('antes de navegar');
       response.data.user.role === 'admin' && navigate('/users');
       response.data.user.role === 'waiter' && navigate('/orders');
-      console.log('Navegando a /orders');
       response.data.user.role === 'chef' && navigate('/kitchen');
-      console.log('despues de navegar');
     } catch (error) {
       if (error.response) {
         if (error.response.data === 'Email and password are required') {
@@ -61,10 +56,9 @@ export function LoginLogic() {
         } else if (error.response.data === 'Incorrect password') {
           setErrorLabel('Credenciales  incorrectas');
         } else {
-          console.error(error);
-          error && navigate('/error-page');
+          navigate('/error-page');
         }
-      } else if (error){
+      } else {
         navigate('/error-page');
       }
     }
