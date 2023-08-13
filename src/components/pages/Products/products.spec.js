@@ -20,46 +20,6 @@ describe('Componente Products', () => {
         jest.clearAllMocks();
     });
 
-    // it('se renderiza sin errores', () => {
-    //     render(
-    //         <MemoryRouter>
-    //             <Products />
-    //         </MemoryRouter>
-    //     );
-
-    //     const titleElement = screen.getByText('Productos');
-    //     expect(titleElement).toBeInTheDocument();
-
-    //     const filterLabel = screen.getByText('Filtrar productos por tipo :');
-    //     expect(filterLabel).toBeInTheDocument();
-
-    //     const desayunoCheckbox = screen.getByLabelText('Desayuno');
-    //     const almuerzoCheckbox = screen.getByLabelText('Almuerzo');
-    //     expect(desayunoCheckbox).toBeInTheDocument();
-    //     expect(almuerzoCheckbox).toBeInTheDocument();
-
-    //     const AddButton = screen.getByAltText('buttonAddProducts');
-    //     expect(AddButton).toBeInTheDocument();
-
-    //     const logoutButton = screen.getByAltText('Cerrar sesión');
-    //     expect(logoutButton).toBeInTheDocument();
-
-    //     const kitchenButton = screen.getByAltText('Ir a vista de cocina');
-    //     expect(kitchenButton).toBeInTheDocument();
-
-    //     const orderButton = screen.getByAltText('Ir a vista de pedidos');
-    //     expect(orderButton).toBeInTheDocument();
-    // });
-
-    // it('Debería renderizar la tabla de productos', () => {
-    //     render(<MemoryRouter>
-    //         <Products />
-    //     </MemoryRouter>);
-
-    //     expect(screen.getByRole('table')).toBeInTheDocument();
-    //     expect(screen.getAllByRole('columnheader')).toHaveLength(6);
-    // });
-
     it('El boton de productos cambia a la ruta correcta', async () => {
         // Crea una función simulada para useNavigate
         const navigateMock = jest.fn();
