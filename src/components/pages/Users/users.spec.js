@@ -87,6 +87,30 @@ describe.only('Componente Users', () => {
         });
     });
 
+    it('El boton de logout cambia a la ruta correcta', async () => {
+        // Crea una función simulada para useNavigate
+        const navigateMock = jest.fn();
+        useNavigateMock.mockImplementation(() => navigateMock);
+
+        // Renderiza el componente Login
+        render(
+            <MemoryRouter>
+                <Users />
+            </MemoryRouter>
+        );
+
+        // Obtén los elementos necesarios
+        const logoutButton = screen.getByAltText('Cerrar sesión');
+
+        // Ejecuta la acción (click en el botón)
+        fireEvent.click(logoutButton);
+
+        // Espera a que se complete la acción asíncrona
+        await waitFor(() => {
+            expect(navigateMock).toHaveBeenCalledWith('/');
+        });
+    });
+
     it('El boton de chef cambia a la ruta correcta', async () => {
         // Crea una función simulada para useNavigate
         const navigateMock = jest.fn();
