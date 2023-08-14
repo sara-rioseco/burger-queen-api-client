@@ -21,7 +21,7 @@ describe('Función ApiRequest', () => {
                 "role": "admin"
             }
         };
-        const url = 'http://localhost:8080/users';
+        const url = 'https://burger-queen-api-mock-u59i-dev.fl0.io/users';
         const method = 'GET';
 
         mockAxios.onGet(url).reply(200, responseData);
@@ -46,7 +46,7 @@ describe('Función ApiRequest', () => {
                 role: "admin"
             }
         };
-        const url = 'http://localhost:8080/users';
+        const url = 'https://burger-queen-api-mock-u59i-dev.fl0.io/users';
         const method = 'POST';
 
         mockAxios.onPost(url).reply(200, responseData);
@@ -58,7 +58,7 @@ describe('Función ApiRequest', () => {
     });
 
     it('Debería manejar respuestas de error', async () => {
-        const url = 'http://localhost:8080/users';
+        const url = 'https://burger-queen-api-mock-u59i-dev.fl0.io/users';
         const method = 'GET';
 
         mockAxios.onGet(url).reply(401, {
