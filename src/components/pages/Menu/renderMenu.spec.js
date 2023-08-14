@@ -1,10 +1,9 @@
-/* eslint-disable no-unused-vars */
-import { render, screen, fireEvent, waitFor, getByText } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { MemoryRouter } from 'react-router-dom';
 import Menu from './menu.jsx';
 
-describe('Componente Products', () => {
+describe('Componente Menú', () => {
     it('Renderiza el componente correctamente', () => {      
       
       render(

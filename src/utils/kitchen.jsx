@@ -28,7 +28,7 @@ export function useKitchenLogic() {
     }
 
     ApiRequest({
-      url: 'http://localhost:8080/orders',
+      url: 'https://burger-queen-api-mock-u59i-dev.fl0.io/orders',
       method: 'get',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -62,13 +62,13 @@ const updateOrderStatus = (orderId) => {
   };
 
   ApiRequest({
-    url: `http://localhost:8080/orders/${orderId}`,
+    url: `https://burger-queen-api-mock-u59i-dev.fl0.io/orders/${orderId}`,
     method: 'patch',
     body: body,
   })
     .then(
       ApiRequest({
-      url: 'http://localhost:8080/orders',
+      url: 'https://burger-queen-api-mock-u59i-dev.fl0.io/orders',
       method: 'get',
       headers: {
         Authorization: `Bearer ${token}`,
