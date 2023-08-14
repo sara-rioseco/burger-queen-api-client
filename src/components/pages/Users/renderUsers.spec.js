@@ -13,7 +13,7 @@ jest.mock('../../../utils/users', () => {
     const originalModule = jest.requireActual('../../../utils/users');
     return {
         ...originalModule,
-        useUsersLogic: jest.fn(() => ({
+        UsersLogic: jest.fn(() => ({
             usersData: [{
                 "email": "iamawaiter@mail.com",
                 "password": "123456",
@@ -25,12 +25,6 @@ jest.mock('../../../utils/users', () => {
                 "password": "123456",
                 "role": "chef",
                 "id": 2,
-            },
-            {
-                "email": "iamaadmin@mail.com",
-                "password": "123456",
-                "role": "admin",
-                "id": 3,
             }],
             getRoleLabel: jest.fn((role) => {
                 switch (role) {
@@ -54,11 +48,16 @@ jest.mock('../../../utils/users', () => {
             handleInputChange: jest.fn(),
             handleConfirmAddClick: jest.fn(),
             handleRoleCheckboxChange: jest.fn(),
-            modalUserId: 2,
+            modalUserId: 1,
             selectedRoles: ['admin', 'waiter', 'chef'],
             modalOpenDeleteUsers: true,
             modalOpenEditUsers: true,
-            editingUserData: 3,
+            editingUserData: {
+                "email": "iamaadmin@mail.com",
+                "password": "123456",
+                "role": "admin",
+                "id": 3,
+            },
             addModalOpen: true,
             newUser: {
                 email: 'test@example.com',
@@ -115,46 +114,21 @@ describe('Componente Users', () => {
     });
 
     it('Debería renderizar la tabla con la información de los usuarios', async () => {
-        const fakeUserData = [
-            {
-                "email": "iamawaiter@mail.com",
-                "password": "123456",
-                "role": "waiter",
-                "id": 1,
-            },
-            {
-                "email": "iamachef@mail.com",
-                "password": "123456",
-                "role": "chef",
-                "id": 2,
-            },
-            {
-                "email": "iamaadmin@mail.com",
-                "password": "123456",
-                "role": "admin",
-                "id": 3,
-            }
-        ];
-
-        // // Simula la lógica de UsersLogic con datos ficticios
-        // jest.mock('../../../utils/users.jsx', () => ({
-        //     ...jest.requireActual('../../../utils/users.jsx'),
-        //     useUsersLogic: jest.fn(() => ({
-        //         usersData: fakeUserData,
-        //     })),
-        // }));
 
         render(
             <MemoryRouter>
                 <Users />
             </MemoryRouter>
         );
-        await waitFor(() => {
-            expect(screen.findBy('iamawaiter@mail.com')).toBeInTheDocument();
-            expect(screen.findBy('iamachef@mail.com')).toBeInTheDocument();
-            expect(screen.findBy('iamaadmin@mail.com')).toBeInTheDocument();
-        })
 
-    });
+        expect(screen.getByRole('row', { name: /iamawaiter@mail.com/i })).toBeInTheDocument();
+        expect(screen.getByText('#1')).toBeInTheDocument();
+        expect(screen.getByRole('row', { name: /Mesero/i })).toBeInTheDocument();
+
+        expect(screen.getByRole('row', { name: /iamachef@mail.com/i })).toBeInTheDocument();
+        expect(screen.getByText('#2')).toBeInTheDocument();
+        expect(screen.getByRole('row', { name: /Cocinero/i })).toBeInTheDocument();
+    })
+
 });
 
