@@ -223,7 +223,7 @@ export function OrdersLogic() {
     }
 
     ApiRequest({
-      url: `hhttps://burger-queen-api-mock-u59i-dev.fl0.io/orders/${orderId}`,
+      url: `https://burger-queen-api-mock-u59i-dev.fl0.io/orders/${orderId}`,
       method: 'patch',
       body: body,
     })
