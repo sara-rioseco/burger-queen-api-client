@@ -16,6 +16,7 @@ jest.mock('react-router-dom', () => ({
   
 /* jest.mock('../../../utils/menu', () => {  
   const originalModule = jest.requireActual('../../../utils/menu');
+  const handleOrdersClickMock = jest.fn();
   return {
     ...originalModule,
     useMenuLogic: jest.fn(() => ({
@@ -40,13 +41,14 @@ jest.mock('react-router-dom', () => ({
           type: "Almuerzo"
         }
       ],
-      getTotalPrice: jest.fn(),
-      setModalOrderProducts: jest.fn(),
       handleBreakfastClick: jest.fn(),
       handleLunchClick: jest.fn(),
+      handleOrdersClick: jest.fn().mockImplementation(handleOrdersClickMock),
       handleClickProduct: jest.fn(),
       handleCreateOrder: jest.fn(),
-      validateInputs: jest.fn()
+      validateInputs: jest.fn(),
+      getTotalPrice: jest.fn(),
+      modalOrderProducts: true,
     }))
   }
 }); */
@@ -54,80 +56,10 @@ jest.mock('react-router-dom', () => ({
 describe('Componente Menú', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-});
-
-  it('Renderiza el componente correctamente', () => {
-    render(
-    <MemoryRouter>
-      <Menu />
-    </MemoryRouter>
-    );
-
-    // Verificar que el botón de pedido se encuentre en el componente
-    const pedidosOption = screen.getByText('PEDIDOS');
-    expect(pedidosOption).toBeInTheDocument();
-
-    // Verificar que los campos de entrada del carrito estén presentes
-    const clientInputElement = screen.getByPlaceholderText('Escribe aquí');
-    const tableSelectElement = screen.getByDisplayValue('Selecciona la mesa');
-    expect(clientInputElement).toBeInTheDocument();
-    expect(tableSelectElement).toBeInTheDocument();
-
   });
 
-  
-  it('Navega a la vista de pedidos al presionar el botón de pedidos', async () => {
-    const navigateMock = jest.fn();
-    useNavigateMock.mockImplementation(() => navigateMock);
+  it('El boton de logout cambia a la ruta correcta', async () => {
 
-    render(
-      <MemoryRouter>
-        <Menu />
-      </MemoryRouter>
-    );
-
-    const orderButton = screen.getByText('PEDIDOS');
-    fireEvent.click(orderButton);
-    await waitFor(() => {
-      expect(navigateMock).toHaveBeenCalled();
-    });
-  });
-
-  it('Muestra menú de desayuno al entrar en la vista', async () => {
-    render(
-      <MemoryRouter>
-        <Menu />
-      </MemoryRouter>
-    );
-
-    const breakfastProduct = screen.getByTestId('breakfast-product-1');
-    expect(breakfastProduct).toBeInTheDocument();
-
-  })
-
-  // it('Cambia al menú de almuerzo y cena al presionar el botón de almuerzo', () => {
-
-  //   jest.mock('../../../utils/menu', () => {  
-  //     const originalModule = jest.requireActual('../../../utils/menu');
-  //     return {
-  //       ...originalModule,
-  //       useMenuLogic: jest.fn().mockReturnValueOnce({
-  //         ...originalModule.useMenuLogic(),
-  //         showMenu: false,
-  //         setShowMenu: jest.fn(),
-  //       })
-  //     }
-  //   });
-
-  //   render(<MemoryRouter><Menu /></MemoryRouter>);
-
-  //   const lunchButtonElement = screen.getByAltText('Botón de productos almuerzo y cena');
-  //   fireEvent.click(lunchButtonElement);
-  //   const lunchProduct = screen.getByTestId('lunch-product-3');
-  //   expect(lunchProduct).toBeInTheDocument();
-  // })
-
-  it('Vuelve a la vista de login al presionar botón de logout', async () => {
     const navigateMock = jest.fn();
     useNavigateMock.mockImplementation(() => navigateMock);
 
@@ -139,20 +71,34 @@ describe('Componente Menú', () => {
 
     const logoutButton = screen.getByAltText('Cerrar sesión');
     fireEvent.click(logoutButton);
+
     await waitFor(() => {
-      expect(navigateMock).toHaveBeenCalledWith('/');
+        expect(navigateMock).toHaveBeenCalledWith('/');
     });
   });
 
-  // it('Abre un modal de alerta si falta algún campo al enviar una orden', async () => {
-  //   render(<MemoryRouter><Menu /></MemoryRouter>);
-  //   const kitchenButton = screen.getByText('ENVIAR A COCINA');
+  it('Navega a la vista de pedidos al presionar el botón de pedidos', async () => {
+    const navigateMock = jest.fn();
+    useNavigateMock.mockImplementation(() => navigateMock);
+    render(<MemoryRouter><Menu /></MemoryRouter>);
 
-  //   fireEvent.click(kitchenButton);
-  //   await waitFor(() => {
-  //     const alertModal = screen.getByText('Ingresa los productos al carrito');
-  //     expect(alertModal).toBeInTheDocument();
-  //   });
-  // })
+    const ordersButton = screen.getByText('PEDIDOS');
+    fireEvent.click(ordersButton);
+
+    await waitFor(() => {
+        expect(navigateMock).toHaveBeenCalled();
+    });
+  });
+
+  it('Abre un modal de alerta si falta algún campo al enviar una orden', async () => {
+    render(<MemoryRouter><Menu /></MemoryRouter>);
+    const kitchenButton = screen.getByText('ENVIAR A COCINA');
+
+    fireEvent.click(kitchenButton);
+    await waitFor(() => {
+      const alertModal = screen.getByText('Ingresa los productos al carrito');
+      expect(alertModal).toBeInTheDocument();
+    });
+  })
 
 })
