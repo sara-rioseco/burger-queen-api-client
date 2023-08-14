@@ -9,67 +9,67 @@ import MockAdapter from 'axios-mock-adapter';
 import { UsersLogic } from '../../../utils/users.jsx';
 import { useNavigate as useNavigateMock } from 'react-router-dom'; // navegar entre router
 
-// jest.mock('../../../utils/users', () => {
-//     const originalModule = jest.requireActual('../../../utils/users');
-//     return {
-//         ...originalModule,
-//         useUsersLogic: jest.fn(() => ({
-//             usersData: [{
-//                 "email": "iamawaiter@mail.com",
-//                 "password": "123456",
-//                 "role": "waiter",
-//                 "id": 1,
-//             },
-//             {
-//                 "email": "iamachef@mail.com",
-//                 "password": "123456",
-//                 "role": "chef",
-//                 "id": 2,
-//             },
-//             {
-//                 "email": "iamaadmin@mail.com",
-//                 "password": "123456",
-//                 "role": "admin",
-//                 "id": 3,
-//             }],
-//             getRoleLabel: jest.fn((role) => {
-//                 switch (role) {
-//                     case 'admin':
-//                         return 'Administrador';
-//                     case 'waiter':
-//                         return 'Mesero';
-//                     case 'chef':
-//                         return 'Cocinero';
-//                     default:
-//                         return role;
-//                 }
-//             }),
-//             handleOpenModalDeleteUsers: jest.fn(),
-//             handleConfirmDeleteClickUsers: jest.fn(),
-//             handleConfirmEditClickUsers: jest.fn(),
-//             handleOpenEditModalUsers: jest.fn(),
-//             handleCloseModalUsers: jest.fn(),
-//             handleAddClick: jest.fn(),
-//             setNewUser: jest.fn(),
-//             handleInputChange: jest.fn(),
-//             handleConfirmAddClick: jest.fn(),
-//             handleRoleCheckboxChange: jest.fn(),
-//             modalUserId: 2,
-//             selectedRoles: ['admin', 'waiter', 'chef'],
-//             modalOpenDeleteUsers: true,
-//             modalOpenEditUsers: true,
-//             editingUserData: 3,
-//             addModalOpen: true,
-//             newUser: {
-//                 email: 'test@example.com',
-//                 password: '123456',
-//                 role: 'admin',
-//             },
-//             errorLabel: 'error',
-//             errorLabelEdit: 'errorEdit',
-//         }))
-//     }
-// });
+jest.mock('../../../utils/users', () => {
+    const originalModule = jest.requireActual('../../../utils/users');
+    return {
+        ...originalModule,
+        useUsersLogic: jest.fn(() => ({
+            usersData: [{
+                "email": "iamawaiter@mail.com",
+                "password": "123456",
+                "role": "waiter",
+                "id": 1,
+            },
+            {
+                "email": "iamachef@mail.com",
+                "password": "123456",
+                "role": "chef",
+                "id": 2,
+            },
+            {
+                "email": "iamaadmin@mail.com",
+                "password": "123456",
+                "role": "admin",
+                "id": 3,
+            }],
+            getRoleLabel: jest.fn((role) => {
+                switch (role) {
+                    case 'admin':
+                        return 'Administrador';
+                    case 'waiter':
+                        return 'Mesero';
+                    case 'chef':
+                        return 'Cocinero';
+                    default:
+                        return role;
+                }
+            }),
+            handleOpenModalDeleteUsers: jest.fn(),
+            handleConfirmDeleteClickUsers: jest.fn(),
+            handleConfirmEditClickUsers: jest.fn(),
+            handleOpenEditModalUsers: jest.fn(),
+            handleCloseModalUsers: jest.fn(),
+            handleAddClick: jest.fn(),
+            setNewUser: jest.fn(),
+            handleInputChange: jest.fn(),
+            handleConfirmAddClick: jest.fn(),
+            handleRoleCheckboxChange: jest.fn(),
+            modalUserId: 2,
+            selectedRoles: ['admin', 'waiter', 'chef'],
+            modalOpenDeleteUsers: true,
+            modalOpenEditUsers: true,
+            editingUserData: 3,
+            addModalOpen: true,
+            newUser: {
+                email: 'test@example.com',
+                password: '123456',
+                role: 'admin',
+            },
+            errorLabel: 'error',
+            errorLabelEdit: 'errorEdit',
+        }))
+    }
+});
 
 describe('Componente Users', () => {
     it('Se renderiza sin errores', () => {
@@ -114,7 +114,7 @@ describe('Componente Users', () => {
         expect(screen.getAllByRole('columnheader')).toHaveLength(5);
     });
 
-    it('Debería renderizar la tabla con la información de los usuarios', () => {
+    it('Debería renderizar la tabla con la información de los usuarios', async () => {
         const fakeUserData = [
             {
                 "email": "iamawaiter@mail.com",
@@ -149,10 +149,12 @@ describe('Componente Users', () => {
                 <Users />
             </MemoryRouter>
         );
+        await waitFor(() => {
+            expect(screen.findBy('iamawaiter@mail.com')).toBeInTheDocument();
+            expect(screen.findBy('iamachef@mail.com')).toBeInTheDocument();
+            expect(screen.findBy('iamaadmin@mail.com')).toBeInTheDocument();
+        })
 
-        expect(screen.getByText('iamawaiter@mail.com')).toBeInTheDocument();
-        expect(screen.getByText('iamachef@mail.com')).toBeInTheDocument();
-        expect(screen.getByText('iamaadmin@mail.com')).toBeInTheDocument();
     });
 });
 
