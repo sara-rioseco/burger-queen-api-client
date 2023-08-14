@@ -48,16 +48,16 @@ export default function Menu() {
     <>
       <div className='menu-container'>
         <nav className='nav-bar'>
-          <Button label='PEDIDOS' onClick={handleOrdersClick} classButton='buttonMenu'/> 
+          <Button label='PEDIDOS' onClick={handleOrdersClick} classButton='buttonMenu' alt='Botón de pedidos'/> 
           <div className="btn-group" role="group" aria-label="Basic example">
-            <button type="button" className="buttonDefault buttonBreakfast" onClick={handleBreakfastClick}>DESAYUNO</button>
-            <button type="button" className="buttonDefault buttonLunch" onClick={handleLunchClick}>ALMUERZO Y CENA</button>
+            <button type="button" className="buttonDefault buttonBreakfast" onClick={handleBreakfastClick} alt='Botón de productos desayuno'>DESAYUNO</button>
+            <button type="button" className="buttonDefault buttonLunch" onClick={handleLunchClick} alt='Botón de productos almuerzo y cena'>ALMUERZO Y CENA</button>
           </div>
         </nav>
         {showMenu && (
           <div className='products-grid'>
             {breakfastProducts.map(product => (
-              <div key={product.id} className='product' onClick={() => handleClickProduct(product)}> 
+              <div key={product.id} className='product' onClick={() => handleClickProduct(product)} data-testid={`breakfast-product-${product.id}`}> 
                 <div className='image-content'><img src={product.image} alt={product.name} className='image' /></div>
                 <div className='text-content'>
                   <div className='product-name'>{product.name}</div>
@@ -70,7 +70,7 @@ export default function Menu() {
         {!showMenu && (
           <div className='products-grid'>
             {lunchProducts.map(product => (
-              <div key={product.id} className='product'  onClick={() => handleClickProduct(product)}> 
+              <div key={product.id} className='product'  onClick={() => handleClickProduct(product)} data-testid={`lunch-product-${product.id}`}> 
                 <div className='image-content'><img src={product.image} alt={product.name} className='image' /></div>
                 <div className='text-content' >
                   <div className='product-name'>{product.name}</div>
