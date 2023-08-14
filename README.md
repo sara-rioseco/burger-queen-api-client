@@ -4,17 +4,21 @@
 
 * [1. Resumen del proyecto](#1-resumen-del-proyecto)
 * [2. Requerimientos del cliente](#2-requerimientos-del-cliente)
-* [3. Objetivos de aprendizaje](#3-objetivos-de-aprendizaje)
-* [4. Consideraciones](#4-consideraciones)
-* [5. Criterios de aceptación del proyecto](#5-criterios-de-aceptación-del-proyecto)
+* [3. Organización](#3-organización)
+* [4. Diseño de la interfaz de usuario](#4-diseño-de-la-interfaz-de-usuario)
+* [5. Historias de usuario](#5-historias-de-usuario)
 * [6. Despliegue](#6-despliegue)
-* [7. Pistas / tips](#7-pistas--tips)
+* [7. Uso](#7-uso)
+* [8. Consideraciones](#8-consideraciones)
+* [9. Objetivos de aprendizaje](#9-objetivos-de-aprendizaje)
 
 ***
 
 ## 1. Resumen del proyecto
 
 Burger Queen API Client es una aplicación desarrollada con React, que cuenta con una interfaz para un restaurante de hamburgesas, a través de la cual los usuarios pueden tomar pedidos (mesero), enviarlos al área de preparación (chef) y hacer el manejo de usuarios y productos (administrador), todo esto conectado a una API.
+
+![logo-burger-queen](src\assets\Images\logo.png)
 
 ## 2. Requerimientos del cliente
 
@@ -77,15 +81,278 @@ que especifica el comportamiento esperado de la API HTTP a consumir.
 Ahí se encuentran todos los detalles de los _endpoints_, como por ejemplo
 qué parámetros esperan, qué deben responder, etc.
 
-## 3. Objetivos de aprendizaje
+## 3. Organización
 
- ### 3.1 Objetivo general de apredizaje
+Como herramienta de organización utilizamos [Trello](https://trello.com/b/B4DmOSE5/proyecto-5-burger-queen),
+en donde hicimos toda la planeación de trabajo de 
+cada sprint que duró este proyecto (4): 
+
+![Trello](src\assets\Images\trello.png)
+
+## 4. Diseño de la interfaz de usuario
+
+El prototipo fue elaborado en [Figma](https://www.figma.com/proto/chmlKFe3zPN5ePyxAjphrz/Burger?type=design&node-id=11-1062&t=8T7WlFU9GgIWXEpS-1&scaling=scale-down&page-id=0%3A1&starting-point-node-id=11%3A1062&show-proto-sidebar=1&mode=design).
+
+![Prototipo baja fidelidad](src\assets\Images\prototipo.png)
+
+## 5. Historias de Usuario
+
+### Historia de usuario 1: Mesero/a debe poder ingresar al sistema, si el admin ya le ha asignado credenciales
+
+Yo como mesero quiero poder ingresar al sistema de pedidos.
+
+#### Criterios de aceptación
+
+* Acceder a una pantalla de login.
+* Ingresar email y contraseña.
+* Recibir mensajes de error comprensibles, dependiendo de cuál es el error
+  con la información ingresada.
+* Ingresar al sistema de pedidos si las crendenciales son correctas.
+***
+
+### Historia de usuario 2: Mesero/a debe poder tomar pedido de cliente/a
+
+Yo como mesero quiero tomar el pedido de un cliente para no depender de mi mala
+memoria, para saber cuánto cobrar, y enviarlo a la cocina para evitar errores y
+que se puedan ir preparando en orden.
+
+#### Criterios de aceptación
+
+* Anotar nombre de cliente.
+* Agregar productos al pedido.
+* Eliminar productos.
+* Ver resumen y el total de la compra.
+* Enviar pedido a cocina (guardar en alguna base de datos).
+* Se ve y funciona bien en una _tablet_
+***
+
+### Historia de usuario 3: Jefe de cocina debe ver los pedidos
+
+Yo como jefe de cocina quiero ver los pedidos de los clientes en orden y
+marcar cuáles están listos para saber qué se debe cocinar y avisar a los meseros
+que un pedido está listo para servirlo a un cliente.
+
+#### Criterios de aceptación
+
+* Ver los pedidos ordenados según se van haciendo.
+* Marcar los pedidos que se han preparado y están listos para servirse.
+* Ver el tiempo que tomó prepara el pedido desde que llegó hasta que se
+  marcó como completado.
+***
+
+### Historia de usuario 4: Mesero debe ver pedidos listos para servir
+
+Yo como mesero quiero ver los pedidos que están preparados para entregarlos
+rápidamente a los clientes que las hicieron.
+
+#### Criterios de aceptación
+
+* Ver listado de pedido listos para servir.
+* Marcar pedidos que han sido entregados.
+* Los datos se deben mantener íntegros, incluso después de que un pedido ha
+  terminado. Todo esto para poder tener estadísticas en el futuro.
+***
+
+### Historia de usuario 5: Administrador(a) de tienda debe administrar a sus trabajadores
+
+Yo como administrador(a) de tienda quiero gestionar a los usuarios de
+la plataforma para mantener actualizado la informacion de mis trabajadores.
+
+#### Criterios de aceptación
+
+* Ver listado de trabajadores.
+* Agregar trabajadores.
+* Eliminar trabajadores.
+* Actualizar datos de trabajadores.
+***
+
+### Historia de usuario 6: Administrador(a) de tienda debe administrar a sus productos
+
+Yo como administrador(a) de tienda quiero gestionar los productos
+para mantener actualizado el menú.
+
+#### Criterios de aceptación
+
+* Ver listado de productos.
+* Agregar productos.
+* Eliminar productos.
+* Actualizar datos de productos.
+***
+
+## 6. Despliegue
+
+Se realizó el despliegue con [Vercel](https://vercel.com/).
+
+### App:
+
+https://dev-007-burger-queen-api-client-sara-rioseco.vercel.app/login
+
+### API:
+
+https://burger-queen-api-mock-u59i-dev.fl0.io/
+
+## 7. Uso
+
+Para poder ingresar a la aplicación se puede utilizar los siguients usuarios:
+
+![Trello](src\assets\Images\usuarios.png)
+
+## 8. Consideraciones
+
+Este proyecto se hizo en dupla y fue una propuesta para que trabajar con el backend consumiendo esta
+[API](https://github.com/Laboratoria/burger-queen-api-mock).
+
+El tiempo estimado para completar el proyecto fue de 3 a 5 Sprints y se realizó en 4 Sprints.
+
+La lógica del proyecto debía estar implementada completamente en JavaScript
+(ES6+), HTML y CSS y empaquetada de manera automatizada.
+
+La aplicación debía ser un _Single Page App_. Los pedidos debían tomarse desde una
+_tablet_, pero **no se requirió una app nativa**, sino una web app que sea
+**mobile-first**.
+
+La aplicación desplegada tiene 92-100% de
+Performance, Progressive Web App, Accessibility y Best Practices de [_Lighthouse_](https://github.com/KarlaMacedo/DEV007-burger-queen-api-client/blob/main/LighthouseReport.pdf).
+
+La aplicación hace uso de `npm-scripts` y cuenta con scripts `dev`,
+`test`, `build` y `deploy`, que se encargan de arrancar, correr las pruebas,
+empaquetar y desplegar la aplicación respectivamente.
+
+Los tests unitarios cubren 90% de _statements_, _functions_,
+_lines_ y _branches_.
+
+Por otro lado, la estructura de carpetas y archivos es:
+
+```text
+.
+├── 
+├── README.md
+├── package.json
+├── index.html
+├── src
+|  ├── main.jsx
+|  ├── App.jsx
+|  ├── App.css
+|  ├── index.css
+|  ├── components
+|  |   ├──button
+|  |   |  ├──button.css
+|  |   |  └──button.jsx
+|  |   ├──chefButton
+|  |   |  ├──chefButton.css
+|  |   |  └──chefButton.jsx
+|  |   ├──input
+|  |   |  ├──input.css
+|  |   |  └──input.jsx
+|  |   ├──logoutButton
+|  |   |  ├──logoutButton.css
+|  |   |  └──logoutButton.jsx
+|  |   ├──modal
+|  |   |  ├──modal.css
+|  |   |  └──modal.jsx
+|  |   ├──pages
+|  |   |  ├──Error
+|  |   |  |  ├──error-page.css
+|  |   |  |  └──error-page.jsx
+|  |   |  ├──Home
+|  |   |  |  ├──home.css
+|  |   |  |  └──home.jsx
+|  |   |  ├──Kitchen
+|  |   |  |  ├──kitchen.css
+|  |   |  |  ├──kitchen.jsx
+|  |   |  |  ├──kitchen.spec.js
+|  |   |  |  └──renderKitchen.spec.js
+|  |   |  ├──Login
+|  |   |  |  ├──login.css
+|  |   |  |  ├──login.jsx
+|  |   |  |  └──login.spec.js
+|  |   |  ├──Menu
+|  |   |  |  ├──menu.css
+|  |   |  |  ├──menu.jsx
+|  |   |  |  ├──menu.spec.js
+|  |   |  |  └──renderMenu.spec.js
+|  |   |  ├──Orders
+|  |   |  |  ├──orders.css
+|  |   |  |  ├──orders.jsx
+|  |   |  |  └──orders.spec.js
+|  |   |  ├──Products
+|  |   |  |  ├──products.css
+|  |   |  |  ├──products.jsx
+|  |   |  |  ├──products.spec.js
+|  |   |  |  └──renderProducts.spec.js
+|  |   |  └──Users
+|  |   |  |  ├──renderUsers.spec.js
+|  |   |  |  ├──users.css
+|  |   |  |  ├──users.jsx
+|  |   |  |  └──users.spec.js
+|  |   ├──stopwatch
+|  |   |  ├──stopwatch.css
+|  |   |  └──stopwatch.jsx
+|  |   └──waiterButton
+|  |   |  ├──waiterButton.css
+|  |   |  └──waiterButton.jsx
+|  ├── services
+|  |   ├── apiRequest.jsx
+|  |   └── apiRequest.spec.js
+|  ├── utils
+|  |   ├── kitchen.jsx
+|  |   ├── login.jsx
+|  |   ├── menu.jsx
+|  |   ├── orders.jsx
+|  |   ├── products.jsx
+|  |   └── users.jsx
+|  └── assets
+|     └── Images
+|        ├──add.png
+|        ├──admin.png
+|        ├──agua.png
+|        ├──borrar.png
+|        ├──cafe.png
+|        ├──cafeLeche.png
+|        ├──ceboll.png
+|        ├──chef.png
+|        ├──close.png
+|        ├──cocin.png
+|        ├──dobl.png
+|        ├──editar.png
+|        ├──fondo.png
+|        ├──hamb.gif
+|        ├──hide.png
+|        ├──jug.png
+|        ├──listo.png
+|        ├──logo.png
+|        ├──logo2.png
+|        ├──meser.png
+|        ├──out.png
+|        ├──pago.png
+|        ├──paps.png
+|        ├──refr.png
+|        ├──remove.png
+|        ├──sandw.png
+|        ├──sencill.png
+|        ├──show.png
+|        └──waiter.png
+├── mock-assets.js
+├── mock-css.js
+├── package-lock.json
+├── babel.config.cjs
+├── vite.config.js
+├── .eslintrc.cjs
+├── .gitignore
+├── LighthouseReport.pdf
+└──thumb.png
+
+```
+
+## 9. Objetivos de aprendizaje
+
+ ### 9.1 Objetivo general de apredizaje
 
  El objetivo principal es aprender a construir una _interfaz web_ usando React. Tratando de solucionar el problema: **cómo mantener la interfaz
  y el estado sincronizados**. Así que en este proyecto nos familiarizamos con  el concepto de _estado de pantalla_, y cómo cada cambio sobre el estado se va reflejando en la interfaz (por ejemplo, cada vez que agregamos un _producto_
  a un _pedido_, la interfaz actualiza la lista del pedido y el total).
 
-### 3.1 Objetivo particulares de apredizaje
+### 9.2 Objetivo particulares de apredizaje
 
 #### HTML
 
@@ -339,221 +606,3 @@ qué parámetros esperan, qué deben responder, etc.
   * [Intro a testeos usabilidad](https://coda.io/@bootcamp-laboratoria/contenido-ux/test-de-usabilidad-15)
   * [Pruebas con Usuarios 1 — ¿Qué, cuándo y para qué testeamos?](https://eugeniacasabona.medium.com/pruebas-con-usuarios-1-qu%C3%A9-cu%C3%A1ndo-y-para-qu%C3%A9-testeamos-7c3a89b4b5e7)
 </p></details>
-
-## 4. Consideraciones
-
-Este proyecto se hizo en dupla y fue una propuesta para que trabajar con el backend consumiendo esta
-[API](https://github.com/Laboratoria/burger-queen-api-mock).
-
-El tiempo estimado para completar el proyecto fue de 3 a 5 Sprints y se realizó en 4 Sprints.
-
-La lógica del proyecto debía estar implementada completamente en JavaScript
-(ES6+), HTML y CSS y empaquetada de manera automatizada.
-
-La aplicación debía ser un _Single Page App_. Los pedidos debían tomarse desde una
-_tablet_, pero **no se requirió una app nativa**, sino una web app que sea
-**mobile-first**.
-
-La aplicación desplegada tiene 80% o más el las puntuaciones de
-Performance, Progressive Web App, Accessibility y Best Practices de Lighthouse.
-
-La aplicación debe hace uso de `npm-scripts` y cuenta con scripts `start`,
-`test`, `build` y `deploy`, que se encarguen de arrancar, correr las pruebas,
-empaquetar y desplegar la aplicación respectivamente.
-
-Los tests unitarios cubren 90% de _statements_, _functions_,
-_lines_ y _branches_.
-
-Por otro lado, deberás definir la estructura de carpetas y archivos que consideres
-necesaria. Puedes guiarte de las convenciones del _framework_ elegido. Por ende,
-los _tests_ y el _setup_ necesario para ejecutarlos, serán hechos por ti.
-
-## 5. Criterios de aceptación del proyecto
-
-### Definición del producto
-
-El [_Product Owner_](https://www.youtube.com/watch?v=r2hU7MVIzxs&t=202s)
-nos presenta este _backlog_ que es el resultado de su trabajo con el clientx
-hasta hoy.
-
-***
-
-#### [Historia de usuario 1] Mesero/a debe poder ingresar al sistema, si el admin ya le ha asignado credenciales
-
-Yo como meserx quiero poder ingresar al sistema de pedidos.
-
-##### Criterios de aceptación
-
-Lo que debe ocurrir para que se satisfagan las necesidades del usuario.
-
-* Acceder a una pantalla de login.
-* Ingresar email y contraseña.
-* Recibir mensajes de error comprensibles, dependiendo de cuál es el error
-  con la información ingresada.
-* Ingresar al sistema de pedidos si las crendenciales son correctas.
-
-##### Definición de terminado
-
-Lo acordado que debe ocurrir para decir que la historia está terminada.
-
-* Debes haber recibido _code review_ de al menos una compañera.
-* Haces _test_ unitarios y, además, has testeado tu producto manualmente.
-* Hiciste _tests_ de usabilidad e incorporaste el _feedback_ del usuario.
-* Desplegaste tu aplicación y has etiquetado tu versión (git tag).
-
-***
-
-#### [Historia de usuario 2] Mesero/a debe poder tomar pedido de cliente/a
-
-Yo como meserx quiero tomar el pedido de unx clientx para no depender de mi mala
-memoria, para saber cuánto cobrar, y enviarlo a la cocina para evitar errores y
-que se puedan ir preparando en orden.
-
-##### Criterios de aceptación
-
-Lo que debe ocurrir para que se satisfagan las necesidades del usuario
-
-* Anotar nombre de clientx.
-* Agregar productos al pedido.
-* Eliminar productos.
-* Ver resumen y el total de la compra.
-* Enviar pedido a cocina (guardar en alguna base de datos).
-* Se ve y funciona bien en una _tablet_
-
-##### Definición de terminado
-
-Lo acordado que debe ocurrir para decir que la historia está terminada.
-
-* Debes haber recibido _code review_ de al menos una compañera.
-* Haces _test_ unitarios y, además, has testeado tu producto manualmente.
-* Hiciste _tests_ de usabilidad e incorporaste el _feedback_ del usuario.
-* Desplegaste tu aplicación y has etiquetado tu versión (git tag).
-
-***
-
-#### [Historia de usuario 3] Jefe de cocina debe ver los pedidos
-
-Yo como jefx de cocina quiero ver los pedidos de lxs clientxs en orden y
-marcar cuáles están listos para saber qué se debe cocinar y avisar a lxs meserxs
-que un pedido está listo para servirlo a un clientx.
-
-##### Criterios de aceptación
-
-* Ver los pedidos ordenados según se van haciendo.
-* Marcar los pedidos que se han preparado y están listos para servirse.
-* Ver el tiempo que tomó prepara el pedido desde que llegó hasta que se
-  marcó como completado.
-
-##### Definición de terminado
-
-* Debes haber recibido _code review_ de al menos una compañera.
-* Haces _test_ unitarios y, además, has testeado tu producto manualmente.
-* Hiciste _tests_ de usabilidad e incorporaste el _feedback_ del usuario.
-* Desplegaste tu aplicación y has etiquetado tu versión (git tag).
-
-***
-
-#### [Historia de usuario 4] Meserx debe ver pedidos listos para servir
-
-Yo como meserx quiero ver los pedidos que están preparados para entregarlos
-rápidamente a lxs clientxs que las hicieron.
-
-##### Criterios de aceptación
-
-* Ver listado de pedido listos para servir.
-* Marcar pedidos que han sido entregados.
-
-##### Definición de terminado
-
-* Debes haber recibido _code review_ de al menos una compañera.
-* Haces _test_ unitarios y, además, has testeado tu producto manualmente.
-* Hiciste _tests_ de usabilidad e incorporaste el _feedback_ del usuario.
-* Desplegaste tu aplicación y has etiquetado tu versión (git tag).
-* Los datos se deben mantener íntegros, incluso después de que un pedido ha
-  terminado. Todo esto para poder tener estadísticas en el futuro.
-
-***
-
-#### [Historia de usuario 5] Administrador(a) de tienda debe administrar a sus trabajadorxs
-
-Yo como administrador(a) de tienda quiero gestionar a los usuarios de
-la plataforma para mantener actualizado la informacion de mis trabajadorxs.
-
-##### Criterios de aceptación
-
-* Ver listado de trabajadorxs.
-* Agregar trabajadorxs.
-* Eliminar trabajadoxs.
-* Actualizar datos de trabajadorxs.
-
-##### Definición de terminado
-
-* Debes haber recibido _code review_ de al menos una compañera.
-* Haces _test_ unitarios y, además, has testeado tu producto manualmente.
-* Hiciste _tests_ de usabilidad e incorporaste el _feedback_ del usuario.
-* Desplegaste tu aplicación y has etiquetado tu versión (git tag).
-
-***
-
-#### [Historia de usuario 6] Administrador(a) de tienda debe administrar a sus productos
-
-Yo como administrador(a) de tienda quiero gestionar los productos
-para mantener actualizado el menú.
-
-##### Criterios de aceptación
-
-* Ver listado de productos.
-* Agregar productos.
-* Eliminar productos.
-* Actualizar datos de productos.
-
-##### Definición de terminado
-
-* Debes haber recibido _code review_ de al menos una compañera.
-* Haces _test_ unitarios y, además, has testeado tu producto manualmente.
-* Hiciste _tests_ de usabilidad e incorporaste el _feedback_ del usuario.
-* Desplegaste tu aplicación y has etiquetado tu versión (git tag).
-
-***
-
-## 6. Despliegue
-
-Puedes elegir el proveedor (o proveedores) que prefieras junto
-con el mecanismo de despligue y estrategia de alojamiento.
-Recuerda que si mockeaste la API, también tienes que desplegarla.
-Te recomendamos explorar las siguientes opciones:
-
-* [Vercel](https://vercel.com/) es una plataforma de _despliegue_ que
-nos permite desplegar nuestra aplicación web estática (HTML, CSS y
-JavaScript) y también nos permite desplegar aplicaciones web que se
-ejecutan en el servidor (Node.js).
-* [Netlify](https://www.netlify.com/) al igual que Vercel, es una
-plataforma de _despliegue_ que nos permite desplegar nuestra aplicación
-web estática (HTML, CSS y JavaScript) y también nos permite desplegar
-aplicaciones web que se ejecutan en el servidor (Node.js).
-
-## 7. Pistas / Tips
-
-Súmate al canal de Slack
-[#project-bq-api-client](https://claseslaboratoria.slack.com/archives/C04A0GS1WJX)
-para conversar y pedir ayuda del proyecto.
-
-### Frameworks / libraries
-
-* [React](https://react.dev/)
-* [Angular](https://angular.io/)
-
-### Herramientas
-
-* [npm-scripts](https://docs.npmjs.com/misc/scripts)
-* [Babel](https://babeljs.io/)
-* [webpack](https://webpack.js.org/)
-* [json-server](https://www.npmjs.com/package/json-server)
-* [mockoon](https://mockoon.com)
-* [nock](https://github.com/nock/nock)
-
-### PWA
-
-* [Tu primera Progressive Web App - Google developers](https://developers.google.com/web/fundamentals/codelabs/your-first-pwapp/?hl=es)
-* [Progressive Web Apps - codigofacilito.com](https://codigofacilito.com/articulos/progressive-apps)
-* [Usando Service Workers - MDN](https://developer.mozilla.org/es/docs/Web/API/Service_Worker_API/Using_Service_Workers)
