@@ -117,7 +117,7 @@ describe('Componente Users', () => {
         });
     });
 
-    it('debería cambiar el array selectedRoles cuando se hace clic en una casilla', () => {
+    it('Debería cambiar el array selectedRoles cuando se hace clic en una casilla', () => {
         const { getByLabelText, getByText } = render(<Users />);
     
         // Verificar que las casillas de selección de roles existen en la interfaz de usuario

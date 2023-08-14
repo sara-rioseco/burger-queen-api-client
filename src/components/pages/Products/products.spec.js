@@ -115,4 +115,32 @@ describe('Componente Products', () => {
             expect(navigateMock).toHaveBeenCalledWith('/orders');
         });
     });
+
+    it('Debería cambiar el array selectedTypes cuando se hace clic en una casilla', () => {
+        const { getByLabelText, getByText } = render(<Products />);
+    
+        // Verificar que las casillas de selección de roles existen en la interfaz de usuario
+        const casillaDesayuno = getByLabelText('Desayuno');
+        const casillaAlmuerzo = getByLabelText('Almuerzo');
+    
+        // Verificar que los roles seleccionados por defecto están marcados
+        expect(casillaDesayuno.checked).toBe(true);
+        expect(casillaAlmuerzo.checked).toBe(true);
+    
+        // Desmarcar la casilla de Desayuno y Almuerzo, pero mantener Cocinero marcado
+        fireEvent.click(casillaDesayuno);
+        fireEvent.click(casillaAlmuerzo);
+    
+        // Verificar que los roles se desmarcaron correctamente
+        expect(casillaDesayuno.checked).toBe(false);
+        expect(casillaAlmuerzo.checked).toBe(false);
+    
+        // Volver a marcar la casilla de Desayunoistrador y Almuerzo
+        fireEvent.click(casillaDesayuno);
+        fireEvent.click(casillaAlmuerzo);
+    
+        // Verificar que los roles se marcaron nuevamente correctamente
+        expect(casillaDesayuno.checked).toBe(true);
+        expect(casillaAlmuerzo.checked).toBe(true);
+      });
 });
