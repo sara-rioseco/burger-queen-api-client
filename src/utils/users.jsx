@@ -174,7 +174,7 @@ export function UsersLogic() {
     }
 
     ApiRequest({
-      url: `https://burger-queen-api-mock-u59i-dev.fl0.io/${editingUserData.id}`,
+      url: `https://burger-queen-api-mock-u59i-dev.fl0.io/users/${editingUserData.id}`,
       method: 'patch',
       body: updateUsers,
     })
@@ -218,7 +218,7 @@ export function UsersLogic() {
     const body = userDelete;
 
     ApiRequest({
-      url: `https://burger-queen-api-mock-u59i-dev.fl0.io/${userId}`,
+      url: `https://burger-queen-api-mock-u59i-dev.fl0.io/users/${userId}`,
       method: 'delete',
       body: body,
     })
