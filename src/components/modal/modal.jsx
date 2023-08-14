@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'; // valida tipos de propiedades y restricciones del componente
 // CSS
-import './Modal.css';
+import './modal.css';
 
 export default function Modal({ open, onClose, children }) {
   if (!open) return null; // No renderiza nada si no está abierta

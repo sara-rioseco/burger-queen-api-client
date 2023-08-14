@@ -26,3 +26,4 @@ dist-ssr
 # Agregar carpetas manualmente
 coverage/
 node_modules/
+.vercel
