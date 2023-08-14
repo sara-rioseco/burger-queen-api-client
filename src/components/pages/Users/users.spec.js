@@ -148,4 +148,22 @@ describe('Componente Users', () => {
         expect(casillaMesero.checked).toBe(true);
         expect(casillaCocinero.checked).toBe(true);
       });
+
+      it('Redirige a la página de inicio de sesión cuando el token JWT ha expirado', async () => {
+        const navigateMock = jest.fn();
+        useNavigateMock.mockImplementation(() => navigateMock);
+    
+        const mock = new MockAdapter(axios);
+        mock.onGet('https://burger-queen-api-mock-u59i-dev.fl0.io/users').reply(401, { data: 'jwt expired' });
+    
+        render(
+          <MemoryRouter>
+            <Users />
+          </MemoryRouter>
+        );
+    
+        await waitFor(() => {
+          expect(navigateMock).toHaveBeenCalledWith('/login');
+        });
+      });
 });
