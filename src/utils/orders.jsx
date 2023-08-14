@@ -41,7 +41,7 @@ export function OrdersLogic() {
 
     // OBTENER DATOS DE PEDIDOS
     ApiRequest({
-      url: 'http://localhost:8080/orders',
+      url: 'https://burger-queen-api-mock-u59i-dev.fl0.io/orders',
       method: 'get',
     })
       .then((response) => {
@@ -62,7 +62,7 @@ export function OrdersLogic() {
 
     // OBTENER DATOS DE PRODUCTOS
     ApiRequest({
-      url: 'http://localhost:8080/products',
+      url: 'https://burger-queen-api-mock-u59i-dev.fl0.io/products',
       method: 'get',
     })
       .then((response) => {
@@ -223,7 +223,7 @@ export function OrdersLogic() {
     }
 
     ApiRequest({
-      url: `http://localhost:8080/orders/${orderId}`,
+      url: `hhttps://burger-queen-api-mock-u59i-dev.fl0.io/orders/${orderId}`,
       method: 'patch',
       body: body,
     })
@@ -263,7 +263,7 @@ export function OrdersLogic() {
     const body = orderDelete;
 
     ApiRequest({
-      url: `http://localhost:8080/orders/${orderId}`,
+      url: `https://burger-queen-api-mock-u59i-dev.fl0.io/orders/${orderId}`,
       method: 'delete',
       body: body,
     })
@@ -291,7 +291,7 @@ export function OrdersLogic() {
     };
 
     ApiRequest({
-      url: `http://localhost:8080/orders/${orderId}`,
+      url: `https://burger-queen-api-mock-u59i-dev.fl0.io/orders/${orderId}`,
       method: 'patch',
       body: body,
     })
