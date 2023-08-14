@@ -116,4 +116,36 @@ describe('Componente Users', () => {
             expect(navigateMock).toHaveBeenCalledWith('/orders');
         });
     });
+
+    it('debería cambiar el array selectedRoles cuando se hace clic en una casilla', () => {
+        const { getByLabelText, getByText } = render(<Users />);
+    
+        // Verificar que las casillas de selección de roles existen en la interfaz de usuario
+        const casillaAdmin = getByLabelText('Administrador');
+        const casillaMesero = getByLabelText('Mesero');
+        const casillaCocinero = getByLabelText('Cocinero');
+    
+        // Verificar que los roles seleccionados por defecto están marcados
+        expect(casillaAdmin.checked).toBe(true);
+        expect(casillaMesero.checked).toBe(true);
+        expect(casillaCocinero.checked).toBe(true);
+    
+        // Desmarcar la casilla de Administrador y Mesero, pero mantener Cocinero marcado
+        fireEvent.click(casillaAdmin);
+        fireEvent.click(casillaMesero);
+    
+        // Verificar que los roles se desmarcaron correctamente
+        expect(casillaAdmin.checked).toBe(false);
+        expect(casillaMesero.checked).toBe(false);
+        expect(casillaCocinero.checked).toBe(true);
+    
+        // Volver a marcar la casilla de Administrador y Mesero
+        fireEvent.click(casillaAdmin);
+        fireEvent.click(casillaMesero);
+    
+        // Verificar que los roles se marcaron nuevamente correctamente
+        expect(casillaAdmin.checked).toBe(true);
+        expect(casillaMesero.checked).toBe(true);
+        expect(casillaCocinero.checked).toBe(true);
+      });
 });

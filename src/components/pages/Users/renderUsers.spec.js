@@ -130,5 +130,62 @@ describe('Componente Users', () => {
         expect(screen.getByRole('row', { name: /Cocinero/i })).toBeInTheDocument();
     })
 
+    it('Debería cambiar el array selectedRoles cuando se hace clic en una casilla', () => {
+        const { handleRoleCheckboxChange, selectedRoles } = UsersLogic();
+    
+        const { getByLabelText } = render(
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                value="admin"
+                checked={selectedRoles.includes('admin')}
+                onChange={() => handleRoleCheckboxChange('admin')}
+              />
+              Administrador
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                value="waiter"
+                checked={selectedRoles.includes('waiter')}
+                onChange={() => handleRoleCheckboxChange('waiter')}
+              />
+              Mesero
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                value="chef"
+                checked={selectedRoles.includes('chef')}
+                onChange={() => handleRoleCheckboxChange('chef')}
+              />
+              Cocinero
+            </label>
+          </div>
+        );
+    
+        const casillaAdmin = getByLabelText('Administrador');
+        const casillaMesero = getByLabelText('Mesero');
+        const casillaCocinero = getByLabelText('Cocinero');
+    
+        fireEvent.click(casillaAdmin);
+        fireEvent.click(casillaMesero);
+        fireEvent.click(casillaCocinero);
+    
+        expect(selectedRoles).toEqual(['admin', 'waiter', 'chef']); // Asegura que el estado de selectedRoles se actualice
+      });
+
+      it('debería retornar la etiqueta de puesto correcta', () => {
+        const { getRoleLabel } = UsersLogic();
+    
+        const etiquetaAdmin = getRoleLabel('admin');
+        const etiquetaMesero = getRoleLabel('waiter');
+        const etiquetaCocinero = getRoleLabel('chef');
+    
+        expect(etiquetaAdmin).toBe('Administrador');
+        expect(etiquetaMesero).toBe('Mesero');
+        expect(etiquetaCocinero).toBe('Cocinero');
+      });
 });
 
