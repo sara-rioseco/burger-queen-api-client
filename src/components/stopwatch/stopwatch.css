@@ -1,0 +1,25 @@
+@import url('https://fonts.cdnfonts.com/css/asap-condensed');
+
+.stopwatch-container {
+    background-color: rgba(0, 0, 0, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(255, 255, 255) !important;
+    position: relative;
+    width: 100%;
+    height: fit-content;
+}
+
+.stopwatch {
+    background-color: #00000000;
+    color: rgb(255, 255, 255) !important;
+    position: relative;
+    width: max-content;
+    max-height: 90%;
+    font-family: 'Asap Condensed', sans-serif;
+    font-weight: bold;
+}
+span .stopwatch-time {
+    color: rgb(255, 255, 255) !important;
+}

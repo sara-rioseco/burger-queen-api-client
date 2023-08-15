@@ -8,6 +8,7 @@ export function useMenuLogic() {
 
   const token = localStorage.getItem('accessToken');
   const userId = localStorage.getItem('userId');
+  const role = localStorage.getItem('role');
 
   const [showMenu, setShowMenu] = useState(true);
   const [productsData, setProductsData] = useState([]);
@@ -29,8 +30,13 @@ export function useMenuLogic() {
       return;
     }
 
+    if (role == 'chef') {
+      navigate('/login');
+      return;
+    }
+
     ApiRequest({
-      url: 'http://localhost:8080/products',
+      url: 'https://burger-queen-api-mock-u59i-dev.fl0.io/products',
       method: 'get',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -49,7 +55,7 @@ export function useMenuLogic() {
         error && navigate('/error-page');
       }
     });
-  }, [navigate, token, userId]);
+  }, [navigate, token, userId, role]);
   
   const breakfastProducts = productsData.filter(product => product.type === 'Desayuno');
   const lunchProducts = productsData.filter(product => product.type === 'Almuerzo');
@@ -252,20 +258,20 @@ export function useMenuLogic() {
     const client = response.client;
     const table = response.table;
     setClientName(client);
-      setTableNumber(table);
-      setOrderProducts(cartData);
-      const updatedOrderProducts = [...cartData];
-      const updatedClient = client;
-      const updatedTableNumber = table;
-      const body = await getOrderData(updatedClient, updatedTableNumber, updatedOrderProducts);
-      console.log(body)
-      ApiRequest({
-        url: 'http://localhost:8080/orders',
-        method: 'post',
-        body: body,
-      })
-        .then(() => {
-          console.log ('Orden creada y en preparación')
+    setTableNumber(table);
+    setOrderProducts(cartData);
+    const updatedOrderProducts = [...cartData];
+    const updatedClient = client;
+    const updatedTableNumber = table;
+    const body = await getOrderData(updatedClient, updatedTableNumber, updatedOrderProducts);
+    console.log(body)
+    ApiRequest({
+      url: 'https://burger-queen-api-mock-u59i-dev.fl0.io/orders',
+      method: 'post',
+      body: body,
+    })
+    .then(() => {
+      console.log ('Orden creada y en preparación')
           setCartData([]);
           setClientName('');
           setTableNumber('default');
@@ -285,43 +291,24 @@ export function useMenuLogic() {
   };
   
   return {
-    navigate,
-    token,
-    userId,
     showMenu,
-    productsData,
     breakfastProducts,
     lunchProducts,
     cartData,
-    setCartData,
     getTotalPrice,
     modalDelete,
-    setModalDelete,
-    clientName,
-    tableNumber,
-    orderProducts,
     modalProductId,
-    setModalProductId,
     modalClientName,
-    handleOpenModalClientName,
     handleCloseModalClientName,
     modalTableNumber,
-    handleOpenModalTableNumber,
     handleCloseModalTableNumber,
     modalOrderProducts,
-    handleOpenModalOrderProducts,
     handleCloseModalOrderProducts,
     modalOrderConfirmation,
     handleOpenModalOrderConfirmation,
     handleCloseModalOrderConfirmation,
     modalOrderSuccess,
-    handleOpenModalOrderSuccess,
     handleCloseModalOrderSuccess,
-    setModalClientName,
-    setModalTableNumber,
-    setModalOrderProducts,
-    setModalOrderConfirmation,
-    setModalOrderSuccess,
     handleOrdersClick,
     handleBreakfastClick,
     handleLunchClick,
@@ -332,6 +319,9 @@ export function useMenuLogic() {
     handleCloseModal,
     handleDelete,
     handleCreateOrder,
-    validateInputs
+    validateInputs,
+    clientName,
+    tableNumber,
+    orderProducts
   }
 }

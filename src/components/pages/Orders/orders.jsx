@@ -5,7 +5,7 @@ import Button from '../../button/button.jsx';
 import LogoutButton from '../../logoutButton/logoutButton.jsx';
 import Modal from '../../modal/modal.jsx';
 import Input from '../../input/input.jsx'
-import { useOrdersLogic } from '../../../utils/orders';
+import { OrdersLogic } from '../../../utils/orders';
 //ASSETS
 import Edit from '../../../assets/Images/editar.png'
 import Delete from '../../../assets/Images/borrar.png'
@@ -40,8 +40,10 @@ export default function Orders() {
     productsData,
     editModalProducts,
     handleStatusChange,
-    filteredOrdersData
-  } = useOrdersLogic();
+    filteredOrdersData,
+    selectedStatus,
+    errorLabel,
+  } = OrdersLogic();
 
   // RENDERIZADO
   return (
@@ -60,6 +62,7 @@ export default function Orders() {
                   type='checkbox'
                   value='Entregado'
                   onChange={handleStatusChange}
+                  checked={selectedStatus.includes('Entregado')}
                 />
                 Entregado
               </label>
@@ -68,6 +71,7 @@ export default function Orders() {
                   type='checkbox'
                   value='Listo en barra'
                   onChange={handleStatusChange}
+                  checked={selectedStatus.includes('Listo en barra')}
                 />
                 Listo en barra
               </label>
@@ -76,6 +80,7 @@ export default function Orders() {
                   type='checkbox'
                   value='En preparación'
                   onChange={handleStatusChange}
+                  checked={selectedStatus.includes('En preparación')}
                 />
                 En preparación
               </label>
@@ -112,7 +117,7 @@ export default function Orders() {
                     {order.status}
                   </td>
                   <td>
-                    ${getTotalOrder(order.products)}
+                    ${getTotalOrder(order.products)},00
                   </td>
                   <td className='buttonsTable'>
                     <img
@@ -235,7 +240,7 @@ export default function Orders() {
                               />
                               <p className='productPriceModal'>
                                 <label>{product.name}</label>
-                                <label>${product.price}</label>
+                                <label>${product.price},00</label>
                               </p>
                             </div>
                           ))}
@@ -243,8 +248,9 @@ export default function Orders() {
                         <div className='lineModal'></div>
                         <div className='totalOrderModal'>
                           <label className='bebas'> TOTAL :</label>
-                          <label>${getUpdatedTotalOrder()}</label>
+                          <label>${getUpdatedTotalOrder()},00</label>
                         </div>
+                        <label className="labelErrorAdmin">{errorLabel}</label>
                       </div>
                       <div>
                         <Button

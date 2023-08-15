@@ -32,28 +32,34 @@ export function LoginLogic() {
   // API REQUEST LOGIN
   const handleLoginClick = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/login', {
+      const response = await axios.post('https://burger-queen-api-mock-u59i-dev.fl0.io/login', {
         email: formData.name,
         password: formData.password,
       });
 
       // Guardar el accessToken en el localStorage
-      localStorage.setItem('accessToken', response.data.accessToken);
-      localStorage.setItem('userId', response.data.user.id);
+      if (response.data) {
+        localStorage.setItem('accessToken', response.data.accessToken);
+        localStorage.setItem('userId', response.data.user.id);
+        localStorage.setItem('role', response.data.user.role);
+      }
 
       response.data.user.role === 'admin' && navigate('/users');
       response.data.user.role === 'waiter' && navigate('/orders');
       response.data.user.role === 'chef' && navigate('/kitchen');
     } catch (error) {
-      if (error.response.data === 'Email and password are required') {
-        setErrorLabel('Completa los campos requeridos');
-      } else if (error.response.data === 'Cannot find user') {
-        setErrorLabel('Usuario no registrado');
-      } else if (error.response.data === 'Incorrect password') {
-        setErrorLabel('Credenciales  incorrectas');
+      if (error.response) {
+        if (error.response.data === 'Email and password are required') {
+          setErrorLabel('Completa los campos requeridos');
+        } else if (error.response.data === 'Cannot find user') {
+          setErrorLabel('Usuario no registrado');
+        } else if (error.response.data === 'Incorrect password') {
+          setErrorLabel('Credenciales  incorrectas');
+        } else {
+          navigate('/error-page');
+        }
       } else {
-        console.error(error);
-        error && navigate('/error-page');
+        navigate('/error-page');
       }
     }
   };

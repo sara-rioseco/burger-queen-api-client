@@ -7,20 +7,22 @@ import { useNavigate } from 'react-router-dom'; // navegar entre router
 import ApiRequest from '../services/apiRequest.jsx';
 
 // LÓGICA DE LA SECCIÓN DE PEDIDOS
-export function useOrdersLogic() {
+export function OrdersLogic() {
   const navigate = useNavigate();
 
   const token = localStorage.getItem('accessToken');
   const userId = localStorage.getItem('userId');
+  const role = localStorage.getItem('role');
 
   const [ordersData, setOrdersData] = useState([]);
-  const [selectedStatus, setSelectedStatus] = useState([]);
+  const [selectedStatus, setSelectedStatus] = useState(['Entregado', 'Listo en barra', 'En preparación']);
   const [modalOpenDelete, setModalOpenDelete] = useState(false);
   const [modalOpenEdit, setModalOpenEdit] = useState(false);
   const [modalOrderId, setModalOrderId] = useState(null);
   const [editModalTable, setEditModalTable] = useState('');
   const [editModalClient, setEditModalClient] = useState('');
   const [editModalStatus, setEditModalStatus] = useState(null);
+  const [errorLabel, setErrorLabel] = useState('');
   const [editModalProducts, setEditModalProducts] = useState([]);
   const [productsData, setProductsData] = useState([]);
 
@@ -31,9 +33,15 @@ export function useOrdersLogic() {
       return;
     }
 
+    // Redirigir al usuario al inicio de sesión si no tiene el role autorizado
+    if (role === 'chef') {
+      navigate('/login');
+      return;
+    }
+
     // OBTENER DATOS DE PEDIDOS
     ApiRequest({
-      url: 'http://localhost:8080/orders',
+      url: 'https://burger-queen-api-mock-u59i-dev.fl0.io/orders',
       method: 'get',
     })
       .then((response) => {
@@ -46,17 +54,15 @@ export function useOrdersLogic() {
       .catch((error) => {
         console.error(error);
         if (error.response.data === 'jwt expired' && error.response.status === 401) {
-          console.error(error);
           navigate('/login');
         } else {
-          console.error(error);
-          error && navigate('/error-page');
+          navigate('/error-page');
         }
       });
 
     // OBTENER DATOS DE PRODUCTOS
     ApiRequest({
-      url: 'http://localhost:8080/products',
+      url: 'https://burger-queen-api-mock-u59i-dev.fl0.io/products',
       method: 'get',
     })
       .then((response) => {
@@ -72,7 +78,7 @@ export function useOrdersLogic() {
           error && navigate('/error-page');
         }
       });
-  }, [navigate, token, userId]);
+  }, [navigate, token, userId, role]);
 
   // LLEVA AL MENU
   const handleMenuClick = () => {
@@ -92,7 +98,7 @@ export function useOrdersLogic() {
   };
 
   // FILTRAR ORDENES POR ESTATUS
-  const filteredOrdersData = selectedStatus.length === 0 ? ordersData : ordersData.filter((order) =>selectedStatus.includes(order.status)
+  const filteredOrdersData = selectedStatus.length === 0 ? ordersData : ordersData.filter((order) => selectedStatus.includes(order.status)
   );
 
 
@@ -207,8 +213,17 @@ export function useOrdersLogic() {
     const orderId = modalOrderId;
     const body = getUpdatedOrder();
 
+    // Si algún campo está vacío imprime etiqueta de error
+    const hasEmptyFields = Object.values(body).some(value => value === '');
+    if (hasEmptyFields) {
+      setErrorLabel('Completa todos los campos');
+      return;
+    } else {
+      setErrorLabel('')
+    }
+
     ApiRequest({
-      url: `http://localhost:8080/orders/${orderId}`,
+      url: `https://burger-queen-api-mock-u59i-dev.fl0.io/orders/${orderId}`,
       method: 'patch',
       body: body,
     })
@@ -228,14 +243,11 @@ export function useOrdersLogic() {
       .catch((error) => {
         console.error(error);
         if (error.response.data === 'jwt expired' && error.response.status === 401) {
-          console.error(error);
           navigate('/login');
         } else {
-          console.error(error);
           error && navigate('/error-page');
         }
       });
-
   };
 
   // ABRE MODAL PARA CONFIRMAR BORRAR UNA ORDEN AL CLICKEAR BOTON DE LA TABLA
@@ -251,7 +263,7 @@ export function useOrdersLogic() {
     const body = orderDelete;
 
     ApiRequest({
-      url: `http://localhost:8080/orders/${orderId}`,
+      url: `https://burger-queen-api-mock-u59i-dev.fl0.io/orders/${orderId}`,
       method: 'delete',
       body: body,
     })
@@ -279,7 +291,7 @@ export function useOrdersLogic() {
     };
 
     ApiRequest({
-      url: `http://localhost:8080/orders/${orderId}`,
+      url: `https://burger-queen-api-mock-u59i-dev.fl0.io/orders/${orderId}`,
       method: 'patch',
       body: body,
     })
@@ -328,6 +340,7 @@ export function useOrdersLogic() {
     modalOrderId,
     modalOpenEdit,
     editModalTable,
+    errorLabel,
     setEditModalTable,
     editModalClient,
     setEditModalClient,

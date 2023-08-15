@@ -1,14 +1,87 @@
- .home{
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+@import url('https://fonts.cdnfonts.com/css/bebas-neue');
+@import url('https://fonts.cdnfonts.com/css/asap-condensed');
+
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
     
-    .logo {
-      width: 25em;
-      height: 25em;
-      margin: 20px;
-    }
-    .logo:hover {
-      filter: drop-shadow(0 0 1em #ffffffaa);
-    }
+  .logo {
+    width: 25em;
+    height: 25em;
+    margin: 20px;
+  }
+  .logo:hover {
+    filter: drop-shadow(0 0 1em #ffffffaa);
+  }
+
+  div .kitchen-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: inherit;
+    width: 56em;
+    margin: 0 auto 0 -32px;
+  }
+
+  div .kitchen-header {
+    color: white;
+    font-family: 'Bebas Neue';
+    font-size: 46px;
+    font-weight: bold;
+    margin: 0;
+  }
+
+  div .kitchen-body {
+    display: flex;
+    flex-flow: row nowrap;
+    overflow-x: scroll;
+    height: 300px;
+    width: 100%;
+    gap: 1em;
+  }
+
+  div .order-container {
+    border-style: solid;
+    border-radius: 8px;
+    color: white;
+    font-family: 'Asap condensed';
+    font-size: 24px;
+    height: 240px;
+    width: 260px;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 0.5;
+    background: rgb(0,0,0)
+  }
+
+  div .order-header {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 1.2em;
+  }
+
+  div .order-header .order-title, .order-time{
+    font-size: 26px !important;
+    width: fit-content;
+    margin: 0.2em;
+  }
+
+  div .order-body {
+    width: 250px;
+    height: 40%;
+    align-self: center;
+    overflow-y: scroll;
+  }
+  
+  div .product-content {
+    font-size: 16px !important;
+    font-weight: normal;
+  }
+
+  button.buttonOrder {
+    font-size: 20px !important;
+  }

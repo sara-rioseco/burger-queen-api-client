@@ -5,7 +5,7 @@ import './button.css';
 export default function Button({ label, onClick, classButton }) {
   // RENDERIZADO
   return (
-    <button className={`buttonDefault ${classButton}`} onClick={onClick}>
+    <button className={`buttonDefault ${classButton}`} onClick={onClick} alt={`${label}`}>
       {label}
     </button>
   );
