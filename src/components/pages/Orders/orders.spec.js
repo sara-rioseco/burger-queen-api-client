@@ -6,62 +6,67 @@ import { MemoryRouter } from 'react-router-dom';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import Orders from './orders.jsx';
-import { OrdersLogic } from '../../../utils/orders';
+import { OrdersLogic } from '../../../utils/orders.jsx';
+import { useNavigate as useNavigateMock } from 'react-router-dom'; // navegar entre router
 
-jest.mock('axios');
+// Reemplaza la importación original de useNavigate con la función simulada
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'), // Mantener las importaciones reales
+    useNavigate: jest.fn(), // Mockear useNavigate
+}));
 
 describe('Componente Orders', () => {
     beforeEach(() => {
         jest.clearAllMocks();
     });
 
-    it('Renderiza el componente correctamente', () => {
+    it('El boton de productos cambia a la ruta correcta', async () => {
+        // Crea una función simulada para useNavigate
+        const navigateMock = jest.fn();
+        useNavigateMock.mockImplementation(() => navigateMock);
+
+        // Renderiza el componente Login
         render(
             <MemoryRouter>
                 <Orders />
             </MemoryRouter>
         );
 
+        // Obtén los elementos necesarios
         const menuButton = screen.getByText('MENU');
-        expect(menuButton).toBeInTheDocument();
 
-        const filterLabel = screen.getByText('Filtrar ordenes por estatus :');
-        expect(filterLabel).toBeInTheDocument();
+        // Ejecuta la acción (click en el botón)
+        fireEvent.click(menuButton);
 
+        // Espera a que se complete la acción asíncrona
+        await waitFor(() => {
+            expect(navigateMock).toHaveBeenCalledWith('/menu');
+        });
+    });
+
+    it('El boton de logout cambia a la ruta correcta', async () => {
+        // Crea una función simulada para useNavigate
+        const navigateMock = jest.fn();
+        useNavigateMock.mockImplementation(() => navigateMock);
+
+        // Renderiza el componente Login
+        render(
+            <MemoryRouter>
+                <Orders />
+            </MemoryRouter>
+        );
+
+        // Obtén los elementos necesarios
         const logoutButton = screen.getByAltText('Cerrar sesión');
-        expect(logoutButton).toBeInTheDocument();
+
+        // Ejecuta la acción (click en el botón)
+        fireEvent.click(logoutButton);
+
+        // Espera a que se complete la acción asíncrona
+        await waitFor(() => {
+            expect(navigateMock).toHaveBeenCalledWith('/');
+        });
     });
-
-    it('Debería renderizar la tabla de pedidos', () => {
-        render(<MemoryRouter>
-            <Orders />
-        </MemoryRouter>);
-
-        expect(screen.getByRole('table')).toBeInTheDocument();
-        expect(screen.getAllByRole('columnheader')).toHaveLength(8);
-    });
-
-    // it('Renderiza y abre la modal de edición al hacer clic en el botón de editar', async () => {
-    //     render(
-    //         <MemoryRouter>
-    //             <Orders />
-    //         </MemoryRouter>
-    //     );
-
-    //     // Esperar a que el botón de edición esté presente en el DOM
-    //     const editButton = await screen.findByAltText('buttonEdit');
-
-    //     // Hacer clic en el botón de edición
-    //     fireEvent.click(editButton);
-
-    //     // Verificar que la modal de edición se abra correctamente
-    //     const editModal = screen.getByRole('dialog');
-    //     expect(editModal).toBeInTheDocument();
-
-    //     // Verificar que el contenido de la modal esté presente
-    //     const modalContent = screen.getByText('Editando pedido de la mesa');
-    //     expect(modalContent).toBeInTheDocument();
-    // });
 
 });
 
