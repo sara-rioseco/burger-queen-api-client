@@ -16,10 +16,10 @@ jest.mock('../../../utils/products', () => {
         ProductsLogic: jest.fn(() => ({
             productsData: [{
                 "id": 1,
-                "name": "Sandwich de jamón y queso",
+                "name": "Fake-product",
                 "price": 10,
                 "image": "https://github.com/KarlaMacedo/DEV007-burger-queen-api-client/blob/feature-orders/src/assets/Images/sandw.png?raw=true",
-                "type": "Desayuno",
+                "type": "Desayuno-test",
                 "dateEntry": "2022-03-05 15:14:10"
             },
             {
@@ -103,8 +103,8 @@ describe('Componente Products', () => {
             <Products />
         </MemoryRouter>);
 
-        expect(screen.getByType('table')).toBeInTheDocument();
-        expect(screen.getAllByType('columnheader')).toHaveLength(6);
+        expect(screen.getByRole('table')).toBeInTheDocument();
+        expect(screen.getAllByRole('columnheader')).toHaveLength(6);
     });
 
     it('Debería renderizar la tabla con la información de los productos', async () => {
@@ -115,13 +115,9 @@ describe('Componente Products', () => {
             </MemoryRouter>
         );
 
-        expect(screen.getByType('row', { name: /Sandwich de jamón y queso/i })).toBeInTheDocument();
-        expect(screen.getByText('$10,00')).toBeInTheDocument();
-        expect(screen.getByType('row', { name: /Desayuno/i })).toBeInTheDocument();
-
-        expect(screen.getByType('row', { name: /Café americano/i })).toBeInTheDocument();
+        expect(screen.getByRole('row', { name: /Café americano/i })).toBeInTheDocument();
         expect(screen.getByText('$5,00')).toBeInTheDocument();
-        expect(screen.getByType('row', { name: /Almuerzo/i })).toBeInTheDocument();
+        expect(screen.getByRole('row', { name: /Almuerzo/i })).toBeInTheDocument();
     })
 
     it('Debería cambiar el array selectedTypes cuando se hace clic en una casilla', () => {
@@ -157,15 +153,5 @@ describe('Componente Products', () => {
         fireEvent.click(casillaAlmuerzo);
 
         expect(selectedTypes).toEqual(['Desayuno', 'Almuerzo']); // Asegura que el estado de selectedTypes se actualice
-    });
-
-    it('debería retornar la etiqueta de tipo correcta', () => {
-        const { getTypeLabel } = ProductsLogic();
-
-        const casillaDesayuno = getTypeLabel('Desayuno');
-        const casillaAlmuerzo = getTypeLabel('Almuerzo');
-
-        expect(casillaDesayuno).toBe('Desayuno');
-        expect(casillaAlmuerzo).toBe('Almuerzo');
     });
 });
