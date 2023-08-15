@@ -18,7 +18,7 @@
 
 Burger Queen API Client es una aplicación desarrollada con React, que cuenta con una interfaz para un restaurante de hamburgesas, a través de la cual los usuarios pueden tomar pedidos (mesero), enviarlos al área de preparación (chef) y hacer el manejo de usuarios y productos (administrador), todo esto conectado a una API.
 
-![logo-burger-queen](https://github.com/KarlaMacedo/Burger-queen-api-client/blob/main/src/assets/Images/logo.png)
+![logo-burger-queen](https://github.com/KarlaMacedo/Burger-queen-api-client/blob/main/src/assets/Images/logo.png?raw=true)
 
 ## 2. Requerimientos del cliente
 
@@ -87,13 +87,13 @@ Como herramienta de organización utilizamos [Trello](https://trello.com/b/B4DmO
 en donde hicimos toda la planeación de trabajo de 
 cada sprint que duró este proyecto (4): 
 
-![Trello](https://github.com/KarlaMacedo/Burger-queen-api-client/blob/main/src/assets/Images/trello.png)
+![Trello](https://github.com/KarlaMacedo/Burger-queen-api-client/blob/main/src/assets/Images/trello.png?raw=true)
 
 ## 4. Diseño de la interfaz de usuario
 
 El prototipo fue elaborado en [Figma](https://www.figma.com/proto/chmlKFe3zPN5ePyxAjphrz/Burger?type=design&node-id=11-1062&t=8T7WlFU9GgIWXEpS-1&scaling=scale-down&page-id=0%3A1&starting-point-node-id=11%3A1062&show-proto-sidebar=1&mode=design).
 
-![Prototipo baja fidelidad](https://github.com/KarlaMacedo/Burger-queen-api-client/blob/main/src/assets/Images/prototipo.png)
+![Prototipo baja fidelidad](https://github.com/KarlaMacedo/Burger-queen-api-client/blob/main/src/assets/Images/prototipo.png?raw=true)
 
 ## 5. Historias de Usuario
 
@@ -195,7 +195,7 @@ https://burger-queen-api-mock-u59i-dev.fl0.io/
 
 Para poder ingresar a la aplicación se puede utilizar los siguients usuarios:
 
-![Trello](https://github.com/KarlaMacedo/Burger-queen-api-client/blob/main/src/assets/Images/usuarios.png)
+![Trello](https://github.com/KarlaMacedo/Burger-queen-api-client/blob/main/src/assets/Images/usuarios.png?raw=true)
 
 ## 8. Consideraciones
 
