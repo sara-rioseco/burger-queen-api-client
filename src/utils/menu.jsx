@@ -320,6 +320,10 @@ export function useMenuLogic() {
     handleDelete,
     handleCreateOrder,
     validateInputs,
+    getDateAndTime,
+    getClientAndTable,
+    getOrderData,
+    checkProductExists,
     clientName,
     tableNumber,
     orderProducts
