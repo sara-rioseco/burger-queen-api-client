@@ -50,7 +50,7 @@ export function useKitchenLogic() {
   }, [navigate, token, userId, role]);
 
   const pendingOrders = ordersData.filter(order => order.status === 'En preparación');
-  const preparedOrders = ordersData.filter(order => order.status === 'Listo en barra');
+
 
 // Abrir modal para confirmar cambio de estado de la orden 
 
@@ -91,6 +91,8 @@ const updateOrderStatus = (orderId) => {
     });
 };
 
+const preparedOrders = ordersData.filter(order => order.status === 'Listo en barra');
+
 const handleOpenModalUpdateOrder = (id) => {
   setModalUpdateOrder(true);
   setModalUpdateOrderId(id);
@@ -100,7 +102,6 @@ const handleCloseModalUpdateOrder = () => {
   setModalUpdateOrder(false);
   setModalUpdateOrderId(null)
 };
-
 
 // Calcular el tiempo desde creación de la orden
   const calculateTimePassed = (orderTime) => {
