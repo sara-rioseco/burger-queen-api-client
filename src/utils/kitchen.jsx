@@ -47,10 +47,9 @@ export function useKitchenLogic() {
         error && navigate('/error-page');
       }
     });
-  }, [navigate, token, userId, role]);
+  }, [navigate, token, userId, role, ordersData]);
 
   const pendingOrders = ordersData.filter(order => order.status === 'En preparación');
-
 
 // Abrir modal para confirmar cambio de estado de la orden 
 
