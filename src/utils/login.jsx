@@ -32,7 +32,7 @@ export function LoginLogic() {
   // API REQUEST LOGIN
   const handleLoginClick = async () => {
     try {
-      const response = await axios.post('https://localhost:8080/login', {
+      const response = await axios.post('https://localhost:8080/auth', {
         email: formData.name,
         password: formData.password,
       });
