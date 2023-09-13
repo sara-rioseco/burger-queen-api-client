@@ -36,7 +36,7 @@ export function useMenuLogic() {
     }
 
     ApiRequest({
-      url: 'https://burger-queen-api-mock-u59i-dev.fl0.io/products',
+      url: 'https://localhost:8080/products',
       method: 'get',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -266,7 +266,7 @@ export function useMenuLogic() {
     const body = await getOrderData(updatedClient, updatedTableNumber, updatedOrderProducts);
     console.log(body)
     ApiRequest({
-      url: 'https://burger-queen-api-mock-u59i-dev.fl0.io/orders',
+      url: 'https://localhost:8080/orders',
       method: 'post',
       body: body,
     })

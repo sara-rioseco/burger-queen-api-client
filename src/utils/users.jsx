@@ -40,7 +40,7 @@ export function UsersLogic() {
 
     // OBTENER DATOS DE USARIOS
     ApiRequest({
-      url: 'https://burger-queen-api-mock-u59i-dev.fl0.io/users',
+      url: 'https://localhost:8080/users',
       method: 'get',
     })
       .then((response) => {
@@ -119,7 +119,7 @@ export function UsersLogic() {
     }
 
     ApiRequest({
-      url: `https://burger-queen-api-mock-u59i-dev.fl0.io/users`,
+      url: `https://localhost:8080/users`,
       method: 'post',
       body: newUser,
     })
@@ -175,7 +175,7 @@ export function UsersLogic() {
     }
 
     ApiRequest({
-      url: `https://burger-queen-api-mock-u59i-dev.fl0.io/users/${editingUserData.id}`,
+      url: `https://localhost:8080/users/${editingUserData.id}`,
       method: 'patch',
       body: updateUsers,
     })
@@ -219,7 +219,7 @@ export function UsersLogic() {
     const body = userDelete;
 
     ApiRequest({
-      url: `https://burger-queen-api-mock-u59i-dev.fl0.io/users/${userId}`,
+      url: `https://localhost:8080/users/${userId}`,
       method: 'delete',
       body: body,
     })

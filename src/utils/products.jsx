@@ -40,7 +40,7 @@ export function ProductsLogic() {
 
     // OBTENER DATOS DE PRODUCTOS
     ApiRequest({
-      url: 'https://burger-queen-api-mock-u59i-dev.fl0.io/products',
+      url: 'https://localhost:8080/products',
       method: 'get',
     })
       .then((response) => {
@@ -105,7 +105,7 @@ export function ProductsLogic() {
     }
 
     ApiRequest({
-      url: `https://burger-queen-api-mock-u59i-dev.fl0.io/products`,
+      url: `https://localhost:8080/products`,
       method: 'post',
       body: newProduct,
     })
@@ -153,7 +153,7 @@ export function ProductsLogic() {
     }
 
     ApiRequest({
-      url: `https://burger-queen-api-mock-u59i-dev.fl0.io/products/${editingProductData.id}`,
+      url: `https://localhost:8080/products/${editingProductData.id}`,
       method: 'patch',
       body: updateProducts,
     })
@@ -201,7 +201,7 @@ export function ProductsLogic() {
     const body = productDelete;
 
     ApiRequest({
-      url: `https://burger-queen-api-mock-u59i-dev.fl0.io/products/${productId}`,
+      url: `https://localhost:8080/products/${productId}`,
       method: 'delete',
       body: body,
     })

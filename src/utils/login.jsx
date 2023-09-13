@@ -32,7 +32,7 @@ export function LoginLogic() {
   // API REQUEST LOGIN
   const handleLoginClick = async () => {
     try {
-      const response = await axios.post('https://burger-queen-api-mock-u59i-dev.fl0.io/login', {
+      const response = await axios.post('https://localhost:8080/login', {
         email: formData.name,
         password: formData.password,
       });
