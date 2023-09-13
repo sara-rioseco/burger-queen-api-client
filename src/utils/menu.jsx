@@ -36,7 +36,7 @@ export function useMenuLogic() {
     }
 
     ApiRequest({
-      url: 'https://localhost:8080/products',
+      url: 'https://bq-api.vercel.app/products',
       method: 'get',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -266,7 +266,7 @@ export function useMenuLogic() {
     const body = await getOrderData(updatedClient, updatedTableNumber, updatedOrderProducts);
     console.log(body)
     ApiRequest({
-      url: 'https://localhost:8080/orders',
+      url: 'https://bq-api.vercel.app/orders',
       method: 'post',
       body: body,
     })

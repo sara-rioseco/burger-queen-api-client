@@ -40,7 +40,7 @@ export function UsersLogic() {
 
     // OBTENER DATOS DE USARIOS
     ApiRequest({
-      url: 'https://localhost:8080/users',
+      url: 'https://bq-api.vercel.app/users',
       method: 'get',
     })
       .then((response) => {
@@ -119,7 +119,7 @@ export function UsersLogic() {
     }
 
     ApiRequest({
-      url: `https://localhost:8080/users`,
+      url: `https://bq-api.vercel.app/users`,
       method: 'post',
       body: newUser,
     })
@@ -175,7 +175,7 @@ export function UsersLogic() {
     }
 
     ApiRequest({
-      url: `https://localhost:8080/users/${editingUserData.id}`,
+      url: `https://bq-api.vercel.app/users/${editingUserData.id}`,
       method: 'patch',
       body: updateUsers,
     })
@@ -219,7 +219,7 @@ export function UsersLogic() {
     const body = userDelete;
 
     ApiRequest({
-      url: `https://localhost:8080/users/${userId}`,
+      url: `https://bq-api.vercel.app/users/${userId}`,
       method: 'delete',
       body: body,
     })

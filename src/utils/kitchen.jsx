@@ -28,7 +28,7 @@ export function useKitchenLogic() {
     }
 
     ApiRequest({
-      url: 'https://localhost:8080/orders',
+      url: 'https://bq-api.vercel.app/orders',
       method: 'get',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -61,13 +61,13 @@ const updateOrderStatus = (orderId) => {
   };
 
   ApiRequest({
-    url: `https://localhost:8080/orders/${orderId}`,
+    url: `https://bq-api.vercel.app/orders/${orderId}`,
     method: 'patch',
     body: body,
   })
     .then(
       ApiRequest({
-      url: 'https://localhost:8080/orders',
+      url: 'https://bq-api.vercel.app/orders',
       method: 'get',
       headers: {
         Authorization: `Bearer ${token}`,

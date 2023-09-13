@@ -189,7 +189,7 @@ https://dev-007-burger-queen-api-client.vercel.app/
 
 ### API:
 
-https://localhost:8080/
+https://bq-api.vercel.app/
 
 ## 7. Uso
 

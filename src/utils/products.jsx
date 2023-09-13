@@ -40,7 +40,7 @@ export function ProductsLogic() {
 
     // OBTENER DATOS DE PRODUCTOS
     ApiRequest({
-      url: 'https://localhost:8080/products',
+      url: 'https://bq-api.vercel.app/products',
       method: 'get',
     })
       .then((response) => {
@@ -105,7 +105,7 @@ export function ProductsLogic() {
     }
 
     ApiRequest({
-      url: `https://localhost:8080/products`,
+      url: `https://bq-api.vercel.app/products`,
       method: 'post',
       body: newProduct,
     })
@@ -153,7 +153,7 @@ export function ProductsLogic() {
     }
 
     ApiRequest({
-      url: `https://localhost:8080/products/${editingProductData.id}`,
+      url: `https://bq-api.vercel.app/products/${editingProductData.id}`,
       method: 'patch',
       body: updateProducts,
     })
@@ -201,7 +201,7 @@ export function ProductsLogic() {
     const body = productDelete;
 
     ApiRequest({
-      url: `https://localhost:8080/products/${productId}`,
+      url: `https://bq-api.vercel.app/products/${productId}`,
       method: 'delete',
       body: body,
     })

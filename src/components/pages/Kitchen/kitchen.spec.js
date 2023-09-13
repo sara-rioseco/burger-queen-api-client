@@ -116,7 +116,7 @@ const mockOrdersData = [
 describe('Componente Kitchen', () => {
   
   it('Renderiza el componente correctamente', async() => {      
-/*  mock.onGet('https://localhost:8080/orders').reply(200, mockOrdersData)
+/*  mock.onGet('https://bq-api.vercel.app/orders').reply(200, mockOrdersData)
       
     render(
       <MemoryRouter>
