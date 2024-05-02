@@ -5,6 +5,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { MemoryRouter } from 'react-router-dom';
 import axios from 'axios';
 import Login from './login.jsx';
+import { url } from '../../../services/apiRequest.jsx';
 import { useNavigate as useNavigateMock } from 'react-router-dom'; // navegar entre router
 
 // Reemplaza la importación original de useNavigate con la función simulada
@@ -78,7 +79,7 @@ describe('Componente Login', () => {
 
     // Crea un mock de axios
     const mockAdapter = new MockAdapter(axios);
-    mockAdapter.onPost('https://bq-api.vercel.app/login').reply(200, {
+    mockAdapter.onPost(`${url}/login`).reply(200, {
       accessToken: 'fakeAccessToken',
       user: {
         id: 3,
@@ -114,7 +115,7 @@ describe('Componente Login', () => {
   it('muestra el mensaje de error "Completa los campos requeridos" cuando los campos están vacíos', async () => {
     // Mockea axios para que simule una respuesta con status 400
     const mockAdapter = new MockAdapter(axios);
-    mockAdapter.onPost('https://bq-api.vercel.app/login').reply(400, 'Email and password are required');
+    mockAdapter.onPost(`${url}/login`).reply(400, 'Email and password are required');
 
     render(
       <MemoryRouter>
@@ -140,7 +141,7 @@ describe('Componente Login', () => {
   it('muestra el mensaje de error "Usuario no registrado" cuando el usuario no existe', async () => {
     // Mockea axios para que simule una respuesta con status 400
     const mockAdapter = new MockAdapter(axios);
-    mockAdapter.onPost('https://bq-api.vercel.app/login').reply(400, 'Cannot find user');
+    mockAdapter.onPost(`${url}/login`).reply(400, 'Cannot find user');
 
     render(
       <MemoryRouter>
@@ -166,7 +167,7 @@ describe('Componente Login', () => {
   it('muestra el mensaje de error "Credenciales incorrectas" cuando la contraseña es incorrecta', async () => {
     // Mockea axios para que simule una respuesta con status 400
     const mockAdapter = new MockAdapter(axios);
-    mockAdapter.onPost('https://bq-api.vercel.app/login').reply(400, 'Incorrect password');
+    mockAdapter.onPost(`${url}/login`).reply(400, 'Incorrect password');
 
     render(
       <MemoryRouter>
@@ -192,7 +193,7 @@ describe('Componente Login', () => {
   it('navega a la página de error cuando ocurre un error desconocido', async () => {
     // Mockea axios para que simule un error
     const mockAdapter = new MockAdapter(axios);
-    mockAdapter.onPost('https://bq-api.vercel.app/login').reply(500);
+    mockAdapter.onPost(`${url}/login`).reply(500);
 
     const navigateMock = jest.fn();
     useNavigateMock.mockImplementation(() => navigateMock);

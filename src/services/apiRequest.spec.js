@@ -1,10 +1,10 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import ApiRequest from './apiRequest.jsx';
+import ApiRequest, { url } from './apiRequest.jsx';
 
 describe('Función ApiRequest', () => {
     let mockAxios;
-
+    let urlString = url
     beforeEach(() => {
         mockAxios = new MockAdapter(axios);
     });
@@ -21,7 +21,7 @@ describe('Función ApiRequest', () => {
                 "role": "admin"
             }
         };
-        const url = 'https://bq-api.vercel.app/users';
+        const url = `${urlString}/users`;
         const method = 'GET';
 
         mockAxios.onGet(url).reply(200, responseData);
@@ -46,7 +46,7 @@ describe('Función ApiRequest', () => {
                 role: "admin"
             }
         };
-        const url = 'https://bq-api.vercel.app/users';
+        const url = `${urlString}/users`;
         const method = 'POST';
 
         mockAxios.onPost(url).reply(200, responseData);
@@ -58,7 +58,7 @@ describe('Función ApiRequest', () => {
     });
 
     it('Debería manejar respuestas de error', async () => {
-        const url = 'https://bq-api.vercel.app/users';
+        const url = `${urlString}/users`;
         const method = 'GET';
 
         mockAxios.onGet(url).reply(401, {

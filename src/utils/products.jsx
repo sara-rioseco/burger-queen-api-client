@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'; // manejo de APIrequest en primer renderizado o cuando las dependecias cambien
 import { useNavigate } from 'react-router-dom';// navegar entre router
 // COMPONENTES
-import ApiRequest from '../services/apiRequest.jsx';
+import ApiRequest, { url } from '../services/apiRequest.jsx';
 
 // LÓGICA DE LA SECCIÓN DE PRODUCTOS
 export function ProductsLogic() {
@@ -40,7 +40,7 @@ export function ProductsLogic() {
 
     // OBTENER DATOS DE PRODUCTOS
     ApiRequest({
-      url: 'https://bq-api.vercel.app/products',
+      url: `${url}/products`,
       method: 'get',
     })
       .then((response) => {
@@ -105,7 +105,7 @@ export function ProductsLogic() {
     }
 
     ApiRequest({
-      url: `https://bq-api.vercel.app/products`,
+      url: `${url}/products`,
       method: 'post',
       body: newProduct,
     })
@@ -153,7 +153,7 @@ export function ProductsLogic() {
     }
 
     ApiRequest({
-      url: `https://bq-api.vercel.app/products/${editingProductData.id}`,
+      url: `${url}/products/${editingProductData.id}`,
       method: 'patch',
       body: updateProducts,
     })
@@ -201,7 +201,7 @@ export function ProductsLogic() {
     const body = productDelete;
 
     ApiRequest({
-      url: `https://bq-api.vercel.app/products/${productId}`,
+      url: `${url}/products/${productId}`,
       method: 'delete',
       body: body,
     })

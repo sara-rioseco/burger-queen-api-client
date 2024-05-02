@@ -7,6 +7,7 @@ import { MemoryRouter } from 'react-router-dom';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { UsersLogic } from '../../../utils/users.jsx';
+import { url } from '../../../services/apiRequest.jsx';
 import { useNavigate as useNavigateMock } from 'react-router-dom'; // navegar entre router
 
 // Reemplaza la importación original de useNavigate con la función simulada
@@ -154,7 +155,7 @@ describe('Componente Users', () => {
         useNavigateMock.mockImplementation(() => navigateMock);
     
         const mock = new MockAdapter(axios);
-        mock.onGet('https://bq-api.vercel.app/users').reply(401, { data: 'jwt expired' });
+        mock.onGet(`${url}/users`).reply(401, { data: 'jwt expired' });
     
         render(
           <MemoryRouter>

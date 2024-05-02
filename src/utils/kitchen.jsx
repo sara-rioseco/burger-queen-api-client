@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ApiRequest from '../services/apiRequest.jsx';
+import ApiRequest, { url } from '../services/apiRequest.jsx';
+
 
 // LÓGICA DE LA SECCIÓN COCINA
 
@@ -28,7 +29,7 @@ export function useKitchenLogic() {
     }
 
     ApiRequest({
-      url: 'https://bq-api.vercel.app/orders',
+      url: `${url}/orders`,
       method: 'get',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -61,13 +62,13 @@ const updateOrderStatus = (orderId) => {
   };
 
   ApiRequest({
-    url: `https://bq-api.vercel.app/orders/${orderId}`,
+    url: `${url}/orders/${orderId}`,
     method: 'patch',
     body: body,
   })
     .then(
       ApiRequest({
-      url: 'https://bq-api.vercel.app/orders',
+      url: `${url}/orders`,
       method: 'get',
       headers: {
         Authorization: `Bearer ${token}`,

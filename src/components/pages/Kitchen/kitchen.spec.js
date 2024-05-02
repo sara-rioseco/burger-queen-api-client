@@ -5,6 +5,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { MemoryRouter } from 'react-router-dom';
 import axios from 'axios';
 import Kitchen from './kitchen.jsx';
+import { url } from '../../../services/apiRequest.jsx';
 
 const mock = new MockAdapter(axios);
 
@@ -116,7 +117,7 @@ const mockOrdersData = [
 describe('Componente Kitchen', () => {
   
   it('Renderiza el componente correctamente', async() => {      
-/*  mock.onGet('https://bq-api.vercel.app/orders').reply(200, mockOrdersData)
+/*  mock.onGet(`${url}/orders`).reply(200, mockOrdersData)
       
     render(
       <MemoryRouter>

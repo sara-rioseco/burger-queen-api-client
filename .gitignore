@@ -27,3 +27,4 @@ dist-ssr
 coverage/
 node_modules/
 .vercel
+.env

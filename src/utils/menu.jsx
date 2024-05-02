@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ApiRequest from '../services/apiRequest.jsx';6
+import ApiRequest, { url }  from '../services/apiRequest.jsx';6
 
 // LÓGICA DE LA SECCIÓN MENÚ
 export function useMenuLogic() {
@@ -36,7 +36,7 @@ export function useMenuLogic() {
     }
 
     ApiRequest({
-      url: 'https://bq-api.vercel.app/products',
+      url: `${url}/products`,
       method: 'get',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -264,9 +264,8 @@ export function useMenuLogic() {
     const updatedClient = client;
     const updatedTableNumber = table;
     const body = await getOrderData(updatedClient, updatedTableNumber, updatedOrderProducts);
-    console.log(body)
     ApiRequest({
-      url: 'https://bq-api.vercel.app/orders',
+      url: `${url}/orders`,
       method: 'post',
       body: body,
     })

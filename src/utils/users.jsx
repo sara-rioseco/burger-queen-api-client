@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'; // manejo de APIrequest en primer renderizado o cuando las dependecias cambien
 import { useNavigate } from 'react-router-dom'; // navegar entre router
 // COMPONENTES
-import ApiRequest from '../services/apiRequest.jsx';
+import ApiRequest, { url } from '../services/apiRequest.jsx';
 
 // LÓGICA DE LA SECCIÓN DE USUARIOS
 export function UsersLogic() {
@@ -40,7 +40,7 @@ export function UsersLogic() {
 
     // OBTENER DATOS DE USARIOS
     ApiRequest({
-      url: 'https://bq-api.vercel.app/users',
+      url: `${url}/users`,
       method: 'get',
     })
       .then((response) => {
@@ -119,7 +119,7 @@ export function UsersLogic() {
     }
 
     ApiRequest({
-      url: `https://bq-api.vercel.app/users`,
+      url: `${url}/users`,
       method: 'post',
       body: newUser,
     })
@@ -175,7 +175,7 @@ export function UsersLogic() {
     }
 
     ApiRequest({
-      url: `https://bq-api.vercel.app/users/${editingUserData.id}`,
+      url: `${url}/users/${editingUserData.id}`,
       method: 'patch',
       body: updateUsers,
     })
@@ -219,7 +219,7 @@ export function UsersLogic() {
     const body = userDelete;
 
     ApiRequest({
-      url: `https://bq-api.vercel.app/users/${userId}`,
+      url: `${url}/users/${userId}`,
       method: 'delete',
       body: body,
     })

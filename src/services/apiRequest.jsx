@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+export const url = 'https://bq-api.vercel.app';
+
 export default function ApiRequest({ url, method, body }) {
   const token = localStorage.getItem('accessToken');
 

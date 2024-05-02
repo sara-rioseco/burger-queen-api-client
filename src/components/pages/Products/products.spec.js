@@ -7,6 +7,7 @@ import { MemoryRouter } from 'react-router-dom';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { ProductsLogic } from '../../../utils/products.jsx';
+import { url } from '../../../services/apiRequest.jsx';
 import { useNavigate as useNavigateMock } from 'react-router-dom'; // navegar entre router
 
 // Reemplaza la importación original de useNavigate con la función simulada
@@ -149,7 +150,7 @@ describe('Componente Products', () => {
         useNavigateMock.mockImplementation(() => navigateMock);
     
         const mock = new MockAdapter(axios);
-        mock.onGet('https://bq-api.vercel.app/products').reply(401, { data: 'jwt expired' });
+        mock.onGet(`${url}/products`).reply(401, { data: 'jwt expired' });
     
         render(
           <MemoryRouter>
@@ -181,7 +182,7 @@ describe('Componente Products', () => {
 
     //   it('Muestra la información de los productos en la tabla', async () => {
     //     const mock = new MockAdapter(axios);
-    //     mock.onGet('https://bq-api.vercel.app/products').reply(200, [
+    //     mock.onGet(`${url}/products`).reply(200, [
     //       { id: 1, name: 'Producto 1', price: 10, type: 'Desayuno', image: 'image1.jpg' },
     //       { id: 2, name: 'Producto 2', price: 15, type: 'Almuerzo', image: 'image2.jpg' },
     //     ]);
@@ -200,7 +201,7 @@ describe('Componente Products', () => {
     //     useNavigateMock.mockImplementation(() => navigateMock);
     
     //     const mock = new MockAdapter(axios);
-    //     mock.onGet('https://bq-api.vercel.app/products').reply(200, { data: [{
+    //     mock.onGet(`${url}/products`).reply(200, { data: [{
     //         "id": 1,
     //         "name": "Sandwich de jamón y queso",
     //         "price": 10,
@@ -246,7 +247,7 @@ describe('Componente Products', () => {
     //     useNavigateMock.mockImplementation(() => navigateMock);
       
     //     const mock = new MockAdapter(axios);
-    //     mock.onGet('https://bq-api.vercel.app/products').reply(200, {
+    //     mock.onGet(`${url}/products`).reply(200, {
     //       data: [
     //         {
     //           "id": 1,
@@ -287,7 +288,7 @@ describe('Componente Products', () => {
     //     useNavigateMock.mockImplementation(() => navigateMock);
     
     //     const mock = new MockAdapter(axios);
-    //     mock.onGet('https://bq-api.vercel.app/products').reply(200, {
+    //     mock.onGet(`${url}/products`).reply(200, {
     //       data: [
     //         {
     //           "id": 1,

@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 // CSS
-import './App.css'
+import './App.css';
 // COMPONENTES/VISTAS
 import Home from './components/pages/Home/home.jsx';
 import Login from './components/pages/Login/login.jsx';
@@ -14,39 +14,38 @@ import ErrorPage from './components/pages/Error/error-page.jsx';
 // CREACIÓN DEL ROUTER
 export const Router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <Home />,
     errorElement: <ErrorPage />,
   },
   {
-    path: "/login",
+    path: '/login',
     element: <Login />,
     errorElement: <ErrorPage />,
   },
   {
-    path: "/menu",
+    path: '/menu',
     element: <Menu />,
     errorElement: <ErrorPage />,
   },
   {
-    path: "/orders",
+    path: '/orders',
     element: <Orders />,
     errorElement: <ErrorPage />,
   },
   {
-    path: "/kitchen",
+    path: '/kitchen',
     element: <Kitchen />,
     errorElement: <ErrorPage />,
   },
   {
-    path: "/users",
+    path: '/users',
     element: <Users />,
     errorElement: <ErrorPage />,
   },
   {
-    path: "/products",
+    path: '/products',
     element: <Products />,
     errorElement: <ErrorPage />,
   },
-])
-
+]);

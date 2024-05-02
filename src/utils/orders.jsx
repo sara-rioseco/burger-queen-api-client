@@ -4,7 +4,7 @@ import {
 } from 'react';
 import { useNavigate } from 'react-router-dom'; // navegar entre router
 // COMPONENTES
-import ApiRequest from '../services/apiRequest.jsx';
+import ApiRequest, { url } from '../services/apiRequest.jsx';
 
 // LÓGICA DE LA SECCIÓN DE PEDIDOS
 export function OrdersLogic() {
@@ -41,7 +41,7 @@ export function OrdersLogic() {
 
     // OBTENER DATOS DE PEDIDOS
     ApiRequest({
-      url: 'https://bq-api.vercel.app/orders',
+      url: `${url}/orders`,
       method: 'get',
     })
       .then((response) => {
@@ -62,7 +62,7 @@ export function OrdersLogic() {
 
     // OBTENER DATOS DE PRODUCTOS
     ApiRequest({
-      url: 'https://bq-api.vercel.app/products',
+      url: `${url}/products`,
       method: 'get',
     })
       .then((response) => {
@@ -223,7 +223,7 @@ export function OrdersLogic() {
     }
 
     ApiRequest({
-      url: `https://bq-api.vercel.app/orders/${orderId}`,
+      url: `${url}/orders/${orderId}`,
       method: 'patch',
       body: body,
     })
@@ -263,7 +263,7 @@ export function OrdersLogic() {
     const body = orderDelete;
 
     ApiRequest({
-      url: `https://bq-api.vercel.app/orders/${orderId}`,
+      url: `${url}/orders/${orderId}`,
       method: 'delete',
       body: body,
     })
@@ -291,7 +291,7 @@ export function OrdersLogic() {
     };
 
     ApiRequest({
-      url: `https://bq-api.vercel.app/orders/${orderId}`,
+      url: `${url}/orders/${orderId}`,
       method: 'patch',
       body: body,
     })
