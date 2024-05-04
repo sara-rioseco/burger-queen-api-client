@@ -174,21 +174,25 @@ export function OrdersLogic() {
   const handleAddProductToOrder = (productId) => {
     console.log('editmodalproducts', editModalProducts)
     let productToAdd = editModalProducts.find((product) => product.product.id === productId);
-    console.log('productToAdd ',productToAdd)
+    console.log('productToAdd ', productToAdd)
     if (productToAdd) {
       // productToAdd = { ... product, qty: (productToAdd.qty++)}
       setEditModalProducts((prevProducts) => {
         console.log('los prevproducts', prevProducts)
         const newProductToAdd = { product: { ... productToAdd.product}, qty: (productToAdd.qty+=1)}
         console.log('product destructured', newProductToAdd)
-        prevProducts.splice(prevProducts.indexOf(productToAdd), 1, newProductToAdd)
+        prevProducts.toSpliced(prevProducts.indexOf(productToAdd), 1, newProductToAdd)
         console.log('new prev products', prevProducts)
         return prevProducts
       })
     } else {
       const newItem = productsData.find(item => {
-        item._id === Number(productId)});
+        
+        console.log('product._id', item._id)
+        return item._id === productId;
+      });
         console.log('productsData', productsData)
+      
         console.log('newitemu', newItem)
       setEditModalProducts((prevProducts) => [
         ...prevProducts,
@@ -225,7 +229,7 @@ export function OrdersLogic() {
   const getUpdatedOrder = () => {
     const updatedOrder = { 
       client: editModalClient,
-      table: editModalTable,
+      table: Number(editModalTable),
       products: editModalProducts,
       status: editModalStatus,
     };
