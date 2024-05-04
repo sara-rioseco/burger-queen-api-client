@@ -84,6 +84,9 @@ export function useMenuLogic() {
           // Clonar el objeto del producto para evitar modificar el objeto original
           const clonedProduct = { ...updatedCartData[existingProductIndex] };
           clonedProduct.qty += 1;
+          // let { _id, ...rest } = clonedProduct;
+          // rest.id = _id;
+          // updatedCartData[existingProductIndex] = rest;
           updatedCartData[existingProductIndex] = clonedProduct;
         } else {
           product.qty = 1;
@@ -107,6 +110,9 @@ export function useMenuLogic() {
       if (checkProductExists(product, updatedCartData)) {
         const clonedProduct = { ...updatedCartData[existingProductIndex] };
         clonedProduct.qty += 1;
+        // let { _id, ...rest } = clonedProduct;
+        // rest.id = _id;
+        // updatedCartData[existingProductIndex] = rest;
         updatedCartData[existingProductIndex] = clonedProduct;
       }
       return updatedCartData;
@@ -124,6 +130,9 @@ export function useMenuLogic() {
           handleClickOpenDelete(product);
         } else {
         clonedProduct.qty -= 1;
+        // let { _id, ...rest } = clonedProduct;
+        // rest.id = _id;
+        // updatedCartData[existingProductIndex] = rest;
         updatedCartData[existingProductIndex] = clonedProduct;
         }
       }
@@ -198,6 +207,7 @@ export function useMenuLogic() {
 
   // construir nueva orden
   const getOrderData = async (client, table, products) => {
+    console.log("products here ", products[0])
     const newOrder = {
       userId: userId,
       client: client,
@@ -205,7 +215,7 @@ export function useMenuLogic() {
       products: products.map((product) => ({
         qty: product.qty,
         product: {
-          _id: product._id,
+          id: product._id,
           name: product.name,
           price: product.price,
           image: product.image,
@@ -216,6 +226,7 @@ export function useMenuLogic() {
       status: 'En preparación',
       dateEntry: getDateAndTime(),
     };
+    console.log('newOrder: ', newOrder)
     return newOrder;
   };
 
@@ -265,7 +276,7 @@ export function useMenuLogic() {
     const updatedClient = client;
     const updatedTableNumber = table;
     const body = await getOrderData(updatedClient, updatedTableNumber, updatedOrderProducts);
-    console.log('body', body)
+    console.log(' handlecreateorder body', body)
     ApiRequest({
       url: `${url}/orders`,
       method: 'post',

@@ -45,9 +45,6 @@ export default function Orders() {
     errorLabel,
   } = OrdersLogic();
 
-  console.log('editModalProducts', editModalProducts)
-  console.log('filteredOrdersData', filteredOrdersData)
-
   // RENDERIZADO
   return (
     <>
@@ -222,28 +219,28 @@ export default function Orders() {
                         <label className='bebas'>PEDIDO :</label>
                         <div className='lineModal'></div>
                         <div className='allProductsOrdersModal'>
-                          {editModalProducts.map((product) => (
-                            <div key={product.productId} className='productOrdersModal'>
+                          {editModalProducts.map((item) => ( 
+                            <div key={`productOrdersModal-${item.product ? item.product.id : item.id}`} className='productOrdersModal'>
                               <img
                                 src={Delete}
                                 className="deleteModal"
                                 alt="buttonDelete"
-                                onClick={() => handleEditModalProductDelete(product.productId)}
+                                onClick={() => handleEditModalProductDelete(item.id)}
                               />
                               <Input
-                                key={product.productId}
+                                key={`input-${item.product ? item.product.id : item.id}`}
                                 type='number'
                                 placeholder='Escribe aquí'
                                 label={''}
-                                name={`productQty_${product.productId}`}
+                                name={`productQty_${item.id}`}
                                 classInputLabel='labelsModalEdit'
                                 classInput='inputModalEdit cantidadModal'
-                                value={product.qty}
-                                onChange={(event) => handleEditModalProductQtyChange(product.productId, event)}
+                                value={item.qty}
+                                onChange={(event) => handleEditModalProductQtyChange(item.product ? item.product.id : item.id, event)}
                               />
                               <p className='productPriceModal'>
-                                <label>{product.name}</label>
-                                <label>${product.price},00</label>
+                                <label>{item.product ? item.product.name : item.name}</label>
+                                <label>${item.product ? item.product.price : item.price},00</label>
                               </p>
                             </div>
                           ))}

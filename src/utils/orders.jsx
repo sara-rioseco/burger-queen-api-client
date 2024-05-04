@@ -26,9 +26,6 @@ export function OrdersLogic() {
   const [editModalProducts, setEditModalProducts] = useState([]);
   const [productsData, setProductsData] = useState([]);
 
-  console.log('ordersData here: ', ordersData)
-  console.log('productsData here: ', productsData)
-
   useEffect(() => {
     // Redirigir al usuario al inicio de sesión si no hay un accessToken
     if (!token) {
@@ -53,7 +50,6 @@ export function OrdersLogic() {
         );
 
         setOrdersData(filteredOrders);
-        console.log('filteredOrders', filteredOrders);
       })
       .catch((error) => {
         console.error(error);
@@ -144,37 +140,68 @@ export function OrdersLogic() {
     setEditModalTable(order.table);
     setEditModalClient(order.client);
     setEditModalStatus(order.status);
-    setEditModalProducts(order.products.map(item => ({
+    console.log('handle open edit modal products bef', order.products)
+    const newModalProducts = order.products.map((item) => ({
       qty: item.qty,
-      productId: item.product._id,
-      name: item.product.name,
-      price: item.product.price,
-    }))
-    );
+      product: {
+        id: item.product.id,
+        name: item.product.name,
+        price: item.product.price,
+        image: item.product.image,
+        type: item.product.type,
+        dateEntry: item.product.dateEntry
+      }
+    }));
+    setEditModalProducts(newModalProducts)
+    console.log('editmodalproducts here', editModalProducts)
+    console.log('neweditmodalproducts here', newModalProducts)
   }
 
   // MANEJO DE CAMBIOS EN LA CANTIDAD DE LOS PRODUCTOS EN LA MODAL EDITAR
   const handleEditModalProductQtyChange = (productId, event) => {
     const updatedProducts = editModalProducts.map((product) => {
-      if (product.productId === productId) {
-        return { ...product, qty: event.target.value };
+      console.log('prodddd', product)
+      if (product.product.id === productId) {
+        return { ...product, qty: Number(event.target.value) };
       }
       return product;
     });
+    console.log('updated products in handle edit modal product qty change', editModalProducts, updatedProducts)
     setEditModalProducts(updatedProducts);
   };
 
   // AÑADIR PRODUCTOS A LA ORDEN EN MODAL EDITAR
   const handleAddProductToOrder = (productId) => {
-    const productToAdd = productsData.find((product) => product._id === productId);
+    console.log('editmodalproducts', editModalProducts)
+    let productToAdd = editModalProducts.find((product) => product.product.id === productId);
+    console.log('productToAdd ',productToAdd)
     if (productToAdd) {
+      // productToAdd = { ... product, qty: (productToAdd.qty++)}
+      setEditModalProducts((prevProducts) => {
+        console.log('los prevproducts', prevProducts)
+        const newProductToAdd = { product: { ... productToAdd.product}, qty: (productToAdd.qty+=1)}
+        console.log('product destructured', newProductToAdd)
+        prevProducts.splice(prevProducts.indexOf(productToAdd), 1, newProductToAdd)
+        console.log('new prev products', prevProducts)
+        return prevProducts
+      })
+    } else {
+      const newItem = productsData.find(item => {
+        item._id === Number(productId)});
+        console.log('productsData', productsData)
+        console.log('newitemu', newItem)
       setEditModalProducts((prevProducts) => [
         ...prevProducts,
         {
-          productId: productToAdd._id,
-          name: productToAdd.name,
           qty: 1,
-          price: productToAdd.price,
+          product: {
+            id: newItem._id,
+            name: newItem.name,
+            price: newItem.price,
+            image: newItem.image,
+            type: newItem.type,
+            dateEntry: newItem.dateEntry
+          }
         },
       ]);
     }
@@ -182,31 +209,24 @@ export function OrdersLogic() {
 
   // ACTUALIZAR PEDIDOS DE LA ORDEN EN LA MODAL EDITAR CUANDO SE QUIERE ELIMINAR UNO
   const handleEditModalProductDelete = (productId) => {
-    const updatedProducts = editModalProducts.filter((product) => product.productId !== productId);
+    const updatedProducts = editModalProducts.filter((product) => product.product.id !== productId);
     setEditModalProducts(updatedProducts);
   };
 
   // OBTIENE EL COSTO TOTAL DE LA ORDEN EN LA MODAL EDITAR
   const getUpdatedTotalOrder = () => {
     return editModalProducts.reduce(
-      (total, product) => total + product.qty * product.price,
+      (total, product) => total + product.qty * (product.product? product.product.price : product.price),
       0
     );
   };
 
   // OBTIENE EL OBJETO CON LA INFORMACIÓN DE LA EDICIÓN DE LA ORDEN
   const getUpdatedOrder = () => {
-    const updatedOrder = {
+    const updatedOrder = { 
       client: editModalClient,
       table: editModalTable,
-      products: editModalProducts.map((product) => ({
-        qty: product.qty,
-        product: {
-          id: product.productId,
-          name: product.name,
-          price: product.price,
-        },
-      })),
+      products: editModalProducts,
       status: editModalStatus,
     };
     return updatedOrder;
