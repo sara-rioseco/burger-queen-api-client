@@ -80,7 +80,7 @@ export function useMenuLogic() {
     setCartData(prevCartData => {
       const updatedCartData = [...prevCartData];
         if (checkProductExists(product, updatedCartData)){
-          const existingProductIndex = updatedCartData.findIndex((p) => p.id === product.id);
+          const existingProductIndex = updatedCartData.findIndex((p) => p._id === product._id);
           // Clonar el objeto del producto para evitar modificar el objeto original
           const clonedProduct = { ...updatedCartData[existingProductIndex] };
           clonedProduct.qty += 1;
@@ -94,7 +94,7 @@ export function useMenuLogic() {
   };
 
   //chequear si el producto ya existe en el carrito
-  const checkProductExists = (item, arr) => arr.filter(p => p.id === item.id).length > 0;
+  const checkProductExists = (item, arr) => arr.filter(p => p._id === item._id).length > 0;
 
   //obtener precio total de todos los productos en el carrito
   const getTotalPrice = () => cartData.reduce((acc, curr) => acc + curr.price * curr.qty, 0);
@@ -103,7 +103,7 @@ export function useMenuLogic() {
   const handleClickAdd = (product) => {
     setCartData(prevCartData => {
       const updatedCartData = [...prevCartData];
-      const existingProductIndex = updatedCartData.findIndex((p) => p.id === product.id);
+      const existingProductIndex = updatedCartData.findIndex((p) => p._id === product._id);
       if (checkProductExists(product, updatedCartData)) {
         const clonedProduct = { ...updatedCartData[existingProductIndex] };
         clonedProduct.qty += 1;
@@ -117,7 +117,7 @@ export function useMenuLogic() {
   const handleClickRemove = (product) => {
     setCartData(prevCartData => {
       const updatedCartData = [...prevCartData];
-      const existingProductIndex = updatedCartData.findIndex((p) => p.id === product.id);
+      const existingProductIndex = updatedCartData.findIndex((p) => p._id === product._id);
       if (checkProductExists(product, updatedCartData)) {
         const clonedProduct = { ...updatedCartData[existingProductIndex] };
         if (clonedProduct.qty === 1) {
@@ -133,7 +133,7 @@ export function useMenuLogic() {
 
   // abrir modal para confirmar eliminación del producto
   const handleClickOpenDelete = (product) => {
-    const updatedProductId = product.id;
+    const updatedProductId = product._id;
     setModalProductId(updatedProductId);
     setModalDelete(true);
   };
@@ -148,7 +148,7 @@ export function useMenuLogic() {
   const handleDelete = (product) => {
     setCartData(prevCartData => {
       const updatedCartData = [...prevCartData];
-      const existingProductIndex = updatedCartData.findIndex((p) => p.id === product.id);
+      const existingProductIndex = updatedCartData.findIndex((p) => p._id === product._id);
        updatedCartData.splice(existingProductIndex, 1);
        setModalProductId(null);
        setModalDelete(false);
@@ -199,13 +199,13 @@ export function useMenuLogic() {
   // construir nueva orden
   const getOrderData = async (client, table, products) => {
     const newOrder = {
-      userId: Number(userId),
+      userId: userId,
       client: client,
       table: Number(table),
       products: products.map((product) => ({
         qty: product.qty,
         product: {
-          id: product.id,
+          _id: product._id,
           name: product.name,
           price: product.price,
           image: product.image,
@@ -260,17 +260,18 @@ export function useMenuLogic() {
     setClientName(client);
     setTableNumber(table);
     setOrderProducts(cartData);
+    console.log(' handlecreateorder ',cartData, ' client ', client, ' table ', table)
     const updatedOrderProducts = [...cartData];
     const updatedClient = client;
     const updatedTableNumber = table;
     const body = await getOrderData(updatedClient, updatedTableNumber, updatedOrderProducts);
+    console.log('body', body)
     ApiRequest({
       url: `${url}/orders`,
       method: 'post',
       body: body,
     })
     .then(() => {
-      console.log ('Orden creada y en preparación')
           setCartData([]);
           setClientName('');
           setTableNumber('default');

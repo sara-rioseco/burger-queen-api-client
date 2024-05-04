@@ -44,7 +44,6 @@ export function UsersLogic() {
       method: 'get',
     })
       .then((response) => {
-        console.log(response.data)
         setUsersData(response.data);
       })
       .catch((error) => {

@@ -26,6 +26,9 @@ export function OrdersLogic() {
   const [editModalProducts, setEditModalProducts] = useState([]);
   const [productsData, setProductsData] = useState([]);
 
+  console.log('ordersData here: ', ordersData)
+  console.log('productsData here: ', productsData)
+
   useEffect(() => {
     // Redirigir al usuario al inicio de sesión si no hay un accessToken
     if (!token) {
@@ -46,10 +49,11 @@ export function OrdersLogic() {
     })
       .then((response) => {
         const filteredOrders = response.data.filter( //sólo muestra pedidos de usuario logeado
-          (order) => order.userId === Number(userId)
+          (order) => order.userId === userId
         );
 
         setOrdersData(filteredOrders);
+        console.log('filteredOrders', filteredOrders);
       })
       .catch((error) => {
         console.error(error);
@@ -136,13 +140,13 @@ export function OrdersLogic() {
   const handleOpenEditModal = (orderId) => {
     setModalOrderId(orderId);
     setModalOpenEdit(true);
-    const order = ordersData.find((order) => order.id === orderId);
+    const order = ordersData.find((order) => order._id === orderId);
     setEditModalTable(order.table);
     setEditModalClient(order.client);
     setEditModalStatus(order.status);
     setEditModalProducts(order.products.map(item => ({
       qty: item.qty,
-      productId: item.product.id,
+      productId: item.product._id,
       name: item.product.name,
       price: item.product.price,
     }))
@@ -162,12 +166,12 @@ export function OrdersLogic() {
 
   // AÑADIR PRODUCTOS A LA ORDEN EN MODAL EDITAR
   const handleAddProductToOrder = (productId) => {
-    const productToAdd = productsData.find((product) => product.id === Number(productId));
+    const productToAdd = productsData.find((product) => product._id === productId);
     if (productToAdd) {
       setEditModalProducts((prevProducts) => [
         ...prevProducts,
         {
-          productId: productToAdd.id,
+          productId: productToAdd._id,
           name: productToAdd.name,
           qty: 1,
           price: productToAdd.price,
@@ -231,7 +235,7 @@ export function OrdersLogic() {
         // Actualizar estado de pedidos para reflejar cambios en la interfaz
         setOrdersData(prevOrders => {
           const updatedOrders = prevOrders.map(order => {
-            if (order.id === orderId) {
+            if (order._id === orderId) {
               return { ...order, ...body };
             }
             return order;
@@ -258,7 +262,7 @@ export function OrdersLogic() {
 
   // FUNCIÓN PARA CONFIRMAR BORRAR UNA ORDEN EN LA MODAL
   const handleConfirmDeleteClick = (orderId) => {
-    const orderDelete = ordersData.find(order => order.id === orderId);
+    const orderDelete = ordersData.find(order => order._id === orderId);
 
     const body = orderDelete;
 
@@ -269,7 +273,7 @@ export function OrdersLogic() {
     })
       .then(() => {
         // Actualiza la informacion de la tabla para borrar la orden en ella
-        setOrdersData(prevOrders => prevOrders.filter(order => order.id !== orderId));
+        setOrdersData(prevOrders => prevOrders.filter(order => order._id !== orderId));
         setModalOpenDelete(false);
       })
       .catch((error) => {
@@ -299,7 +303,7 @@ export function OrdersLogic() {
         // Actualiza info de la tabla
         setOrdersData(prevOrders => {
           const updatedOrders = prevOrders.map(order => {
-            if (order.id === orderId) {
+            if (order._id === orderId) {
               return { ...order, status: "Entregado" };
             }
             return order;

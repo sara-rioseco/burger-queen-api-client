@@ -57,7 +57,7 @@ export default function Menu() {
         {showMenu && (
           <div className='products-grid'>
             {breakfastProducts.map(product => (
-              <div key={product.id} className='product' onClick={() => handleClickProduct(product)} data-testid={`breakfast-product-${product.id}`}> 
+              <div key={product._id} className='product' onClick={() => handleClickProduct(product)} data-testid={`breakfast-product-${product._id}`}> 
                 <div className='image-content'><img src={product.image} alt={product.name} className='image' /></div>
                 <div className='text-content'>
                   <div className='product-name'>{product.name}</div>
@@ -70,7 +70,7 @@ export default function Menu() {
         {!showMenu && (
           <div className='products-grid'>
             {lunchProducts.map(product => (
-              <div key={product.id} className='product'  onClick={() => handleClickProduct(product)} data-testid={`lunch-product-${product.id}`}> 
+              <div key={product._id} className='product'  onClick={() => handleClickProduct(product)} data-testid={`lunch-product-${product._id}`}> 
                 <div className='image-content'><img src={product.image} alt={product.name} className='image' /></div>
                 <div className='text-content' >
                   <div className='product-name'>{product.name}</div>
@@ -110,12 +110,12 @@ export default function Menu() {
           </thead>
           <tbody>
             {cartData && cartData.map((product) => (
-              <tr key={product.id}>
+              <tr key={product._id}>
                 <td className='table-body'>{product.name}</td>
                 <td className='table-count'><img src={Remove} alt='remove-button' className='action-button' onClick={()=> handleClickRemove(product)}/>{'\u00A0'}{'\u00A0'}{product.qty}{'\u00A0'}{'\u00A0'}<img src={Add} alt='add-button' className='action-button' onClick={()=> handleClickAdd(product)}/></td>
                 <td className='table-number'>${product.qty*product.price},00</td>
                 <td className='modalDelete'>
-                  <Modal open={modalDelete && modalProductId === product.id} onClose={handleCloseModal}>
+                  <Modal open={modalDelete && modalProductId === product._id} onClose={handleCloseModal}>
                     <h2 className='textModal'>¿Deseas eliminar este producto?</h2>
                     <h2 className='textModal'>{product.name} x {product.qty}</h2>
                     <div>
@@ -206,9 +206,9 @@ export default function Menu() {
           try {
             validateInputs(cartData)
           } catch {
-            (e) => console.log(e, 'error validating data')
+            (e) => console.error(e, 'error validating data')
           } finally {
-            validateInputs(cartData) ? handleOpenModalOrderConfirmation(): console.log('error validating data');
+            validateInputs(cartData) ? handleOpenModalOrderConfirmation() : console.log('error validating data');
           }
         }} classButton='buttonMenu'/>
       </div>

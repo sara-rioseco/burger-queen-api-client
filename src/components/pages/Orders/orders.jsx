@@ -45,6 +45,9 @@ export default function Orders() {
     errorLabel,
   } = OrdersLogic();
 
+  console.log('editModalProducts', editModalProducts)
+  console.log('filteredOrdersData', filteredOrdersData)
+
   // RENDERIZADO
   return (
     <>
@@ -103,7 +106,7 @@ export default function Orders() {
             </thead>
             <tbody>
               {filteredOrdersData.map((order) => (
-                <tr key={order.id}>
+                <tr key={order._id}>
                   <td>
                     #{order.table}
                   </td>
@@ -124,7 +127,7 @@ export default function Orders() {
                       src={Edit}
                       className="edit"
                       alt="buttonEdit"
-                      onClick={() => handleOpenEditModal(order.id)} />
+                      onClick={() => handleOpenEditModal(order._id)} />
                   </td>
                   <td className='buttonsTable'>
                     {order.status !== 'Entregado' && (
@@ -132,7 +135,7 @@ export default function Orders() {
                         src={Delete}
                         className="delete"
                         alt="buttonDelete"
-                        onClick={() => handleOpenModalDelete(order.id)}
+                        onClick={() => handleOpenModalDelete(order._id)}
                       />
                     )}
                   </td>
@@ -142,17 +145,17 @@ export default function Orders() {
                         src={Check}
                         className="check"
                         alt="buttonCheck"
-                        onClick={() => handleCheckClick(order.id)}
+                        onClick={() => handleCheckClick(order._id)}
                       />
                     )}
                   </td>
                   <td className='modalDelete'>
-                    <Modal open={modalOpenDelete && modalOrderId === order.id} onClose={handleCloseModal}>
+                    <Modal open={modalOpenDelete && modalOrderId === order._id} onClose={handleCloseModal}>
                       <h2 className='textModal'>Estas seguro que deseas eliminar el pedido de la mesa {order.table} ?</h2>
                       <div>
                         <Button
                           label='CONFIRMAR'
-                          onClick={() => handleConfirmDeleteClick(order.id)}
+                          onClick={() => handleConfirmDeleteClick(order._id)}
                           classButton='buttonsModal'>
                         </Button>
                         <Button
@@ -162,7 +165,7 @@ export default function Orders() {
                         </Button>
                       </div>
                     </Modal>
-                    <Modal open={modalOpenEdit && modalOrderId === order.id} onClose={handleCloseModal}>
+                    <Modal open={modalOpenEdit && modalOrderId === order._id} onClose={handleCloseModal}>
                       <h2 className='textModal'>Editando pedido de la mesa {order.table}:</h2>
                       <div className='infoOrderModal'>
                         <div className='infoClientModal'>
@@ -202,11 +205,11 @@ export default function Orders() {
                           >
                             <option value='' disabled>Seleccione un producto</option>
                             {productsData.map((product) => {
-                              const isProductAlreadyAdded = editModalProducts.some((addedProduct) => addedProduct.productId === product.id);
+                              const isProductAlreadyAdded = editModalProducts.some((addedProduct) => addedProduct.productId === product._id);
 
                               if (!isProductAlreadyAdded) {
                                 return (
-                                  <option key={product.id} value={product.id}>
+                                  <option key={product._id} value={product._id}>
                                     {product.name} - ${product.price}
                                   </option>
                                 );

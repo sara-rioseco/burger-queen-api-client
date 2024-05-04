@@ -94,7 +94,7 @@ export default function Products() {
                 {productsData
                   .filter(product => selectedTypes.includes(product.type))
                   .map((product) => (
-                    <tr key={product.id}>
+                    <tr key={product._id}>
                       <td>{product.name}</td>
                       <td><img src={product.image} className='imgProducts' /></td>
                       <td>${product.price},00</td>
@@ -104,7 +104,7 @@ export default function Products() {
                           src={Edit}
                           className="edit"
                           alt="buttonEdit"
-                          onClick={() => handleOpenEditModalProducts(product.id)}
+                          onClick={() => handleOpenEditModalProducts(product._id)}
                         />
                       </td>
                       <td className='buttonsTable'>
@@ -112,11 +112,11 @@ export default function Products() {
                           src={Delete}
                           className="delete"
                           alt="buttonDelete"
-                          onClick={() => handleOpenModalDeleteProducts(product.id)}
+                          onClick={() => handleOpenModalDeleteProducts(product._id)}
                         />
                       </td>
                       <td className='modalDelete'>
-                        <Modal open={modalOpenDeleteProducts && modalProductId === product.id} onClose={handleCloseModalProducts}>
+                        <Modal open={modalOpenDeleteProducts && modalProductId === product._id} onClose={handleCloseModalProducts}>
                           <h2 className='textModal'>Estas seguro que deseas eliminar el siguiente producto?</h2>
                           <div className='containerTextDeleteModal'>
                             <label className="textLabelsModalDeleteProducts">Producto:</label><label className='productModalText'>{product.name}</label></div>
@@ -125,7 +125,7 @@ export default function Products() {
                           <div>
                             <Button
                               label='CONFIRMAR'
-                              onClick={() => handleConfirmDeleteClickProducts(product.id)}
+                              onClick={() => handleConfirmDeleteClickProducts(product._id)}
                               classButton='buttonsModal'>
                             </Button>
                             <Button
@@ -135,7 +135,7 @@ export default function Products() {
                             </Button>
                           </div>
                         </Modal>
-                        <Modal open={modalOpenEditProducts && modalProductId === product.id} onClose={handleCloseModalProducts}>
+                        <Modal open={modalOpenEditProducts && modalProductId === product._id} onClose={handleCloseModalProducts}>
                           <h2 className='textModal'>Editando producto  {product.name} :</h2>
                           <div className='infoProductModal'>
                             <Input

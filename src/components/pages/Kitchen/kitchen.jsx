@@ -28,7 +28,7 @@ export default function Kitchen() {
         <div className='kitchen-body'>
           {pendingOrders.map(order => (
             updateTimerEachSecond(order),
-            <div key={order.id} className='order-container'>
+            <div key={order._id} className='order-container'>
               <div className='order-header'>
                 <h2 className='order-title'>Mesa #{order.table}</h2>
                 <h2 className='order-time'><Stopwatch isActive={true} time={calculateTimePassed(order.dateEntry)} /></h2>
@@ -36,20 +36,20 @@ export default function Kitchen() {
               <div className='order-body'>
                 <div className='order-content'>
                   {order.products.map(product => (
-                  <h2 className='product-content' key={`00${order.id}00${product.product.id}`}>{product.product.name} x {product.qty}</h2>
+                  <h2 className='product-content' key={`00${order._id}00${product.product.id}`}>{product.product.name} x {product.qty}</h2>
                   ))}
                 </div>
               </div>
               <div className='order-footer'>
-                <Modal open={modalUpdateOrder && modalUpdateOrderId === order.id} onClose={handleCloseModalUpdateOrder}>
+                <Modal open={modalUpdateOrder && modalUpdateOrderId === order._id} onClose={handleCloseModalUpdateOrder}>
                   <h2 className='textModal'>¿Deseas marcar la orden como lista en barra?</h2>
                   <h2 className='textModal'>Mesa #{order.table}</h2>            
                   {order.products.map(product => (
-                    <h2 className='product-content' key={`00${order.id}00${product.product.id}`}>{product.product.name} x {product.qty}</h2>))}
+                    <h2 className='product-content' key={`00${order._id}00${product.product.id}`}>{product.product.name} x {product.qty}</h2>))}
                   <div>
                     <Button
                       label='CONFIRMAR'
-                      onClick={() => updateOrderStatus(order.id)}
+                      onClick={() => updateOrderStatus(order._id)}
                       classButton='buttonsModal'>
                     </Button>
                     <Button
@@ -59,7 +59,7 @@ export default function Kitchen() {
                     </Button>
                   </div>
                 </Modal>
-                <Button classButton='buttonOrder' label="ORDEN LISTA" onClick={() => handleOpenModalUpdateOrder(order.id)} />
+                <Button classButton='buttonOrder' label="ORDEN LISTA" onClick={() => handleOpenModalUpdateOrder(order._id)} />
               </div>
             </div>
           ))}
@@ -67,7 +67,7 @@ export default function Kitchen() {
         <div className='kitchen-header'>LISTO EN BARRA</div>
         <div className='kitchen-body'>
           {preparedOrders.map(order => (
-            <div key={order.id} className='order-container'>
+            <div key={order._id} className='order-container'>
               <div className='order-header'>
                 <h2 className='order-title'>Mesa #{order.table}</h2>
                 <h2 className='order-time'>Terminado</h2>
@@ -75,7 +75,7 @@ export default function Kitchen() {
               <div className='order-body'>
                 <div className='order-content'>
                   {order.products.map(product => (
-                  <h2 className='product-content' key={`00${order.id}00${product.product.id}`}>{product.product.name} x {product.qty}</h2>
+                  <h2 className='product-content' key={`00${order._id}00${product.product.id}`}>{product.product.name} x {product.qty}</h2>
                   ))}
                 </div>
               </div>

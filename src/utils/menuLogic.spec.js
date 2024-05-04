@@ -93,7 +93,6 @@ describe('handleCreateOrder en useMenuLogic', () => {
     const { getClientAndTable } = menuLogicModule.useMenuLogic;
     getClientAndTable.mockImplementation(() => 'cliente', 1 );
     const result = handleCreateOrder(cartDataMock);
-    console.log(result);
     expect(result).toBeDefined();
   });
 });
